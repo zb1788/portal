@@ -1,0 +1,20 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{ margin:0; padding:0;}
+li{list-style-type:none;}
+a{ text-decoration:none; }
+img{ border:0 none; display:block;}
+input{ border:0 none;}
+
+body{ background-image:url(../images/bj.png);}
+.bjbox{ background-image:url(../images/zlzzj-k.png); margin:0 auto;width:995px; height:1400px; position:relative;}
+.ydbox{
+	background-image: url(../images/C-zlzzj-sy.png);
+	width: 987px;
+	height: 928px;
+	position: absolute;
+	left: -1px;
+	top: 132px;
+}
+.btn{ width:203px; height:56px; display:block; margin-top:783px; margin-left:55px;}

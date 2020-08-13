@@ -1,0 +1,216 @@
+/*登陆页，开始{*/
+.login{
+  //头
+  header{
+    @extend %content;
+    height: 221px;
+    position: relative;
+    h1{
+      background: url("../images/logo.png") no-repeat;
+      width: 386px;
+      height: 72px;
+      position: absolute;
+      left: 0;
+      top: 111px;
+      a{
+        display: block;
+        text-indent: -9999px;}
+    }
+  }
+  /*幻灯片*/
+  #slider{
+    position: relative;
+    height: 360px;
+    ul{
+      li{
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        a{
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    ol{
+      position: absolute;
+      bottom: 20px;
+      z-index: 1000;
+      left: 0;
+      right: 0;
+      text-align: center;
+      margin-left: -400px;
+      li{
+        cursor: pointer;
+        margin: 0 5px;
+        width: 13px;
+        height: 13px;
+        display: inline-block;
+        background: url("../images/sliderNumIco.png") -13px top no-repeat;
+        &.active{
+          background-position: 0 0;
+        }
+      }
+    }
+  }
+  //登录区域
+  .loginBox{
+    height: 370px;
+    .loginBoxIn{
+      @extend %content;
+      z-index: 1000;
+
+      position: relative;
+    }
+    .loginForm{
+      padding:0 23px;
+      width: 339px;
+      height: 463px;
+      border:10px solid #fff;
+      background: #e6e6e6;
+      position: absolute;
+      right: 0px;
+      top: -113px;
+      .tabTitle{
+        margin-top: 44px;
+        margin-bottom: 36px;
+        background: #555555;
+        border-radius: 25px;
+        behavior: url(css/PIE.htc);
+        position: relative;
+        height: 54px;
+        a{
+          float: left;
+          display: block;
+          height: 54px;
+          line-height: 54px;
+          padding: 0 18px;
+          font-size: 21px;
+          color: #ffffff;
+          position: relative;
+          z-index: 1000;
+        }
+        .active{
+          display: block;
+          background: #8fc31f;
+          color: #ffffff;
+          border-radius: 25px;
+          behavior: url(css/PIE.htc);
+          position: absolute;
+          padding: 0;
+          width: 78px;
+          height: 54px;
+          left: -1px;
+          top: 0;
+        }
+      }
+      .tabContent{
+        i{
+          width: 40px;
+          height: 40px;
+          border: 1px solid #e8e8e8;
+          border-radius: 50%;
+          behavior: url(css/PIE.htc);
+          display: inline-block;
+          position: absolute;
+          right: 6px;
+          top: 6px;
+        }
+        .userIco{
+          background: url("../images/userIco.png") center no-repeat;
+        }
+        .passwordIco{background: url("../images/unlockIco.png") center no-repeat;}
+        .validateIco{background: url("../images/validateIco.png") center no-repeat;}
+        p{
+          position: relative;
+          margin-bottom: 15px;
+          background: #fff;
+          border-radius: 25px;
+          behavior: url(css/PIE.htc);
+          height: 53px;
+          input{
+            width: 312px;
+            border:none;
+            background: none;
+            padding-left: 22px;
+            height: 53px;
+            line-height: 53px;
+          }
+          &.code{
+            width: 184px;
+            input{
+              width: 162px;
+
+            }
+            img{
+              position: absolute;
+              width: 140px;
+              right: -153px;
+              height: 53px;
+            }
+          }
+        }
+        .loginBtn{
+          display: block;
+          height: 53px;
+          line-height: 53px;
+          color: #ffffff;
+          font-size: 24px;
+          width: 100%;
+          border:none;
+          background: #0d94ea;
+          border-radius: 25px;
+          behavior: url(css/PIE.htc);
+          position: relative;
+          margin-top: 15px;
+        }
+        #savepass{
+          vertical-align: middle;
+          margin-left: 10px;}
+        label{
+          font-size: 20px;
+          color: #0d94ea;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+  //脚
+  footer{
+    height: 200px;
+    background: #e6e6e6;
+    .footerIn{
+      .copyBox{
+        padding-top: 64px;}
+      @extend %content;
+      position: relative;
+      .QRCodeBox{
+        position: absolute;
+        right: 66px;
+        top: 40px;
+        figure{
+          float: right;
+          margin-left: 70px;
+          img{
+            display: block;}
+          figcaption{
+            display: block;
+            margin-top: 10px;
+            font-size: 16px;
+            color: #555555;
+          }
+        }
+      }
+      p{
+        color: #555555;
+        font-size: 16px;
+        line-height: 30px;
+      }
+    }
+  }
+}
+/*}结束，登陆页*/

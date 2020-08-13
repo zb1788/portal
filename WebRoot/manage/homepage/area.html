@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layuiAdmin 控制台主页一</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../layuiadmin/style/style.css" media="all">
+  <link rel="stylesheet" href="../layuiadmin/style/addstyle.css" media="all">
+  <link rel="stylesheet" href="../layuiadmin//fonts/iconfont.css" media="all">
+	<script src="../../js/lib/jquery.js"></script>
+	<script src="../../script/base64.js"></script>
+	<script src="../../script/util.js"></script>
+	<script src="../../common/config.jsp?showip=1" type="text/javascript"></script>
+    <script type="text/javascript" src="../njs/polyfill.min.js"></script>
+	<script type="text/javascript" src="../njs/vue.js" ></script>
+	<script type="text/javascript" src="../njs/axios.js" ></script>
+	<script type="text/javascript" src="../njs/bluebird.js" ></script>
+	<script type="text/javascript" src="../../js/lib/echarts.js" ></script>
+    <script type="text/javascript" src="../../js/lib/echarts-liquidfill.min.js" ></script>
+	<script src="../../script/util.js"></script>
+	<script src="../channelgeterbyarea.jsp"></script>
+	<script src="../userinfo.jsp"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md">
+      <div class="layui-row layui-col-space15">
+        <!-- 最近应用 -->
+        <div class="layui-col-md">
+          <div class="layui-card">
+            <div class="layui-card-header">最近应用</div>
+            <div class="layui-card-body">
+
+              <div class="layui-carousel layadmin-carousel layadmin-carousel-s layadmin-shortcut">
+                <div carousel-item>
+                  <ul class="layui-row layui-col-space10" id="recentApp">
+                    <li class="layui-col-xs2">
+                      <a lay-href="home/homepage1.html">
+                        <i class="layui-icon layui-icon-notice"></i>
+                        <cite>通知公告</cite>
+                      </a>
+                    </li>
+                    <li class="layui-col-xs2">
+                      <a lay-href="home/homepage2.html">
+                        <i class="layui-icon layui-icon-chart"></i>
+                        <cite>登录统计</cite>
+                      </a>
+                    </li>
+                    <li class="layui-col-xs2">
+                      <a lay-href="component/layer/list.html">
+                        <i class="icon iconfont">&#xeb96</i>
+                        <cite>使用排行</cite>
+                      </a>
+                    </li>
+                    <li class="layui-col-xs2">
+                      <a layadmin-event="im">
+                        <i class="icon iconfont">&#xe613</i>
+                        <cite>在线备课管理</cite>
+                      </a>
+                    </li>
+                    <li class="layui-col-xs2">
+                      <a lay-href="component/progress/index.html">
+                        <i class="layui-icon layui-icon-engine"></i>
+                        <cite>开通统计</cite>
+                      </a>
+                    </li>
+                    <li class="layui-col-xs2">
+                      <a lay-href="app/workorder/list.html">
+                        <i class="icon iconfont">&#xeb67;</i>
+                        <cite>教务管理</cite>
+                      </a>
+                    </li>
+                  </ul>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div></div>
+      <!-- 用户注册 -->
+      <div class="layui-col-md" id="userRegister">
+        <div class="layui-card">
+          <div class="layui-card-header">用户注册</div>
+          <div class="layui-card-body">
+            <div class="layui-carousel layadmin-carousel">
+              <div carousel-item>
+                <ul class="site-doc-icon yhzc-list">
+                  <li class="layui-col-xs2">
+                    <i class="icon iconfont">&#xe6d2;</i>
+                    <div class="doc-icon-name">学校</div>
+                    <div class="doc-icon-code">注册：{{SCHOOL_REGISTER_NUMBER}}</div>
+                  </li>
+                  <li class="layui-col-xs2">
+                    <i class="icon iconfont">&#xe600;</i>
+                    <div class="doc-icon-name">班级</div>
+                    <div class="doc-icon-code">注册：{{CLASS_REGISTER_NUMBER}}</div>
+                  </li>
+                  <li class="layui-col-xs2">
+                    <i class="icon iconfont">&#xe65f;</i>
+                    <div class="doc-icon-name">教师</div>
+                    <div class="doc-icon-code">注册：{{TEACHER_REGISTER_NUMBER}}</div>
+                    <div class="doc-icon-code">激活：{{TEACHER_ACTIVE_NUMBER}}</div>
+                  </li>
+                  <li class="layui-col-xs2">
+                    <div style="position: relative;width: 100%;height: 140px;">
+                      <div id="chart1" style="width:200px; height: 200px; top: 50%;left:50%;position: absolute;margin-left: -100px; margin-top: -100px;"></div>
+                      <label style="top: 140px; position: absolute; text-align: center;display: block; left: 0; right: 0;">教师激活率</label>
+                    </div>
+                  </li>
+                  <li class="layui-col-xs2">
+                    <i class="icon iconfont">&#xe661;</i>
+                    <div class="doc-icon-name">学生</div>
+                    <div class="doc-icon-code">注册：{{STUDENT_REGISTER_NUMBER}}</div>
+                    <div class="doc-icon-code">激活：{{STUDENT_ACTIVE_NUMBER}}</div>
+                  </li>
+                  <li class="layui-col-xs2">
+                    <div style="position: relative;width: 100%;height: 140px;">
+                      <div id="chart2" style="width:200px; height: 200px; top: 50%;left:50%;position: absolute;margin-left: -100px; margin-top: -100px;"></div>
+                      <label style="top: 140px; position: absolute; text-align: center;display: block; left: 0; right: 0;">学生激活率</label>
+                    </div>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+            <div class="moreCon"><a style="cursor:pointer;" onclick="$('#lm27_01',window.parent.document).click()">详情<i class="layui-icon layui-icon-right"></i></a></div>
+          </div>
+        </div>
+      </div></div>
+
+    <!-- 本月使用概况 -->
+    <div class="layui-col-md">
+      <div class="layui-card">
+        <div class="layui-card-header"><div class="fr fc-gray" id="loginDate"></div>本月登录情况<!-- <span>注册且已登录的用户为激活用户</span> --></div>
+        <div class="layui-card-body">
+
+          <table class="layui-table table-center"  lay-filter="test-table-thead1" id="loginStatusVue">
+            <thead>
+            <tr>
+              <th>角色</th>
+              <th>激活人数</th>
+              <th>上月登录人数</th>
+              <th>本月登录人数</th>
+              <th title="占比=本月登录人数/激活人数 ">占比 <i class="layui-icon">&#xe702;</i></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>教师</td>
+              <td>{{teacher.TEACHER_ACTIVE_NUMBER}}</td>
+              <td>{{teacher.TEACHER_LAST_MONTH_LOGIN_NUMBER}}</td>
+              <td v-if="teacher.TEACHER_LAST_MONTH_LOGIN_NUMBER>teacher.TEACHER_THIS_MONTH_LOGIN_NUMBER">{{teacher.TEACHER_THIS_MONTH_LOGIN_NUMBER}} ↓</td>
+              <td v-else-if="teacher.TEACHER_LAST_MONTH_LOGIN_NUMBER==teacher.TEACHER_THIS_MONTH_LOGIN_NUMBER">{{teacher.TEACHER_THIS_MONTH_LOGIN_NUMBER}}</td>
+              <td v-else>{{teacher.TEACHER_THIS_MONTH_LOGIN_NUMBER}} ↑</td>
+              <td>{{teacher.TEACHER_RATE}}</td>
+            </tr>
+            <tr>
+              <td>学生</td>
+              <td>{{student.STUDENT_ACTIVE_NUMBER}}</td>
+              <td>{{student.STUDENT_LAST_MONTH_LOGIN_NUMBER}}</td>
+              <td v-if="student.STUDENT_LAST_MONTH_LOGIN_NUMBER>student.STUDENT_THIS_MONTH_LOGIN_NUMBER">{{student.STUDENT_THIS_MONTH_LOGIN_NUMBER}} ↓</td>
+              <td v-else-if="student.STUDENT_LAST_MONTH_LOGIN_NUMBER==student.STUDENT_THIS_MONTH_LOGIN_NUMBER">{{student.STUDENT_THIS_MONTH_LOGIN_NUMBER}}</td>
+              <td v-else>{{student.STUDENT_THIS_MONTH_LOGIN_NUMBER}} ↑</td>
+              <td>{{student.STUDENT_RATE}}</td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="moreCon" style="display: none;"><a style="cursor:pointer;" onclick="$('#lm27_02',window.parent.document).click()">详情<i class="layui-icon layui-icon-right"></i></a></div>
+          <div class="tac" style="text-align: left;"><span class="areaName"></span>登录排行榜</div><hr>
+          <table class="layui-table table-clear" id="loginRankStatusVue">
+            <thead>
+            <tr>
+              <th>排名</th>
+              <th class="thAreaName">名称</th>
+              <th>登录次数</th>
+              <th>在线时长（分）</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(item,index) in rank">
+              <td class="topten" v-if="index == 0"><img src="../layuiadmin/images/topten1.png"></td>
+              <td class="topten" v-else-if="index == 1"><img src="../layuiadmin/images/topten2.png"></td>
+              <td class="topten" v-else><img src="../layuiadmin/images/topten3.png"></td>
+              <td class="userface"><img src="../layuiadmin/images/face.png">{{item.TITLE}}</td>
+              <td>{{item.LOGIN_TIMES}}</td>
+              <td>{{item.ONLINE_TIME}}</td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="moreCon"><a style="cursor:pointer;" onclick="$('#lm27_02',window.parent.document).click()">详情<i class="layui-icon layui-icon-right"></i></a></div>
+
+        </div>
+      </div>
+    </div>
+    <!-- 备课成果 -->
+    <div class="layui-col-md" id="beiKeChengGuo">
+      <div class="layui-card">
+
+        <div class="layui-card-body">
+          <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-hash">
+            <div class="main-title">备课成果</div>
+            <ul class="layui-tab-title tab-week">
+              <li class="layui-this" lay-id="11">本月</li>
+              <li lay-id="22" class="">上月</li>
+            </ul>
+
+            <div class="layui-tab-content">
+              <div class="layui-tab-item layui-show">
+
+                <div class="layui-row layui-col-space10">
+                  <div class="layui-col-md3">
+                    <div class="tac">PC端授课包</div>
+                    <table class="layui-table table-center table-clear">
+                      <thead>
+                      <tr>
+                        <th>使用教师数</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td><div class="num"><strong>{{SK_USE_SCHOOL_THIS}}</strong> / <span class="totalTeacherNum"></span></div></td>
+                      </tr>
+                      <tr>
+                        <td v-if="SK_USE_SCHOOL_THIS>SK_USE_SCHOOL_LAST">与上月相比 {{SK_USE_SCHOOL_THIS-SK_USE_SCHOOL_LAST}} ↑</td>
+                        <td v-else-if="SK_USE_SCHOOL_THIS==SK_USE_SCHOOL_LAST">与上月持平</td>
+                        <td v-else>与上月相比 {{SK_USE_SCHOOL_LAST-SK_USE_SCHOOL_THIS}} ↓</td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <div class="layui-col-md9">
+                    <div class="layui-card-body clear-pad">
+                      <div class="tac"><span class="areaName"></span>备课排行</div>
+                      <table class="layui-table table-center table-clear">
+                        <thead>
+                        <tr>
+                          <th>排名</th>
+                          <th class="thAreaName">名称</th>
+                          <th>备课人次</th>
+                          <th>备课人数</th>
+                          <th>资源上传数量</th>
+                          <th>资源浏览量</th>
+                          <th>资源总容量</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in nowRank">
+                          <td>{{item.RANK}}</td>
+                          <td>{{item.TITLE}}</td>
+                          <td>{{item.BK_TIMES}}</td>
+                          <td>{{item.BK_PERSONS}}</td>
+                          <td>{{item.RES_UPLOAD_TIMES}}</td>
+                          <td>{{item.RES_PLAY_TIMES}}</td>
+                          <td>{{item.CAPACITY}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <div class="moreCon nobgc" style="display: none;"><a>详情<i class="layui-icon layui-icon-right"></i></a></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="layui-col-md">
+                  <div class="layui-card-body clear-pad" id="beikechengguobychart" style="height:260px">
+
+                  </div>
+                </div>
+              </div>
+              <div class="layui-tab-item">
+                <div class="layui-row layui-col-space10">
+                  <div class="layui-col-md3">
+                    <div class="tac">PC端授课包</div>
+                    <table class="layui-table table-center table-clear">
+                      <thead>
+                      <tr>
+                        <th>使用教师数</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td><div class="num"><strong>{{BEFORE_SK_USE_SCHOOL_THIS}}</strong> / <span class="totalTeacherNum"></span></div></td>
+                      </tr>
+                      <tr>
+                        <td v-if="BEFORE_SK_USE_SCHOOL_THIS>BEFORE_SK_USE_SCHOOL_LAST">与上月相比 {{BEFORE_SK_USE_SCHOOL_THIS-BEFORE_SK_USE_SCHOOL_LAST}} ↑</td>
+                        <td v-else-if="BEFORE_SK_USE_SCHOOL_THIS==BEFORE_SK_USE_SCHOOL_LAST">与上月持平</td>
+                        <td v-else>与上月相比 {{BEFORE_SK_USE_SCHOOL_LAST-BEFORE_SK_USE_SCHOOL_THIS}} ↓</td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <div class="layui-col-md9">
+                    <div class="layui-card-body clear-pad">
+                      <div class="tac"><span class="areaName"></span>备课排行</div>
+                      <table class="layui-table table-center table-clear">
+                        <thead>
+                        <tr>
+                          <th>排名</th>
+                          <th class="thAreaName">名称</th>
+                          <th>备课人次</th>
+                          <th>备课人数</th>
+                          <th>资源上传数量</th>
+                          <th>资源浏览量</th>
+                          <th>资源总容量</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in lastRank">
+                          <td>{{item.RANK}}</td>
+                          <td>{{item.TITLE}}</td>
+                          <td>{{item.BK_TIMES}}</td>
+                          <td>{{item.BK_PERSONS}}</td>
+                          <td>{{item.RES_UPLOAD_TIMES}}</td>
+                          <td>{{item.RES_PLAY_TIMES}}</td>
+                          <td>{{item.CAPACITY}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <div class="moreCon nobgc" style="display: none;"><a>详情<i class="layui-icon layui-icon-right"></i></a></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="layui-col-md">
+                  <div class="layui-card-body clear-pad" id="beikechengguosychart" style="height:260px">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 授课使用 -->
+    <div class="layui-col-md"  id="shouKeChengGuo">
+      <div class="layui-card">
+
+        <div class="layui-card-body">
+          <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-hash">
+            <div class="main-title">授课使用</div>
+            <ul class="layui-tab-title tab-week">
+              <li class="layui-this" lay-id="11">本月</li>
+              <li lay-id="22" class="">上月</li>
+            </ul>
+            <div class="layui-tab-content">
+              <div class="layui-tab-item layui-show">
+
+                <div class="layui-row layui-col-space10">
+                  <div class="layui-col-md3">
+                    <div class="tac">授课端</div>
+                    <table class="layui-table table-center table-clear">
+                      <thead>
+                      <tr>
+                        <th>使用教师数</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td><div class="num"><strong>{{SK_SCHOOL_THIS}}</strong> / <span class="totalTeacherNum"></span></div></td>
+                      </tr>
+                      <tr>
+                        <td v-if="SK_SCHOOL_THIS>SK_SCHOOL_LAST">与上月相比 {{SK_SCHOOL_THIS-SK_SCHOOL_LAST}} ↑</td>
+                        <td v-else-if="SK_SCHOOL_THIS==SK_SCHOOL_LAST">与上月持平</td>
+                        <td v-else>与上月相比 {{SK_SCHOOL_LAST-SK_SCHOOL_THIS}} ↓</td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <div class="layui-col-md9">
+                    <div class="layui-card-body clear-pad">
+                      <div class="tac"><span class="areaName"></span>授课排行</div>
+                      <table class="layui-table table-center table-clear">
+                        <thead>
+                        <tr>
+                          <th>排名</th>
+                          <th class="thAreaName">名称</th>
+                          <th>授课人次</th>
+                          <th>授课人数</th>
+                          <th>资源播放</th>
+                          <th>表扬次数</th>
+                          <th>训练次数</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in nowRank">
+                          <td>{{item.RANK}}</td>
+                          <td>{{item.TITLE}}</td>
+                          <td>{{item.SK_TIMES}}</td>
+                          <td>{{item.SK_PERSONS}}</td>
+                          <td>{{item.TLS_RES_TIMES}}</td>
+                          <td>{{item.TLS_PRAISE_TIMES}}</td>
+                          <td>{{item.TLS_TRAIN_TIMES}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <div class="moreCon nobgc" style="display: none;"><a>详情<i class="layui-icon layui-icon-right"></i></a></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="layui-col-md">
+                  <div class="layui-card-body clear-pad" id="shoukebychart" style="height:260px">
+
+                  </div>
+                </div>
+              </div>
+              <div class="layui-tab-item">
+                <div class="layui-row layui-col-space10">
+                  <div class="layui-col-md3">
+                    <div class="tac">授课端</div>
+                    <table class="layui-table table-center table-clear">
+                      <thead>
+                      <tr>
+                        <th>使用教师数</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td><div class="num"><strong>{{BEFORE_SK_SCHOOL_THIS}}</strong> / <span class="totalTeacherNum"></span></div></td>
+                      </tr>
+                      <tr>
+                        <td v-if="BEFORE_SK_SCHOOL_THIS>BEFORE_SK_SCHOOL_LAST">与上月相比 {{BEFORE_SK_SCHOOL_THIS-BEFORE_SK_SCHOOL_LAST}} ↑</td>
+                        <td v-else-if="BEFORE_SK_SCHOOL_THIS==BEFORE_SK_SCHOOL_LAST">与上月持平</td>
+                        <td v-else>与上月相比 {{BEFORE_SK_SCHOOL_LAST-BEFORE_SK_SCHOOL_THIS}} ↓</td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <div class="layui-col-md9">
+                    <div class="layui-card-body clear-pad">
+                      <div class="tac"><span class="areaName"></span>授课排行</div>
+                      <table class="layui-table table-center table-clear">
+                        <thead>
+                        <tr>
+                          <th>排名</th>
+                          <th class="thAreaName">名称</th>
+                          <th>授课人次</th>
+                          <th>授课人数</th>
+                          <th>资源播放</th>
+                          <th>表扬次数</th>
+                          <th>训练次数</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in lastRank">
+                          <td>{{item.RANK}}</td>
+                          <td>{{item.TITLE}}</td>
+                          <td>{{item.SK_TIMES}}</td>
+                          <td>{{item.SK_PERSONS}}</td>
+                          <td>{{item.TLS_RES_TIMES}}</td>
+                          <td>{{item.TLS_PRAISE_TIMES}}</td>
+                          <td>{{item.TLS_TRAIN_TIMES}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <div class="moreCon nobgc" style="display: none;"><a>详情<i class="layui-icon layui-icon-right"></i></a></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="layui-col-md">
+                  <div class="layui-card-body clear-pad" id="shoukebychartsy" style="height:260px">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 作业概况 -->
+    <div class="layui-col-md"  id="zuoyeChengGuo">
+      <div class="layui-card">
+
+        <div class="layui-card-body">
+          <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-hash">
+            <div class="main-title">作业概况</div>
+            <ul class="layui-tab-title tab-week">
+              <li class="layui-this" lay-id="11">本月</li>
+              <li lay-id="22" class="">上月</li>
+            </ul>
+            <div class="layui-tab-content">
+              <div class="layui-tab-item layui-show">
+
+                <div class="layui-row layui-col-space10">
+                  <div class="layui-col-md3">
+                    <div class="tac">作业</div>
+                    <table class="layui-table table-center table-clear">
+                      <thead>
+                      <tr>
+                        <th>布置作业次数</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td><div class="num"><strong>{{ZY_THIS}}</strong></div></td>
+                      </tr>
+                      <tr>
+                        <td v-if="ZY_THIS>ZY_LAST">与上月相比 {{ZY_THIS-ZY_LAST}} ↑</td>
+                        <td v-else-if="ZY_THIS==ZY_LAST">与上月持平</td>
+                        <td v-else>与上月相比 {{ZY_LAST-ZY_THIS}} ↓</td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <div class="layui-col-md9">
+                    <div class="layui-card-body clear-pad">
+                      <div class="tac"><span class="areaName"></span>作业排行</div>
+                      <table class="layui-table table-center table-clear">
+                        <thead>
+                        <tr>
+                          <th>排名</th>
+                          <th class="thAreaName">名称</th>
+                          <th>作业布置人数</th>
+                          <th>作业布置人次</th>
+                          <th>学生参与人次</th>
+                          <th>完成率</th>
+                          <th>批改率</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in nowRank">
+                          <td>{{item.RANK}}</td>
+                          <td>{{item.TITLE}}</td>
+                          <td>{{item.HW_TECHER_NUMBER}}</td>
+                          <td>{{item.HW_TIMES}}</td>
+                          <td>{{item.PERSON_TIMES}}</td>
+                          <td>{{item.FINISH_RATE}}</td>
+                          <td>{{item.MARK_RATE}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <div class="moreCon nobgc" style="display: none;"><a href="#">详情<i class="layui-icon layui-icon-right"></i></a></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="layui-col-md">
+                  <div class="layui-card-body clear-pad" id="zuoyebychart" style="height:260px">
+
+                  </div>
+                </div>
+              </div>
+              <div class="layui-tab-item">
+                <div class="layui-row layui-col-space10">
+                  <div class="layui-col-md3">
+                    <div class="tac">作业</div>
+                    <table class="layui-table table-center table-clear">
+                      <thead>
+                      <tr>
+                        <th>布置作业次数</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td><div class="num"><strong>{{BEFORE_ZY_THIS}}</strong> </div></td>
+                      </tr>
+                      <tr>
+                        <td v-if="BEFORE_ZY_THIS>BEFORE_ZY_LAST">与上月相比 {{BEFORE_ZY_THIS-BEFORE_ZY_LAST}} ↑</td>
+                        <td v-else-if="BEFORE_ZY_THIS==BEFORE_ZY_LAST">与上月持平</td>
+                        <td v-else>与上月相比 {{BEFORE_ZY_LAST-BEFORE_ZY_THIS}} ↓</td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <div class="layui-col-md9">
+                    <div class="layui-card-body clear-pad">
+                      <div class="tac"><span class="areaName"></span>作业排行</div>
+                      <table class="layui-table table-center table-clear">
+                        <thead>
+                        <tr>
+                          <th>排名</th>
+                          <th class="thAreaName">名称</th>
+                          <th>作业布置人数</th>
+                          <th>作业布置人次</th>
+                          <th>学生参与人次</th>
+                          <th>完成率</th>
+                          <th>批改率</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in lastRank">
+                          <td>{{item.RANK}}</td>
+                          <td>{{item.TITLE}}</td>
+                          <td>{{item.HW_TECHER_NUMBER}}</td>
+                          <td>{{item.HW_TIMES}}</td>
+                          <td>{{item.PERSON_TIMES}}</td>
+                          <td>{{item.FINISH_RATE}}</td>
+                          <td>{{item.MARK_RATE}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <div class="moreCon nobgc" style="display: none;"><a href="#">详情<i class="layui-icon layui-icon-right"></i></a></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="layui-col-md">
+                  <div class="layui-card-body clear-pad" id="zuoyebychartsy" style="height:260px">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 作业概况end -->
+  </div>
+</div>
+</div>
+</div>
+
+<div class="layui-layer layui-layer-tips" id="layui-tips" type="tips" contype="object" style="z-index: 99999; position: absolute; width: 210px; left: 0px; top: 0px;display:none"><div id="" class="layui-layer-content" style="">我是另外一个tips，只不过我长得跟之前那位稍有些不一样。<i class="layui-layer-TipsG layui-layer-TipsT" ></i></div><span class="layui-layer-setwin"></span></div>
+<script src="../layuiadmin/layui/layui.js?t=1"></script>
+<script src="../../script/js_md5.js"></script>
+<script type="text/javascript">
+axios.defaults.withCredentials = true
+var _type4OtherConfig="manage_area2";
+// 添加请求拦截器
+axios.interceptors.request.use(function (config) {
+  // 在发送请求之前做些什么
+  console.log(config);
+  if(config.method == 'get'){
+    if(config.url.indexOf('?') > 0){
+      var mdStr=hex_md5(config.url.substring(config.url.indexOf("?")+1));
+      var np=mdStr.substring(16)+mdStr.substring(0,16);
+      config.url=config.url+"&check_sn="+np;
+    }
+  }
+  return config;
+}, function (error) {
+  // 对请求错误做些什么
+  return Promise.reject(error);
+});
+
+var now = new Date();
+var year = now.getFullYear();
+var month = now.getMonth()+1;
+if(month<10){
+  month = "0"+month;
+}
+
+var d = new Date(year,month,0);
+var days = d.getDate();
+
+var lastObj = getLastDate(year,month);
+var lastYear = lastObj.year;
+var lastMonth = lastObj.month;
+var lastDays;
+var d = new Date(lastYear,lastMonth,0);
+lastDays = d.getDate();
+
+var beforeLastObj = getLastDate(lastYear,lastMonth);
+var beforeLastYear = beforeLastObj.year;
+var beforeLastMonth = beforeLastObj.month;
+var beforeLastDays;
+var d = new Date(beforeLastYear,beforeLastMonth,0);
+beforeLastDays = d.getDate();
+
+$("#loginDate").html(year+"/"+month+"/01"+" - "+year+"/"+month+"/"+days);
+
+var area_level = 2;//点的个数：2为市，3为区
+var area_id = userAreaId+'.';
+if(area_id == null || area_id == ''){
+  alert('区域id参数异常，请联系管理员！');
+}
+area_level = (area_id.split('.')).length-1;
+
+var areaName = "学校";
+if(area_level == 2){
+  areaName = "区域";
+}
+$(".areaName").html(areaName);
+$(".thAreaName").html(areaName+"名称");
+
+
+function getLastDate(year,month){
+  var preMonth = '';
+  var preYear = year;
+  if(month == '01'){
+    preMonth = 12;
+    preYear = year*1-1;
+  }else{
+    preMonth = month*1-1;
+    if(preMonth < 10){
+      preMonth = "0"+preMonth;
+    }
+  }
+  var obj = {};
+  obj.year = preYear;
+  obj.month = preMonth;
+  return obj;
+}
+
+//recentApp
+function changeChannel(channelid){
+	if(typeof(window.postMessage)!= undefined){//判断是否支持postMessage
+		try{
+			window.parent.postMessage({"type":"changeMenu","value":channelid},"*");
+	    }catch(e){
+	   		
+	    }
+	} 
+}
+//count倒序
+function recentCompare(a,b){
+	if (a.count>b.count) {
+		return -1;
+	}else if(a.count<b.count){
+		return 1
+	}else{
+		return 0;
+	}
+}
+//获取最近应用
+function getRecentApp(){
+	var cdata=util.getLocalData("channelCount");
+	if(cdata==null || cdata.indexOf("{")==-1){
+		cdata=null;
+	}
+	//过滤当前用户没有的栏目,count置为-2
+	for(var rai=0;rai<recentlyChannel.length;rai++){
+		if($("#lm"+recentlyChannel[rai].code,parent.document).length==0){
+			recentlyChannel[rai].count=-2;
+		}
+	}
+	if(!util.isBlank(cdata)){
+		cdata=JSON.parse(cdata);
+		//对应栏目数据排序
+		for(var cid in cdata){
+			if($("#"+cid,parent.document).length>0){
+				cid=cid.replace("lm","");
+				for(var ri=0;ri<recentlyChannel.length;ri++){
+					if(recentlyChannel[ri].code==cid){
+						recentlyChannel[ri].count=cdata["lm"+cid];
+					}
+				}
+			}
+		}
+		recentlyChannel=recentlyChannel.sort(recentCompare);
+	}else{
+		//无数据，默认
+		
+	}
+	var codeArr = new Array();
+	for(var ri=0;ri<7;ri++){
+		codeArr.push('<li class="layui-col-xs2"><a onclick="$(\'#lm'+recentlyChannel[ri].code+'\',window.parent.document).click()" ><i class="layui-icon"><img src="../images/recent/'+
+				recentlyChannel[ri].img+'" width="30" height="30" /></i><cite>'+
+          recentlyChannel[ri].name+'</cite></a></li>');
+	}
+	$("#recentApp").html(codeArr.join(""));
+}
+
+getRecentApp();
+
+//显示提示 
+function showDesTip(x,e){
+	var content="";
+	if(1==x){
+		content="占比=本周登录人数/激活人数";
+	}else if(2==x){
+		content="激活率=激活人数/注册人数";
+	}
+	var itop=0;
+	var ileft=0;
+	if(e.pageY>55){
+		itop=e.pageY-55;
+	}else{
+		itop=e.pageY;
+	}
+	if(e.pageX>200){
+		ileft=e.pageX-200;
+	}else{
+		ileft=e.pageX;
+	}
+	$("#layui-tips .layui-layer-content").html(content);
+	$("#layui-tips").css("top",itop+"px").css("left",ileft+"px").show();
+	setTimeout('$("#layui-tips").hide()',2000);
+}
+
+
+
+
+//用户注册
+var registerVue = new Vue({
+  el: '#userRegister',
+  data: {
+    SCHOOL_REGISTER_NUMBER:0,
+    CLASS_REGISTER_NUMBER:0,
+    TEACHER_REGISTER_NUMBER:0,
+    TEACHER_ACTIVE_NUMBER:0,
+    TEACHER_ACTIVE_RATE:'0%',
+    STUDENT_REGISTER_NUMBER:0,
+    STUDENT_ACTIVE_NUMBER:0,
+    STUDENT_ACTIVE_RATE:'0%',
+  }
+});
+var chart1 = echarts.init(document.getElementById("chart1"));
+var chart2 = echarts.init(document.getElementById("chart2"));
+//获取用户注册相关数据
+if(true){
+  axios.all([
+    axios.get(util.makeUrl("STAT_WEB","STAT_WEB.REGISTER")+".&rn="+Math.round(Math.random()*1000)),
+  ]).then(axios.spread(function(r1){
+    r1=r1.data;
+
+    registerVue.$data.SCHOOL_REGISTER_NUMBER=r1.SCHOOL_REGISTER_NUMBER;
+    registerVue.$data.CLASS_REGISTER_NUMBER=r1.CLASS_REGISTER_NUMBER;
+    registerVue.$data.TEACHER_REGISTER_NUMBER=r1.TEACHER_REGISTER_NUMBER;
+    registerVue.$data.TEACHER_ACTIVE_NUMBER=r1.TEACHER_ACTIVE_NUMBER;
+    registerVue.$data.TEACHER_ACTIVE_RATE=r1.TEACHER_ACTIVE_RATE;
+    registerVue.$data.STUDENT_REGISTER_NUMBER=r1.STUDENT_REGISTER_NUMBER;
+    registerVue.$data.STUDENT_ACTIVE_NUMBER=r1.STUDENT_ACTIVE_NUMBER;
+    registerVue.$data.STUDENT_ACTIVE_RATE=r1.STUDENT_ACTIVE_RATE;
+
+    $('.totalTeacherNum').html(r1.TEACHER_REGISTER_NUMBER);
+    drawWaterChart(chart1,r1.TEACHER_ACTIVE_RATE.replace(/%/g,'')/100);
+    drawWaterChart(chart2,r1.STUDENT_ACTIVE_RATE.replace(/%/g,'')/100);
+  })).catch(function(e){
+    console.log('获取用户注册信息接口失败，接口地址【getUserRegisterInfo】');
+    //alert("排行数据获取:"+e);
+  });
+}
+
+
+//画水波图
+function drawWaterChart(chart,percent){
+  window.addEventListener('resize', function () {
+    chart.resize()
+  })
+
+  var option = {
+    series: [{
+      type: 'liquidFill',
+      data: [percent],
+      label: {
+        position: ['50%', '50%'],
+        fontSize: 30,
+        color: 'rgb(49,78,151)',
+      }
+    }],
+
+  };
+
+  chart.setOption(option);
+}
+
+
+//登录情况
+var loginStatusVue = new Vue({
+  el: '#loginStatusVue',
+  data: {
+    teacher:{
+      TEACHER_THIS_MONTH_LOGIN_NUMBER:0,
+      TEACHER_LAST_MONTH_LOGIN_NUMBER:0,
+      TEACHER_ACTIVE_NUMBER:0,
+      TEACHER_RATE:'0%'
+    },
+    student:{
+      STUDENT_THIS_MONTH_LOGIN_NUMBER:0,
+      STUDENT_LAST_MONTH_LOGIN_NUMBER:0,
+      STUDENT_ACTIVE_NUMBER:0,
+      STUDENT_RATE:'0%'
+    }
+  }
+});
+//获取用户用户登录情况数据
+axios.all([
+  axios.get(util.makeUrl("STAT_WEB","STAT_WEB.LOGIN_INFO")+".&rn="+Math.round(Math.random()*1000)),
+]).then(axios.spread(function(r1){
+  r1=r1.data;
+
+  loginStatusVue.$data.teacher=r1[0];
+  loginStatusVue.$data.student=r1[1];
+
+})).catch(function(e){
+  console.log('获取用户登录情况数据失败，接口地址：【getCurrentMonthUserLoginInfo】')
+  //alert("排行数据获取:"+e);
+});
+
+
+//登录排行榜
+var loginRankStatusVue = new Vue({
+  el: '#loginRankStatusVue',
+  data: {
+    rank:[]
+  }
+});
+//获取用户用户登录排行榜
+axios.all([
+  axios.get(util.makeUrl("STAT_WEB","STAT_WEB.LOGIN_RANK")+".&rn="+Math.round(Math.random()*1000)),
+]).then(axios.spread(function(r1){
+  r1=r1.data;
+
+  loginRankStatusVue.$data.rank = r1;
+})).catch(function(e){
+  console.log('获取用户登录情况数据失败，接口地址：【getCurrentMonthAreaLoginInfo】')
+  //alert("排行数据获取:"+e);
+});
+
+
+//备课成果相关==================================================================================================
+var beiKeChengGuoVue = new Vue({
+  el: '#beiKeChengGuo',
+  data: {
+    SK_USE_SCHOOL_THIS:0,
+    SK_USE_SCHOOL_LAST:0,
+    BEFORE_SK_USE_SCHOOL_THIS:0,
+    BEFORE_SK_USE_SCHOOL_LAST:0,
+    nowRank:[],
+    lastRank:[]
+  }
+});
+
+
+//获取教师备课使用数(本月）
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.BK_INFO")+".&month="+year+month+"&last_month="+lastYear+lastMonth+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+
+  beiKeChengGuoVue.$data.SK_USE_SCHOOL_THIS = r1.SK_USE_SCHOOL_THIS;
+  beiKeChengGuoVue.$data.SK_USE_SCHOOL_LAST = r1.SK_USE_SCHOOL_LAST;
+}).catch(function (e) {
+  console.log('获取教师备课数对比数据失败，接口地址：【getSKPacakgeInfo】')
+})
+//获取教师备课使用数(上月）
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.BK_INFO")+".&month="+lastYear+lastMonth+"&last_month="+beforeLastYear+beforeLastMonth+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+
+  beiKeChengGuoVue.$data.BEFORE_SK_USE_SCHOOL_THIS = r1.SK_USE_SCHOOL_THIS;
+  beiKeChengGuoVue.$data.BEFORE_SK_USE_SCHOOL_LAST = r1.SK_USE_SCHOOL_LAST;
+}).catch(function (e) {
+  console.log('获取教师备课数对比数据失败，接口地址：【getSKPacakgeInfo】')
+})
+
+
+//获取备课排行（本月）
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.BK_RANK")+".&starttime="+year+month+"01&endtime="+year+month+days+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+
+  beiKeChengGuoVue.$data.nowRank = r1;
+}).catch(function (e) {
+  console.log('获取教师备课排行数据失败，接口地址：【getAreaBKRank】')
+})
+
+
+//获取备课排行（上月）
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.BK_RANK")+".&starttime="+lastYear+lastMonth+"01&endtime="+lastYear+lastMonth+lastDays+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+
+  beiKeChengGuoVue.$data.lastRank = r1;
+}).catch(function (e) {
+  console.log('获取教师备课排行数据失败，接口地址：【getAreaBKRank】')
+})
+
+//获取备课图表(本月)
+var BkBytcharts = echarts.init(document.getElementById("beikechengguobychart"));
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.BK_CHART")+".&starttime="+year+month+"01&endtime="+year+month+days+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+
+  var xArr = [];
+  var yArr = [];
+  for(var i=0; i<r1.length;i++){
+    var item = r1[i];
+    xArr.push(item.TIME);
+    yArr.push(item.TIMES);
+  }
+
+  drawChart(xArr,yArr,"使用备课教师数",BkBytcharts);
+}).catch(function (e) {
+  console.log('获取教师备课图表数据失败，接口地址：【getAreaBKTeacherDayList】')
+})
+
+
+//获取备课图表(上月)
+$("#beikechengguosychart").css("width",$("#beikechengguobychart").width());
+var BkSytcharts = echarts.init(document.getElementById("beikechengguosychart"));
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.BK_CHART")+".&starttime="+lastYear+lastMonth+"01&endtime="+lastYear+lastMonth+lastDays+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+  var xArr = [];
+  var yArr = [];
+  for(var i=0; i<r1.length;i++){
+    var item = r1[i];
+    xArr.push(item.TIME);
+    yArr.push(item.TIMES);
+  }
+  drawChart(xArr,yArr,"使用备课教师数",BkSytcharts);
+}).catch(function (e) {
+  console.log('获取教师备课图表数据失败，接口地址：【getAreaBKTeacherDayList】')
+})
+
+
+
+
+//授课相关======================================================================================
+//授课成果相关
+var shouKeChengGuoVue = new Vue({
+  el: '#shouKeChengGuo',
+  data: {
+    SK_SCHOOL_THIS:0,
+    SK_SCHOOL_LAST:0,
+    BEFORE_SK_SCHOOL_THIS:0,
+    BEFORE_SK_SCHOOL_LAST:0,
+    nowRank:[],
+    lastRank:[]
+  }
+});
+
+
+//获取教师授课使用数(本月)
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.SK_INFO")+".&month="+year+month+"&last_month="+lastYear+lastMonth+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+  shouKeChengGuoVue.$data.SK_SCHOOL_THIS = r1.SK_SCHOOL_THIS;
+  shouKeChengGuoVue.$data.SK_SCHOOL_LAST = r1.SK_SCHOOL_LAST;
+}).catch(function (e) {
+  console.log('获取教师备课数对比数据失败，接口地址：【getSKInfo】')
+})
+//获取教师授课使用数(上月)
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.SK_INFO")+".&month="+lastYear+lastMonth+"&last_month="+beforeLastYear+beforeLastMonth+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+  shouKeChengGuoVue.$data.BEFORE_SK_SCHOOL_THIS = r1.SK_SCHOOL_THIS;
+  shouKeChengGuoVue.$data.BEFORE_SK_SCHOOL_LAST = r1.SK_SCHOOL_LAST;
+}).catch(function (e) {
+  console.log('获取教师备课数对比数据失败，接口地址：【getSKInfo】')
+})
+
+
+//获取授课排行（本月）
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.SK_RANK")+".&starttime="+year+month+"01&endtime="+year+month+days+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+  shouKeChengGuoVue.$data.nowRank = r1;
+}).catch(function (e) {
+  console.log('获取教师备课排行数据失败，接口地址：【getAreaSKRank】')
+})
+
+
+//获取授课排行（上月）
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.SK_RANK")+".&starttime="+lastYear+lastMonth+"01&endtime="+lastYear+lastMonth+lastDays+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+  shouKeChengGuoVue.$data.lastRank = r1;
+}).catch(function (e) {
+  console.log('获取教师备课排行数据失败，接口地址：【getAreaSKRank】')
+})
+
+//获取授课图表(本月)
+var SkBytcharts = echarts.init(document.getElementById("shoukebychart"));
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.SK_CHART")+".&starttime="+year+month+"01&endtime="+year+month+days+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+  var xArr = [];
+  var yArr = [];
+  for(var i=0; i<r1.length;i++){
+    var item = r1[i];
+    xArr.push(item.TIME);
+    yArr.push(item.TIMES);
+  }
+  drawChart(xArr,yArr,"使用授课教师数",SkBytcharts);
+}).catch(function (e) {
+  console.log('获取教师授课图表数据失败，接口地址：【getAreaSKTeacherDayList】')
+})
+
+//获取授课图表(上月)
+$("#shoukebychartsy").css("width",$("#shoukebychart").width());
+var SkSytcharts = echarts.init(document.getElementById("shoukebychartsy"));
+
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.SK_CHART")+".&starttime="+lastYear+lastMonth+"01&endtime="+lastYear+lastMonth+lastDays+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+  var xArr = [];
+  var yArr = [];
+  for(var i=0; i<r1.length;i++){
+    var item = r1[i];
+    xArr.push(item.TIME);
+    yArr.push(item.TIMES);
+  }
+  drawChart(xArr,yArr,"使用授课教师数",SkSytcharts);
+}).catch(function (e) {
+  console.log('获取教师授课图表数据失败，接口地址：【getAreaSKTeacherDayList】')
+})
+
+
+//作业相关======================================================================================
+
+var zuoyeChengGuoVue = new Vue({
+  el: '#zuoyeChengGuo',
+  data: {
+    ZY_THIS:0,
+    ZY_LAST:0,
+    BEFORE_ZY_THIS:0,
+    BEFORE_ZY_LAST:0,
+    nowRank:[],
+    lastRank:[]
+  }
+});
+
+
+//获取作业使用数(本月)
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.ZY_INFO")+".&month="+year+month+"&last_month="+lastYear+lastMonth+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+  zuoyeChengGuoVue.$data.ZY_THIS = r1.ZY_THIS;
+  zuoyeChengGuoVue.$data.ZY_LAST = r1.ZY_LAST;
+}).catch(function (e) {
+  console.log('获取作业对比数据失败，接口地址：【getZYInfo】')
+})
+//获取作业使用数(上月)
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.ZY_INFO")+".&month="+lastYear+lastMonth+"&last_month="+beforeLastYear+beforeLastMonth+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+  zuoyeChengGuoVue.$data.BEFORE_ZY_THIS = r1.ZY_THIS;
+  zuoyeChengGuoVue.$data.BEFORE_ZY_LAST = r1.ZY_LAST;
+}).catch(function (e) {
+  console.log('获取作业对比数据失败，接口地址：【getZYInfo】')
+})
+
+
+//获取作业排行（本月）
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.ZY_RANK")+".&starttime="+year+month+"01&endtime="+year+month+days+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+  zuoyeChengGuoVue.$data.nowRank = r1;
+}).catch(function (e) {
+  console.log('获取作业数据失败，接口地址：【getAreaZYRank】')
+})
+
+
+//获取作业排行（上月）
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.ZY_RANK")+".&starttime="+lastYear+lastMonth+"01&endtime="+lastYear+lastMonth+lastDays+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+  zuoyeChengGuoVue.$data.lastRank = r1;
+}).catch(function (e) {
+  console.log('获取作业排行数据失败，接口地址：【getAreaZYRank】')
+})
+
+//获取作业图表(本月)
+var ZYBytcharts = echarts.init(document.getElementById("zuoyebychart"));
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.ZY_CHART")+".&starttime="+year+month+"01&endtime="+year+month+days+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+  var xArr = [];
+  var yArr = [];
+  for(var i=0; i<r1.length;i++){
+    var item = r1[i];
+    xArr.push(item.TIME);
+    yArr.push(item.TIMES);
+  }
+  drawChart(xArr,yArr,"作业发送次数",ZYBytcharts);
+}).catch(function (e) {
+  console.log('获取作业图表数据失败，接口地址：【getAreaZYDayList】')
+})
+
+//获取作业图表(上月)
+$("#zuoyebychartsy").css("width",$("#zuoyebychart").width());
+var ZYSytcharts = echarts.init(document.getElementById("zuoyebychartsy"));
+
+axios.get(util.makeUrl("STAT_WEB","STAT_WEB.ZY_CHART")+".&starttime="+lastYear+lastMonth+"01&endtime="+lastYear+lastMonth+lastDays+"&rn="+Math.round(Math.random()*1000)).then(function (r1) {
+  r1=r1.data;
+
+  var xArr = [];
+  var yArr = [];
+  for(var i=0; i<r1.length;i++){
+    var item = r1[i];
+    xArr.push(item.TIME);
+    yArr.push(item.TIMES);
+  }
+  drawChart(xArr,yArr,"作业发送次数",ZYSytcharts);
+}).catch(function (e) {
+  console.log('获取作业图表数据失败，接口地址：【getAreaZYDayList】')
+})
+
+
+
+//获取绘图宽度,不然echart画不出来
+// var thishudongChartDiv = document.getElementById("beikechengguobzchart");
+// var chartWidth = thishudongChartDiv.clientWidth||thishudongChartDiv.offsetWidth;
+// $("#lasthuDongChart").css("width",chartWidth+"px");
+// $("#lastSendChart").css("width",chartWidth+"px");
+
+
+
+function drawChart(xdata,sdata,title,tcharts){
+	if(null==title||""==title){
+		title="";
+	}
+/*xdata=[{value:90, show: true,symbol:'circle',symbolSize:5},
+			            	{value:90, show: true,symbol:'circle',symbolSize:5},
+			            	{value:90, show: true,symbol:'circle',symbolSize:3},
+			            	{value:20, show: true,symbol:'circle',symbolSize:5},
+			            	{value:110, show: true,symbol:'circle',symbolSize:5},
+			            	{value:60, show: true,symbol:'circle',symbolSize:5},
+			            	{value:132, show: true,symbol:'circle',symbolSize:5}]
+*/
+	  // var tcharts = echarts.init(document.getElementById(id));
+	  option = {
+			    title : {
+			        text: title,
+                    textAlign:'left'
+			    },
+			    tooltip : {
+			        trigger: 'axis'
+			    },/*
+			    legend: {
+			        data:['使用量']
+			    },*/
+			    calculable : false,//曲线
+			    xAxis : [
+			        {
+			            //name : '日期',
+			            type : 'category',
+                        splitLine:{show: false},//去除网格线
+                        splitArea : {show : false},//保留网格区域
+			            //boundaryGap : false,//贴y轴起始
+			            data : xdata
+			        }
+			    ],
+			    yAxis : [
+			        {
+			            //name : '总量',
+			            type : 'value',
+                        splitLine:{show: false},//去除网格线
+                        splitArea : {show : false},//保留网格区域
+			            axisLabel : {
+			                formatter: '{value}'
+			            }
+			        }
+			    ],
+			    series : [
+			        {
+			            name:'使用量',
+			            type:'line',
+			            data:sdata,
+                        /*
+				        itemStyle : {  
+                               normal : {
+                            	   color: "#4169E1",
+                            	   areaStyle: {type: 'default',color:'#1F9AFF'},
+                                   lineStyle:{  
+                                       color:'#1E90FF'  
+                                   },
+                                   label : {show: true}
+                               }  
+                        }*/
+                        /*,
+			            markLine : {
+			                data : [
+			                    {type : 'average', name: '平均值'}
+			                ]
+			            }*/
+			        }
+			    ]
+			};
+
+	  tcharts.setOption(option, true);
+}
+function dealChartData(arr,xname,sname){
+	if(arr && arr!=null && arr.length>0){
+		var xdata=[];
+		var ydata=[];
+		for(var ci=0;ci<arr.length;ci++){
+			xdata.push(arr[ci][xname]);
+			ydata.push(arr[ci][sname]);
+		}
+		return {"xdata":xdata,"sdata":ydata};
+	}
+	return {"xdata":null,"sdata":null};
+}
+
+//获取指定月份的天数
+function getDays(year,month) {
+  var stratDate = new Date(year,month-1,1);
+  var endData = new Date(year,month,1);
+  var days = (endData -stratDate)/(1000*60*60*24);
+  return days;
+}
+
+function GetQueryString(name) {
+  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+  var r = window.location.search.substr(1).match(reg);
+  if (r != null) return decodeURIComponent(decodeURIComponent(unescape(r[2])));
+  return null;
+}
+
+/*
+drawChart(null,"本周作业发送","lastSendChart");
+*/
+</script>
+<script>
+  layui.config({
+    base: '../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'console']);
+</script>
+
+<script src="../../common/otherConfig.jsp" type="text/javascript"></script>
+</body>
+</html>
+

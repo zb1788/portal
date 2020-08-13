@@ -1,0 +1,109 @@
+﻿<list>
+	<!-- 进入系统登陆首页 -->
+	<ui url="index" class="zzvcom.web.action.BaseAction" method="transit">
+		<result name="success">/login/templet.jsp</result>
+	</ui>
+	
+	<!-- 同步课堂 模块登 -->
+	<ui url="tbkt" class="zzvcom.web.action.BaseAction" method="transit">
+		<result name="success">/login/mode.jsp?module=/login/main/tbkt.html</result>
+	</ui>
+	
+	<!-- 名校名卷 模块登 -->
+	<ui url="mxmj" class="zzvcom.web.action.BaseAction" method="transit">
+		<result name="success">/login/mode.jsp?module=/login/main/mxmj.html</result>
+	</ui>
+	
+	<!-- 名师微课 模块登 -->
+	<ui url="mswk" class="zzvcom.web.action.BaseAction" method="transit">
+		<result name="success">/login/mode.jsp?module=/login/main/mswk.html</result>
+	</ui>
+	
+	<!-- 学情分析 模块登 -->
+	<ui url="xqfx" class="zzvcom.web.action.BaseAction" method="transit">
+		<result name="success">/login/mode.jsp?module=/login/main/xqfx.html</result>
+	</ui>
+	
+	<!-- 登陆后进入系统
+	 <ui url="loginaction" class="zzvcom.web.action.LoginAction" method="login" ></ui>
+	 -->
+	<ui url="loginaction" class="zzvcom.web.action.BaseAction" method="transit" >
+		<result name="success">/turntomain.jsp</result>
+	</ui>
+	
+	<!-- 登录退出 -->
+	<ui url="loginout" class="zzvcom.web.action.IndexAction" method="loginout">
+		<result name="success">/ssoLogout.jsp</result>
+	</ui>
+	
+	<!-- 空间首页 -->
+	<ui url="webindex" class="zzvcom.web.action.IndexAction" method="portalFrame">
+		<result name="success">/space/index.jsp</result>
+		<result name="dxekt">/space/module/dxekt/index.jsp</result>
+		<result name="ydhlj">/space/module/ydhlj/index.jsp</result>
+		<result name="ydqt">/space/module/ydqt/index.jsp</result>
+		<result name="jxqt">/space/module/jxqt/index.jsp</result>
+		<result name="hhhts">/space/module/hhhts/index.jsp</result>
+		<result name="gxq">/space/module/gxq/index.jsp</result>
+		<result name="err">/login/default/login.html</result>
+	</ui>
+	<!-- 教师空间首页 -->
+	<ui url="teacherindex" class="zzvcom.web.action.IndexAction" method="teacherindex">
+		<result name="success">/space/teacher.jsp</result>
+		<result name="ydhlj">/space/module/ydhlj/teacher.jsp</result>
+		<result name="dxekt">/space/module/dxekt/teacher.jsp</result>
+		<result name="ydqt">/space/module/ydqt/teacher.jsp</result>
+		<result name="jxqt">/space/module/jxqt/teacher.jsp</result>
+		<result name="gxq">/space/module/gxq/teacher.jsp</result>
+	</ui>
+	<!-- 学生空间首页 -->
+	<ui url="studentindex" class="zzvcom.web.action.IndexAction" method="studentindex">
+		<result name="success">/space/student.jsp</result>
+		<result name="dxekt">/space/module/dxekt/student.jsp</result>
+		<result name="ydhlj">/space/module/ydhlj/student.jsp</result>
+		<result name="ydqt">/space/module/ydqt/student.jsp</result>
+		<result name="jxqt">/space/module/jxqt/student.jsp</result>
+		<result name="gxq">/space/module/gxq/student.jsp</result>
+	</ui>
+	<!-- 家长空间首页 -->
+	<ui url="parentindex" class="zzvcom.web.action.IndexAction" method="parentindex">
+		<result name="success">/space/parent.jsp</result>
+		<result name="dxekt">/space/module/dxekt/parent.jsp</result>
+		<result name="ydhlj">/space/module/ydhlj/parent.jsp</result>
+		<result name="ydqt">/space/module/ydqt/parent.jsp</result>
+	</ui>
+	<!-- 发送短信 -->
+	<ui url="sendVicode" class="zzvcom.web.action.SendMsg" method="sendVicode"></ui>
+	<!--  转换编码形式  -->
+	<ui url="changeCode" class="zzvcom.web.action.ChangeCode" method="changeStringCode"></ui>
+	<ui url="urldecode" class="zzvcom.web.action.ChangeCode" method="URLdecodeString"></ui>
+    <!--配置管理-->
+	<ui url="dataconfigs/editconfiginfo" class="zzvcom.web.action.DataConfigAction" method="editconfiginfo">
+		<result name="success">/dataconfigs/configparam.jsp?resultflag=1</result>
+		<result name="error">/dataconfigs/configparam.jsp?resultflag=0</result>
+	</ui>
+	<!-- 授课升级提示接口 -->
+	<ui url="dataconfigs/showSkUpdate" class="zzvcom.web.action.DataConfigAction" method="showSkUpdate"></ui>
+	
+	
+	
+	<!-- 管理员登陆后进入系统-->
+	<ui url="manage/loginaction" class="zzvcom.web.action.BaseAction" method="transit" >
+		<result name="success">/turntomain.jsp?type=manage</result>
+	</ui>
+	<!-- 老版管理员空间框架页 -->
+	<ui url="manage/owebindex" class="zzvcom.web.action.IndexAction" method="manageFrame">
+		<result name="success">/manage/oindex.jsp</result>
+	</ui>
+	<!-- 管理员空间框架页 -->
+	<ui url="manage/webindex" class="zzvcom.web.action.IndexAction" method="manageFrame">
+		<result name="success">/manage/index.jsp</result>
+	</ui>
+	
+	<!-- 管理员空间页 -->
+	<ui url="manage/manageindex" class="zzvcom.web.action.IndexAction" method="manageindex">
+		<result name="xiaoji">/manage/manage_xiaoji.jsp</result>
+		<result name="quji">/manage/manage_quji.jsp</result>
+	</ui>
+	
+</list>

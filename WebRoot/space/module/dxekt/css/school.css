@@ -1,0 +1,217 @@
+.banner {
+    margin-bottom: 42px;
+}
+
+
+/* main start */
+
+
+/* course start */
+
+.teacherlesson-main {
+    margin-bottom: 50px;
+}
+
+.teacherlesson-main-course .course-left {
+    width: 855px;
+    float: left;
+    margin-right: 20px;
+    overflow: hidden;
+}
+
+.main-title {
+    margin-bottom: 25px;
+}
+
+
+/* .main-list-body {} */
+
+
+/* 左侧 start */
+
+.listBody>ul {
+    display: none;
+}
+
+.listBody>ul.on {
+    display: block;
+}
+
+.main-list-body {
+    padding-left: 6px;
+    margin-top: 30px;
+}
+
+.main-list-body li {
+    margin-bottom: 12px;
+    height: 126px;
+    padding: 5px;
+}
+
+.main-list-body li .img {
+    float: left;
+    width: 198px;
+    height: 126px;
+    display: block;
+}
+
+.main-list-body ul {
+    display: none;
+}
+
+.main-list-body ul.on {
+    display: block;
+}
+
+.main-list-body li .list-info {
+    float: left;
+    margin-left: 20px;
+    width: 621px;
+}
+
+.main-list-body li .list-info .list-info-left {
+    width: 630px;
+    float: left;
+}
+
+.main-list-body li .list-info .list-info-left p {
+    color: #666666;
+}
+
+.main-list-body li .list-info .list-info-time {
+    float: right;
+    margin-top: 12px;
+    color: #666666;
+}
+
+.main-list-body li .list-info .info-title {
+    font-size: 20px;
+    color: #000;
+    margin-bottom: 25px;
+}
+
+.main-list-body li .list-info .info-title:hover {
+    color: #f8b502;
+}
+
+
+/* 左侧 end */
+
+
+/* 右侧 start */
+
+.course-right {
+    width: 260px;
+    float: right;
+}
+
+.course-right .rigth-top {
+    /* line-height: 48px; */
+    padding: 10px 5px;
+    border-bottom: 1px solid #f1f5f9;
+    /* background: #f8f8f8; */
+}
+
+.course-right .rigth-top .main-title {
+    margin-bottom: 0px;
+    font-size: 18px;
+    color: #354052;
+}
+
+.course-right .popular-body {
+    background: #fff;
+    padding: 10px 0;
+}
+
+.course-right .popular-body li a {
+    padding: 0 8px;
+}
+
+.ddp-fiery {
+    margin-bottom: 30px;
+    border: 1px solid #f1f5f9;
+    border-radius: 5px;
+}
+
+.ddp-type-01 li {
+    float: left;
+    width: 50%;
+    position: relative;
+}
+
+.ddp-type-01 li a {
+    display: block;
+    font-size: 15px;
+    color: #333;
+    line-height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ddp-type-01 li i {
+    width: 4px;
+    height: 4px;
+    display: inline-block;
+    border-radius: 50%;
+    line-height: 30px;
+    background: #000;
+    vertical-align: middle;
+}
+
+.ddp-type-01 li a:hover {
+    color: #00bd52;
+}
+
+.ddp-type-02 a {
+    display: block;
+    color: #333;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 32px;
+}
+
+.ddp-type-02 a i {
+    color: #333;
+    font-size: 16px;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    text-align: center;
+    line-height: 20px;
+    display: inline-block;
+    vertical-align: -4px;
+}
+
+.ddp-type-02 li:nth-child(1) a i,
+.ddp-type-02 li.r1 a i {
+    background: #00bd52;
+    color: #fff;
+}
+
+.ddp-type-02 li:nth-child(2) a i,
+.ddp-type-02 li.r2 a i {
+    background: #00bd52;
+    color: #fff;
+}
+
+.ddp-type-02 li:nth-child(3) a i,
+.ddp-type-02 li.r3 a i {
+    background: #00bd52;
+    color: #fff;
+}
+
+.ddp-type-02 a:hover {
+    color: #00bd52;
+}
+
+
+/* 右侧 end */
+
+
+/* main end */
+
+
+/* main end */

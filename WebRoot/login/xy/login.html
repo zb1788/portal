@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link rel="shortcut" href="{ICOIMG}" type="image/x-icon"/>
+		<link rel="icon" href="{ICOIMG}" type="image/x-icon"/>
+		<link rel="bookmark"  href="{ICOIMG}" type="image/x-icon" />
+		<meta name="keywords"	content="{SEOKEY}、同步学习网、优教通、人人通、网络学习空间" />
+		<meta name="description" content="{SEOKEY}，全国首家在线同步教与学平台，专注为中小学教师、学生、家长、管理者提供高品质的同步教学、同步学习、互动沟通 、教学管理服务。在优教通，遇见更好的自己！" />
+		<title>襄阳市教育资源公共服务平台，{SEOKEY}</title>
+		<link rel="shortcut icon" href="favicon.ico" />
+		<link rel="bookmark"  type="image/x-icon"  href="favicon.ico"/>
+		<link href="login/xy/style/style.css" rel="stylesheet" type="text/css" />
+		<link href="login/main/style/common.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="login/xy/style/jquery.autocomplete.css" />
+
+		<script type='text/javascript' src="script/jquery.js"></script>
+		<script type='text/javascript' src="script/jquery-migrate-ada.js"></script>
+		<script type='text/javascript' src='script/jquery.autocomplete.js'></script>
+		<script type="text/javascript" src="js/lib/jquery.cookie.js"></script>
+		<script type='text/javascript' src="space/script/artDialog.js?skin=default"></script>
+				
+		<script type='text/javascript' src="script/base64.js"></script>
+		<script type='text/javascript' src="script/js_md5.js"></script>
+		<script type='text/javascript' src="script/js_rsa.js"></script>
+		<script type='text/javascript' src="script/util.js?day={DAYSTAMP}" ></script>
+		<script type="text/javascript" src="common/config.jsp?day={DAYSTAMP}"></script>
+		
+<script type='text/javascript' src="script/utfparse.js?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="script/jquery.qrcode.js"></script>
+<script type='text/javascript' src="login/main/script/loginobj.js?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="login/main/script/logincode.js?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="login/main/script/loginpage.js?day={DAYSTAMP}"></script>
+
+		<script type="text/javascript" src="login/xy/script/xylogin.js"></script>
+		<script type="text/javascript" src="login/default/script/login.js"></script>
+<script type="text/javascript">
+//账号信息输入框绑定回车事件{{襄阳特有}}
+$("html").off().on("keyup",function(eve){  
+	if(eve.which==13){  
+		tologin();
+	}
+});
+function hidTips() {//隐藏温馨提示
+    $('#tips').slideUp(600);
+}
+var otherConfig = decodeURIComponent(decodeURIComponent(portal_config.otherConfig));
+//默认Logo
+var defaultlogo="xylogo.png";
+//优教家族代码中使用
+var cmsPath =protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/";
+var flashChannelCode="";
+$(function(){
+	//手机端和pc端插件
+	var phone_url = protocol+sysconfig.CMS+interface_config["CMS.APPDOWN"];
+	var pc_url = protocol+sysconfig.CMS+interface_config["CMS.SETUPFILE"];
+	$("#phoned").attr("href",phone_url);
+	$("#pcd").attr("href",pc_url);
+});
+//二维码大小设置
+codelogin.width=160;
+codelogin.height=160;
+</script>
+  </head>
+  <body>
+    <div class="tips" id="tips" >&nbsp;</div>
+		<!-- 控件加载判断 -->
+		<OBJECT ID="ocx" width="0" height="0" CLASSID="CLSID:B02201C9-1789-4FF0-B95F-C1A03D8B6B99">
+			<PARAM NAME="_Version" VALUE="65536">
+			<PARAM NAME="_ExtentX" VALUE="10583">
+			<PARAM NAME="_ExtentY" VALUE="10583">
+			<PARAM NAME="_StockProps" VALUE="0">
+		</OBJECT>
+		<!-- 角色选择提示信息开始 -->
+	  <div class="containers posRe" id="alertContainerDiv" >
+	    <div class="msg" id="msgs" display="none">
+	      <ul class="info">
+	        <span class="clos"><a href="javascript:void(0);" onClick="hideMsg2();"></a></span><font class="redfon2">温馨提示</font>
+	      </ul>
+	      <span id="tsInfo"></span>
+	    </div>
+	  </div>
+  	<!-- 角色选择提示信息结束 -->
+<div class="header">
+  <div class="container">
+    <div class="logo"><img id="logo1" src="login/logo/xylogo.png" height="60" /></div>
+    <div class="tel"> <a class="phone" href="#" id="phoned" target="_blank">手机客户端</a> <a class="pc" href="#" id="pcd" target="_blank">PC插件</a> <span class="telephone">400-699-3111</span> </div>
+    <div class="clearfix"></div>
+  </div>
+  <!-- 焦点图及登录信息开始 -->
+  <div id="flash">
+    <div class="w980">
+    <div class="posRe" icodeurl='true' >
+      <div class="mask_login"></div>
+      
+      <!--黑色遮罩-->
+      <div class="inputBox" id="codeLogin" style="display:none">
+      	<div class="scan"><span ><a class="qrcode_target" href="javascript:" >&nbsp;</a></span></div>
+     
+        <div class="loginBg pt" >
+        <h2>打开优教信使或微信<br>扫一扫   快速登录</h2>
+        <p class="ma" id="qrcodeCanvas" style="width:160px;height:160px;margin-left:auto;margin-right:auto;margin-top:10px;margin-bottom:10px;padding:17px;background-color:#FFF"></p>
+         <p class="link"> <a target="_blank" href="{{icode:CMS.PAGE.USEGUIDE}}" >帮助</a></p>
+         	
+        </div>
+      </div>
+      
+      <div class="inputBox" id="pwdLogin">
+      	<div class="scan"><span class="scan-ts">扫码登录更安全</span><span ><a class="qrcode_target" href="javascript:void(0)" >&nbsp;</a></span></div>
+        <h2 class="tab gly"><a id="teacher" href="javascript:;">教师</a><a id="student" href="javascript:;">学生</a><a id="parent" href="javascript:;" >家长</a><a id="manager" href="javascript:;" style="margin-right:0;">管理员</a></h2>
+        <form id="loginForm" name="loginForm" action="" method="post" target="">
+        <div class="loginBg">
+			<input type="hidden" id="loginUsertype" name="loginUsertype"/>
+			<input type="hidden" id="gjpt" name="gjpt" />
+			<input type="hidden" name="username" id="username"/>
+			<input type="hidden" name="sfp" id="sfp" value="" />
+			<input type="hidden"  id="pwd" name="pwd" value="" />
+			<input id="isPortalisPortal" name="isPortal" type="hidden" value="1" />
+			<input id="data" name="data" type="hidden" value="" />
+			
+          <!-- 多账号选择层 -->
+          <div id="roleDiv" phonenum="" class="ac_results" style="left:17px;top:120px;width:;275px;display:none;position:absolute" >
+            <ul id="roleList" style="overflow:hidden" >
+            </ul>
+          </div>
+          <p class="bor">
+            <label class="user"></label>
+            <input type="text" id="inputname" name="inputname" class="textbox1" value="" placeholder="用户名" />
+          </p>
+          <p class="bor">
+            <label class="password"></label>
+            <input type="password" id="inpwd" autocomplete="new-password" placeholder="密　码" class="textbox1" />
+          </p>
+          <p class="bor" style="width:120px;float:left;">
+            <label class="check_code"></label>
+            <input type="text" name="validateCode" id="validateCode" class="textbox1" style="width:60px;" maxlength="4" value="" placeholder="验证码" />
+          </p>
+          <span class="yanz"><img id="validateImg" src="login/main/images/code.png" width="58" height="28" /></span>
+          <div class="getKey">
+            <input id="savepass" type="checkbox" /> 记住密码　　<a href="{{icode:TMS.803}}" class="blue">找回密码</a> <a class="blue" target="_blank" href="{{icode:CMS.PAGE.USEGUIDE}}" target="_blank" >帮助</a>
+          </div>
+          <p class="mt20 qk2">
+            <input type="button" value="登&nbsp;录"  class="loginBtn"  id="loginbuttion" />
+            <input type="button" class="greenBtn" style="display:none" id="zcButton" value="注&nbsp;册" />
+          </p>
+        </div>
+      </form>
+      
+      </div>
+      <!--会员登录结束--> 
+      
+    </div>
+    <!--end posRe--> 
+  </div>
+  <!--  end w980 -->
+    <ul id="tp">
+  </ul>
+  <div class="flash_bar" id="an"> </div>
+  <script>
+			var currentindex=1;
+			var numbers = 1;
+			function changeflash(i) {	
+			currentindex=i;
+			for (j=1;j<=numbers;j++){
+				if (j==i) 
+				{$("#flash"+j).fadeIn("normal");
+				$("#flash"+j).css("display","block");
+				$("#f"+j).removeClass();
+				$("#f"+j).addClass("dq");
+				}
+				else
+				{$("#flash"+j).css("display","none");
+				$("#f"+j).removeClass();
+				$("#f"+j).addClass("no");}
+			}}
+			function startAm(){
+			timerID = setInterval("timer_tick()",8000);
+			}
+			function stopAm(){
+			clearInterval(timerID);
+			}
+			function timer_tick() {
+				if(currentindex<=numbers){
+					changeflash(currentindex);
+					currentindex++;
+				}else{
+					currentindex = 1;
+					changeflash(currentindex);
+					currentindex++;
+				}
+			}
+			$(document).ready(function(){
+				$(".flash_bar div").mouseover(function(){stopAm();}).mouseout(function(){startAm();});
+				startAm();
+			});
+		</script>
+  </div>
+</div>
+<!-- 焦点图及登录信息结束 -->
+<div class="container m20">
+<div class="lef">
+  <!--名校-->
+  <div class="school">
+    <h1 class="dbt line_b"><!--<span class="more"><a href="<%=Common.getCmsUrl()%>/A01/A01051/A01051014/list_1.html" target="_blank">更多</a></span>--><font>名校</font></h1>
+    <div class="s_con" id="schoolList">
+      <ul class="col_1" id="col_1">
+      </ul>
+      <ul class="col_2" id="col_2">
+      </ul>
+      <ul class="col_3" id="col_3">
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  <!--名校结束-->
+  <!--名师-->
+  <div class="mingshi w330 fl">
+    <h1 class="dbt line_g"><font>隆中名师</font></h1>
+    <ul class="ms_list" id="msList">
+    </ul>
+  </div>
+  <!--名校长-->
+  <div class="mingshi w330 fr">
+    <h1 class="dbt line_g"><font>隆中名校长</font></h1>
+    <ul class="ms_list" id="mxzList">
+    </ul>
+  </div>
+  <!--微博-->
+  <div class="weibo w330 fl">
+    <h1 class="dbt line_b"><font>微博</font></h1>
+    <div id="google1" class="weibo_con">
+      <ul id="dhooo1">
+      </ul>
+    </div>
+    <!--end #google1-->
+  </div>
+  <!--end weibo-->
+  <!--论坛-->
+  <div id="bbsdata" style="display:none">
+    <script type="text/javascript" charset="gbk" src="http://www.jybk.cn/api.php?mod=js&bid=3"></script>
+  </div>
+    <div class="luntan w330 fr">
+      <h1 class="dbt line_b"><font>论坛</font></h1>
+      <ul id="dhooo2">
+      </ul>
+    </div>
+  </div>
+  <!--左边结束-->
+  <!--右边开始-->
+  <div class="right_n">
+    <!--教育资讯-->
+    <div class="newsList">
+      <h1 class="dbt2">教育资讯</h1>
+      <ul id="jyzxList">
+      </ul>
+    </div>
+    <!--教师最热资源-->
+    <div class="newsList">
+      <h1 class="dbt2">教师最热资源</h1>
+      <ul id="teacherHottest" >
+      </ul>
+    </div>
+    <!--学生最热资源-->
+    <div class="newsList">
+      <h1 class="dbt2">学生最热资源</h1>
+      <ul id="studentHottest">
+      </ul>
+    </div>
+    <!--平台最热资源-->
+    <div class="newsList">
+      <h1 class="dbt2">平台最新资源</h1>
+      <ul id="sysHottest">
+      </ul>
+    </div>
+  </div>
+  <!--end rig-->
+  <div class="banner"><a href="http://cms.czbanbantong.com/A01/lib/defaultstyle/yjt/index.html" target="_blank"><img src="login/xy/img/banner.jpg" width="1000" height="100" /></a></div>
+  <div class="app">
+    <h1 class="dbt3">核心应用</h1>
+    <ul>
+      <dl>
+        <dt><img src="login/xy/images/ico/ico01.png" width="48" height="48" /></dt>
+        <dd class="title"><a href="#" target="_blank" id="qsbk">轻松备课</a></dd>
+        <dd class="intro">丰富的教学资源，辅助备授课的智能平台</dd>
+      </dl>
+      <dl>
+        <dt><img src="login/xy/images/ico/ico02.png" width="48" height="48" /></dt>
+        <dd class="title"><a href="#" target="_blank" id="gxjx">高效教学</a></dd>
+        <dd class="intro">学同步课程，练在线测评，考试升学样样行</dd>
+      </dl>
+      <dl>
+        <dt><img src="login/xy/images/ico/ico03.png" width="48" height="48" /></dt>
+        <dd class="title"><a href="#" target="_blank" id="jxhd">家校互动</a></dd>
+        <dd class="intro">名师手拉手，同步专项、升学备考</dd>
+      </dl>
+    </ul>
+    <ul>
+      <dl>
+        <dt><img src="login/xy/images/ico/ico04.png" width="48" height="48" /></dt>
+        <dd class="title"><a href="#" target="_blank" id="tbyx">同步预习</a></dd>
+        <dd class="intro">班级文化、资源、信息、活动的共享空间</dd>
+      </dl>
+      <dl>
+        <dt><img src="login/xy/images/ico/ico05.png" width="48" height="48" /></dt>
+        <dd class="title"><a href="#" target="_blank" id="wytw">我要提问</a></dd>
+        <dd class="intro">丰富的教学资源，辅助备授课的智能平台</dd>
+      </dl>
+      <dl>
+        <dt><img src="login/xy/images/ico/ico06.png" width="48" height="48" /></dt>
+        <dd class="title"><a href="#" target="_blank" id="zxpy">专项培优</a></dd>
+        <dd class="intro">记录成长点滴，关爱成长过程</dd>
+      </dl>
+    </ul>
+    <ul style="margin-right:0;">
+      <dl>
+        <dt><img src="login/xy/images/ico/ico07.png" width="48" height="48" /></dt>
+        <dd class="title"><a href="#" target="_blank" id="kxfx">课前辅学</a></dd>
+        <dd class="intro">班级文化、资源、信息、活动的共享空间</dd>
+      </dl>
+      <dl>
+        <dt><img src="login/xy/images/ico/ico08.png" width="48" height="48" /></dt>
+        <dd class="title"><a href="#" target="_blank" id="cpfk">测评反馈</a></dd>
+        <dd class="intro">亲子交流、互动、沟通的信息与资源平台</dd>
+      </dl>
+      <dl>
+        <dt><img src="login/xy/images/ico/ico09.png" width="48" height="48" /></dt>
+        <dd class="title"><a href="#" target="_blank" id="jzxt">家长学堂</a></dd>
+        <dd class="intro">丰富的教学资源，辅助备授课的智能平台</dd>
+      </dl>
+    </ul>
+    <div class="clearfix"></div>
+  </div>
+  <!--end app-->
+</div>
+<!--end container-->
+<div class="links">
+  <div class="container">
+    <h1>友情链接</h1>
+    <ul>
+      <li>
+        <label>政务</label>
+        <span class="links_con"> <a href="http://www.moe.edu.cn/" target="_blank">教育部</a> <a href="http://www.hbe.gov.cn/" target="_blank">湖北省教育厅</a> <a href="http://www.e21.cn/" target="_blank">湖北教育信息网</a> <a href="http://www.xiangyang.gov.cn/" target="_blank">襄阳市政府网</a> <a href="http://www.xfedu.cn/index.aspx" target="_blank">襄阳教育网</a> </span> </li>
+      <li style="margin-right:0;">
+        <label>资源</label>
+        <span class="links_con"> <a href="http://www.zxxk.com/" target="_blank">学科网</a> <a href="http://www.cnki.net/" target="_blank">中国知网</a> <a href="http://www.pep.com.cn/" target="_blank">人民教育出版社</a> <a href="http://www.classroomvideo.cn" target="_blank">知识视界</a> <a href="http://qhtf.xjcxedu.com/ttmed/" target="_blank">清华同方</a><a href="http://www.jybk.cn/forum.php?gid=1082" target="_blank">创客教育</a></span> </li>
+      <div class="clearfix"></div>
+    </ul>
+  </div>
+</div>
+<!--end links-->
+<iframe style="min-width: 1000px;" id="footiframe" name="footiframe" src="" width="100%" height="200" scrolling="no" frameborder="0"></iframe>
+  </body>
+  <!--
+<script src="login/default/script/common.js"></script>
+<script src="login/default/script/login.js"></script>
+-->
+<script type="text/javascript">
+		var _type4OtherConfig="login";
+</script>
+<script type="text/javascript" src="common/otherConfig.jsp?day={DAYSTAMP}"></script>
+<script type="text/javascript">
+		
+	var marqueeContent=new Array();   //滚动新闻
+	var marqueeContent_con=new Array();   //滚动新闻
+	var marqueeContent_title=new Array();   //滚动新闻
+	//核心应用
+	var cmsurl=protocol+sysconfig.CMS;
+	$("#qsbk").attr("href",cmsurl+"/A01/A01012/A01012002/2013_03/02/113d28e16ce8918.html");
+	$("#gxjx").attr("href",cmsurl+"/A01/A01012/A01012002/2013_03/02/113d28dd2253956.html");
+	$("#jxhd").attr("href",cmsurl+"/A01/A01012/A01012002/2013_03/02/113d28bf4e06967.html");
+	$("#tbyx").attr("href",cmsurl+"/A01/A01012/A01012001/2013_03/02/113d291e01b6869.html");
+	$("#wytw").attr("href",cmsurl+"/A01/A01012/A01012001/2013_03/02/113d2916ac87403.html");
+	$("#zxpy").attr("href",cmsurl+"/A01/A01012/A01012001/2013_03/02/113d29131bdc699.html");
+	$("#kxfx").attr("href",cmsurl+"/A01/A01012/A01012003/2013_03/02/113d298882be536.html");
+	$("#cpfk").attr("href",cmsurl+"/A01/A01012/A01012003/2013_03/02/113d2985d721713.html");
+	$("#jzxt").attr("href",cmsurl+"/A01/A01012/A01012003/2013_03/02/113d297fc400181.html");
+	//获取焦点图信息
+	xylogin.getLoginfocusImg("CMS.JSON.A01074015001");
+	$(".flash_bar div").mouseover(function(){stopAm();}).mouseout(function(){startAm();});
+	//焦点图滚动显示效果
+	startAm();
+	
+	//获取名校信息
+	xylogin.showEliteSchool("schoolList","CMS.JSON.A01071");
+	//获取名师和名校长信息
+	xylogin.showMsOrMxz("msList","CMS.JSON.A01068");
+	xylogin.showMsOrMxz("mxzList","CMS.JSON.A01069");
+	
+	//获取微博、论坛信息
+	xylogin.showJywb("dhooo1","CMS.JSON.A01072","<%=path%>");
+	xylogin.showBbs("dhooo2");
+	
+	//获取教育资讯、教师最热资源、学生最热资源、平台最新资源
+	//xylogin.showZy("jyzxList","CMS.JSON.A01073");
+	xylogin.showZy("teacherHottest","CMS.JSON.A01074");
+	xylogin.showZy("studentHottest","CMS.JSON.A01075");
+	xylogin.showZy("sysHottest","CMS.JSON.A01076");
+	$.getScript("http://www.xfedu.cn/ajax/selectitemlist.ashx?cids=4724,4786&startrecorder=0&count=6&jsoncallback=xyItemListSelect");
+	//教育微博滚动效果
+	var Marquee=function(A,B,C,D,E,F){
+	  var $=function (id){return document.getElementById(id)},Y=+!!F;
+	  (A=$(A)).appendChild((B=$(B)).cloneNode(true));
+	  (function (){
+	      var m=A.scrollTop%C?(E||0):D;
+	      A.scrollTop=[0,B.offsetHeight][Y]==A.scrollTop?[B.offsetHeight-1,1][Y]:(A.scrollTop+[-1,1][Y]);
+	      scro = setTimeout(arguments.callee,m);
+	  })()
+	  return arguments.callee;
+	}
+	Marquee('google1','dhooo1',150,0,70,1);
+	$('#google1').mouseover(function(){
+	  clearTimeout(scro);
+	})
+	$('#google1').mouseout(function(){
+	  Marquee('google1','dhooo1',150,0,70,1);
+	});
+
+	//优教卡注册
+function zcClick(param){
+	if("undefined"==typeof(param) || param==null){
+		param=document.getElementById("loginUsertype").value;
+	}
+	if(param=='parent'){
+		param="student";
+	}
+	if(param==null || param==""){
+		var loginUsertype = "";
+		if($("#loginUsertype").val()==""){ //默认老师
+			loginUsertype = "teacher";
+		}else{
+			loginUsertype = $("#loginUsertype").val();
+		}
+		window.open(protocol+sysconfig.PORTAL+"/login/zcPage.jsp?usertype="+loginUsertype);
+	}else if(param=='student' || param =='teacher'){
+		window.open(protocol+sysconfig.PORTAL+"/login/zcPage.jsp?usertype="+param);
+	}
+	
+}
+</script>
+</html>

@@ -1,0 +1,49 @@
+@charset "gb2312";
+/* CSS Document */
+
+/*hushi子菜单*/
+.hs-nav-wrap { background-color: #0e94eb; height: 72px;  }
+.hs-nav-wrap.stu { background-color: #0fa155; }
+.hs-nav-wrap.parent { background-color:#d88f00; }
+.hs-nav { width: 100%; clear: both;}
+.hs-nav ul li { float: left;   color: #5BB7ED; text-align: center; position: relative;  }
+.hs-nav-wrap.stu .hs-nav ul li {color: #12C567;  }
+.hs-nav-wrap.parent  .hs-nav ul li {color: #EE9B00;   }
+.hs-nav ul li a,.hs-nav ul li a:visited { display: inline-block; width: 85px; text-align: center; height: 71px; padding:0 12px;  line-height: 91px;  font-size: 15px;  color: #fff; filter:alpha(opacity=70); /*支持IE */ 
+-moz-opacity:0.7; /*支持FF */ 
+opacity:0.7;  }
+
+ .hs-nav ul li a:hover { background: url(../images/hs/xk_icon_bg.png) no-repeat center 6px; color:#0e94eb; text-decoration: none; filter:alpha(opacity=100); /*支持IE */ 
+-moz-opacity:1; /*支持FF */ 
+opacity:1; }
+
+.w980 .hs-nav li a,.hs-nav ul li a:visited { display: inline-block; padding:0 2px ; font-size: 14px; }
+
+
+.hs-nav li a.cur,.hs-nav li a.cur:visited {background: url(../images/hs/xk_icon_bg.png) no-repeat center 6px; color:#0e94eb;   filter:alpha(opacity=100); /*支持IE */ 
+-moz-opacity:1; /*支持FF */ 
+opacity:1; }
+.hs-nav li a span.xk_icon,.hs-nav li a span.xk_icon1,.hs-nav li a span.xk_icon2,.hs-nav li a span.xk_icon3,.hs-nav li a span.xk_icon4,.hs-nav li a span.xk_icon5,.hs-nav li a span.xk_icon6,.hs-nav li a span.xk_icon7,.hs-nav li a span.xk_icon8,.hs-nav li a span.xk_icon9,.hs-nav li a span.xk_icon10{position: absolute; background: url(../images/hs/xk_icon.png) no-repeat; width: 40px;height: 40px;display: block; left: 50%; margin-left: -20px; top:3px;}
+.hs-nav.beike li a span.xk_icon,.hs-nav.beike li a span.xk_icon1,.hs-nav.beike li a span.xk_icon2,.hs-nav.beike li a span.xk_icon3,.hs-nav.beike li a span.xk_icon4,.hs-nav.beike li a span.xk_icon5,.hs-nav.beike li a span.xk_icon6,.hs-nav.beike li a span.xk_icon7,.hs-nav.beike li a span.xk_icon8,.hs-nav.beike li a span.xk_icon9,.hs-nav.beike li a span.xk_icon10{position: absolute; background: url(../images/hs/bk_icon.png) no-repeat; width: 40px;height: 40px;display: block; left: 50%; margin-left: -20px; top:3px;}
+.hs-nav li a span.xk_icon ,.hs-nav.beike li a span.xk_icon { background-position: -12px -13px; }
+.hs-nav li a span.xk_icon1,.hs-nav.beike  li a span.xk_icon1{ background-position: -101px -13px; }
+.hs-nav li a span.xk_icon2,.hs-nav.beike  li a span.xk_icon2{ background-position: -194px -13px; }
+.hs-nav li a span.xk_icon3,.hs-nav.beike  li a span.xk_icon3{ background-position: -282px -13px; }
+.hs-nav li a span.xk_icon4,.hs-nav.beike  li a span.xk_icon4{ background-position: -371px -13px; }
+.hs-nav li a span.xk_icon5,.hs-nav.beike  li a span.xk_icon5{ background-position: -458px -13px; }
+.hs-nav li a span.xk_icon6,.hs-nav.beike  li a span.xk_icon6{ background-position: -545px -13px; }
+.hs-nav li a span.xk_icon7,.hs-nav.beike  li a span.xk_icon7{ background-position: -630px -13px; }
+.hs-nav li a span.xk_icon8,.hs-nav.beike  li a span.xk_icon8{ background-position: -717px -13px; }
+.hs-nav li a span.xk_icon9{ background-position: -813px -13px; }
+.hs-nav li a span.xk_icon10{ background-position: -916px -13px; }
+.hs-nav li a.cur span.xk_icon,.hs-nav li a:hover span.xk_icon{ background-position: -12px -106px;  }
+.hs-nav li a.cur span.xk_icon1,.hs-nav li a:hover span.xk_icon1{ background-position: -101px -106px;  }
+.hs-nav li a.cur span.xk_icon2,.hs-nav li a:hover span.xk_icon2{ background-position: -194px -106px;  }
+.hs-nav li a.cur span.xk_icon3,.hs-nav li a:hover span.xk_icon3{ background-position: -282px -106px;  }
+.hs-nav li a.cur span.xk_icon4,.hs-nav li a:hover span.xk_icon4{ background-position: -371px -106px;  }
+.hs-nav li a.cur span.xk_icon5,.hs-nav li a:hover span.xk_icon5{ background-position: -458px -106px;  }
+.hs-nav li a.cur span.xk_icon6,.hs-nav li a:hover span.xk_icon6{ background-position: -545px -106px;  }
+.hs-nav li a.cur span.xk_icon7,.hs-nav li a:hover span.xk_icon7{ background-position: -630px -106px;  }
+.hs-nav li a.cur span.xk_icon8,.hs-nav li a:hover span.xk_icon8{ background-position: -717px -106px;  }
+.hs-nav li a.cur span.xk_icon9,.hs-nav li a:hover span.xk_icon9{ background-position: -813px -106px;  }
+.hs-nav li a.cur span.xk_icon10,.hs-nav li a:hover span.xk_icon10{ background-position: -916px -106px;  }

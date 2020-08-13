@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>小学生引导</title>
+
+<link href="../css/w1200/S-index.css" rel="stylesheet" type="text/css">
+</head>
+<script src="../jquery/jquery.js"></script>
+<script type="text/javascript">
+	function getRequest() { 
+		var url = location.search; //获取url中"?"符后的字串 
+		var theRequest = new Object(); 
+		if (url.indexOf("?") != -1) { 
+			var str = url.substr(1); 
+			strs = str.split("&"); 
+			for(var i = 0; i < strs.length; i ++) { 
+				theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]); 
+			} 
+		} 
+		return theRequest; 
+	} 
+	var param = new Object(); 
+	param = getRequest();
+	var path = param["path"];
+	$(document).ready(function(){
+		$("#yindao_s").attr("href","S-inde-yindao.html?path="+path);
+		$("#yindao_x").attr("href","S-inde-yindao.html?path="+path);
+	});
+</script>
+<script>
+ $(function(){
+	 $(".jsjx").click(
+  function(
+  ){
+	  $(".index").hide();
+	  $(".tbxx").fadeIn(300);
+	  $("#mainBg").attr("class","bj2-img");
+	  })
+	 })
+ $(function(){
+	 $(".jsjx2").click(
+  function(
+  ){
+	  $(".tbxx").hide();
+	  $(".hdxx").fadeIn(300);
+	   $("#mainBg").attr("class","bj3-img");
+	  })
+	 })
+ $(function(){
+	 $(".jsjx3").click(
+  function(
+  ){
+	  $(".hdxx").hide();
+	  $(".zlzzj").fadeIn(300);
+	   $("#mainBg").attr("class","bj4-img");
+	  })
+	 })
+ $(function(){
+	 $(".jsjx4").click(
+  function(
+  ){
+	  $(".zlzzj").hide();
+	  $(".zwzd").fadeIn(300);
+	   $("#mainBg").attr("class","bj5-img");
+	  })
+	 })
+ $(function(){
+	 $(".jsjx5").click(
+  function(
+  ){
+	  $(".zwzd").hide();
+	  $(".masty").fadeIn(300);
+	  })
+	 })
+ $(function(){
+	 $(".jsjx6").click(
+  function(
+  ){
+	  $(".masty").hide();
+	  $(".index").fadeIn(300);
+	  $("#mainBg").attr("class","bj-img");
+	  })
+	 })
+</script>
+<body>
+<div class="bigbox">
+  <div id="mainBg" class="bj-img">
+      <div class="turn-off"><a href="#" id="yindao_s"><img src="../images/w1200/tun-off.png"></a>
+      </div>
+       <div class="yindaobox">
+          <div class="index">
+              <a href="#"><img class="jsjx" src="../images/w1200/jx-btn1.png"></a>
+          </div>
+          <div class="tbxx">
+             <a href="#"><img  class="jsjx2"src="../images/w1200/jx-btn1.png"></a>
+          </div>
+          <div class="hdxx">
+             <a href="#"><img  class="jsjx3"src="../images/w1200/jx-btn1.png"></a>
+          </div>
+          <div class="zlzzj">
+             <a href="#"><img  class="jsjx4"src="../images/w1200/jx-btn1.png"></a>
+          </div>
+          <div class="zwzd">
+             <a href="#"><img class="jsjx5" src="../images/w1200/jx-btn1.png"></a>
+          </div>
+          <div class="masty">
+             <a href="#"><img class="jsjx6" src="../images/w1200/zailai-btn.png"></a>
+             <a href="#" id="yindao_x"><img class="jsjx7" src="../images/w1200/ty-btn.png"></a>
+          </div>
+       </div>
+  </div>
+</div>
+
+</body>
+</html>

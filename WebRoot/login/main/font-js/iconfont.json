@@ -1,0 +1,30 @@
+{
+  "id": "1689405",
+  "name": "jiangsu",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "3691437",
+      "name": "皇冠",
+      "font_class": "huangguan",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "3981587",
+      "name": "学校",
+      "font_class": "xuexiao",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "8088582",
+      "name": "教师",
+      "font_class": "jiaoshi",
+      "unicode": "e6c6",
+      "unicode_decimal": 59078
+    }
+  ]
+}

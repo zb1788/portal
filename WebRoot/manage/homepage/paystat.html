@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layuiAdmin 控制台主页一</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../layuiadmin/style/style.css" media="all">
+  <link rel="stylesheet" href="../layuiadmin//font/iconfont.css" media="all">
+	<script src="../../js/lib/jquery.js"></script>
+	<script src="../../script/base64.js"></script>
+	<script src="../../script/util.js"></script>
+	<script src="../../common/config.jsp?showip=1" type="text/javascript"></script>
+	<script type="text/javascript" src="../njs/vue.js" ></script>
+	<script type="text/javascript" src="../njs/axios.js" ></script>
+	<script type="text/javascript" src="../njs/bluebird.js" ></script>
+  <script type="text/javascript" src="../../js/lib/echarts.js" ></script>
+  <script type="text/javascript" src="../../js/lib/echarts-liquidfill.min.js" ></script>
+	<script src="../channelgeter.jsp"></script>
+	<script src="../userinfo.jsp"></script>
+  <style>
+    .layui-fl {
+      float: left;
+      display: inline;
+    }
+    .layui-fr {
+      float: right;
+      display: inline;
+    }
+    .option{
+      /*用div的样式代替select的样式*/
+      float:left;
+      /*border-radius: 5px;*/
+      /*盒子阴影修饰作用,自己随意*/
+      /* box-shadow: 0 0 5px #ccc;*/
+      border: 1px solid #cccccc;
+      position: relative;
+    }
+    .option select{
+      /*清除select的边框样式*/
+      border: none;
+      /*清除select聚焦时候的边框颜色*/
+      outline: none;
+      /*将select的宽高等于div的宽高*/
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      /*通过padding-left的值让文字居中*/
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="layui-col-md12">
+  <div class="layui-card" style="padding-top: 10px;">
+    <div class="lable-title layui-fl">项目：</div>
+    <div class="option" style="z-index:100;">
+      <select id="projectList" name="projectList">
+      </select>
+    </div>
+    <div style="position: relative;width: 100%;height: 140px;">
+      <div id="chart2" style="width:200px; height: 200px; top: 50%;left:45%;position: absolute;margin-left: -100px; margin-top: -100px;"></div>
+      <div style="position: absolute;top: 25%;left: 50%;">
+        <div style="font-size:18px;font-weight:bold;">学校缴费率</div>
+        <div style="font-size:16px;margin: 5px 0;">已缴费：<span id="paymentCount">--</span>人</div>
+        <div style="font-size:16px;">未缴费：<span id="studentCount">--</span>人</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="layui-col-md12">
+  <div class="layui-card">
+    <div class="layui-card" lay-filter="component-form-element" style="display:none;">
+      <div class="lable-title layui-fl">班级：</div>
+      <div class="option">
+      <select id="classList" name="classList">
+      </select>
+      </div>
+    </div>
+
+      <div class="searchCon layui-fr">
+        <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="excl_rep()">导出信息</button>
+      </div>
+
+
+      <div class="layui-clear"></div>
+      <div class="layui-tab-content" style="padding-top:0px;">
+        <div class="layui-tab-item layui-show">
+          <table id="tableList" class="layui-table table-center"  lay-filter="test-table-thead1" style="margin-top:0;">
+
+          </table>
+
+          <!--<div class="table-tips">备课优币获取量=授课包共享优币+被引用次数；授课包共享至学校，每课时15优币；共享至区域，每课时30优币</div>-->
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script src="../layuiadmin/layui/layui.all.js?t=1"></script>
+<script src="../../script/js_md5.js"></script>
+<script type="text/javascript">
+axios.defaults.withCredentials = true
+var _type4OtherConfig="manage_xiao4";
+
+var ut = GetQueryString('ut');
+var loading;
+var table;
+var tableData = [];//当月表格数据
+var currentGrade = '';
+
+// layui.config({
+//   base: './layui/' //此处路径请自行处理, 可以使用绝对路径
+// }).extend({
+//   excel:'excel'
+// });
+layui.config({
+  base: '../layuiadmin/layui/' //静态资源所在路径
+})
+
+var laypage;
+layui.use(['laypage', 'layer', 'table','element','form'], function(){
+  laypage = layui.laypage
+  var layer = layui.layer;
+  table = layui.table;
+  var element = layui.element;
+  var form = layui.form;
+
+  initTable();
+
+
+})
+
+
+
+//获取项目
+getProject();
+
+
+
+$('#projectList').change(function () {
+  loading = layer.msg('加载中...');
+  getSchoolStat();
+  getClassStat();
+})
+
+
+function excl_rep() {
+  var projectList = $('#projectList').val();
+  if(typeof projectList == 'undefined'|| projectList == null){
+    projectList= '';
+  }
+  var url = sysconfig["LOCAL_PROTOCOL"]+"://"+sysconfig["TMS"] +'/tms/payment/exportPaymentRate.do';
+  var param = {};
+  param.paymentItemId = projectList;
+  url += '?queryParamPayment='+new Base64().encode(JSON.stringify(param))+"&ut="+ut;
+
+  window.open(url);
+}
+
+//获取学校所有班级
+/**
+function getAllClass(){
+  var url = sysconfig["LOCAL_PROTOCOL"]+"://"+sysconfig["TMS"] +'/tms/interface/querySchoolClass.jsp';
+  url+= '?classType=a&queryType=bySchool&schoolId='+schoolId;
+  $.ajax({
+    url:url,
+    type:"get",
+    dataType:"jsonp",
+    jsonp:"jsoncallback",
+    success:function(data){
+      if(data && data.rtnArray && data.rtnArray.length > 0){
+        $.each(data.rtnArray,function (k,v) {
+          var html = '<option value="'+v.classId+'">'+v.className+'</option>';
+          $('#classList').append(html);
+        })
+      }
+    },
+    error:function (e) {
+
+    }
+    
+  })
+}
+*/
+
+//获取学校统计
+function getSchoolStat(){
+  var projectList = $('#projectList').val();
+  if(typeof projectList == 'undefined'|| projectList == null){
+    projectList= '';
+  }
+  //var url = sysconfig["LOCAL_PROTOCOL"]+"://"+sysconfig["TMS"] +'/tms/interface/querySchoolClass.jsp';
+  //var url = "http://192.168.144.111/tms/payment/countProdPaymentRateSchool.do";
+  var url = sysconfig["LOCAL_PROTOCOL"]+"://"+sysconfig["TMS"] + '/tms/payment/countProdPaymentRateSchool.do'
+  //url+= '?classType=a&queryType=bySchool&schoolId='+schoolId;
+  var param = {};
+  param.paymentItemId = projectList;
+  url += '?queryParamPayment='+new Base64().encode(JSON.stringify(param))+"&ut="+ut;
+  $.ajax({
+    url:url,
+    type:"get",
+    dataType:"jsonp",
+    jsonp:"jsoncallback",
+    success:function(data){
+      if(data && data.code == '200' && data.data.length >0 ){
+        $('#paymentCount').html(data.data[0].paymentCount);
+        $('#studentCount').html(data.data[0].studentCount*1-data.data[0].paymentCount*1);
+        var chart2 = echarts.init(document.getElementById("chart2"));
+
+        var percent = (data.data[0].paymentCount/data.data[0].studentCount).toFixed(4);
+        drawWaterChart(chart2,percent);
+      }
+    },
+    error:function (e) {
+    }
+
+  })
+}
+
+
+function getClassStat(){
+  loading = layer.msg('加载中...');
+  var projectList = $('#projectList').val();
+  var projectName = $('#projectList').html();
+  if(typeof projectList == 'undefined'|| projectList == null){
+    projectList= '';
+  }
+  //var url = sysconfig["LOCAL_PROTOCOL"]+"://"+sysconfig["TMS"] +'/tms/interface/querySchoolClass.jsp';
+  //url = "http://192.168.144.111/tms/payment/countProdPaymentRateClass.do";
+  var url = sysconfig["LOCAL_PROTOCOL"]+"://"+sysconfig["TMS"] +'/tms/payment/countProdPaymentRateClass.do';
+  //url+= '?classType=a&queryType=bySchool&schoolId='+schoolId;
+  var param = {};
+  param.paymentItemId = projectList;
+  url += '?queryParamPayment='+new Base64().encode(JSON.stringify(param))+"&ut="+ut;
+  $.ajax({
+    url:url,
+    type:"get",
+    dataType:"jsonp",
+    jsonp:"jsoncallback",
+    success:function(data){
+      tableData = [];
+      if(data && data.code == '200'){
+        $.each(data.data,function (k,v) {
+          var obj = {};
+          obj.order = k+1;
+          obj.className = v.className;
+          obj.name = projectName;
+          obj.studentCount = v.studentCount;
+          obj.paymentCount = v.paymentCount;
+          var per = ((v.paymentCount/v.studentCount)*100).toFixed(2);
+          obj.percent = per+"%";
+          tableData.push(obj);
+        })
+        setTimeout(function(){
+          table.reload('tableList',{
+            elem: '#tableList'
+            ,data:tableData
+          })
+        },100);
+      }
+    },
+    error:function (e) {
+      layer.close(loading);
+    }
+
+  })
+}
+
+//获取所有项目
+function getProject(){
+  var url = sysconfig["LOCAL_PROTOCOL"]+"://"+sysconfig["ZHIFU"] +'/phonepay/showitems?areacode='+userAreaId+'&showtype=all';
+  //url+= '?classType=a&queryType=bySchool&schoolId='+schoolId;
+  $.ajax({
+    url:url,
+    type:"get",
+    dataType:"jsonp",
+    jsonp:"jsoncallback",
+    success:function(data){
+      if(data && data.code == '200'){
+        $.each(data.items,function (k,v) {
+          var html = '<option value="'+v.productcode+'">'+v.productname+'</option>';
+          $('#projectList').append(html);
+        })
+        getSchoolStat();
+        getClassStat();
+      }
+    },
+    error:function (e) {
+    }
+
+  })
+}
+
+
+
+
+
+
+
+//画水波图
+function drawWaterChart(chart,percent){
+  var formatter = (percent*100).toFixed(2)+'%';
+  window.addEventListener('resize', function () {
+    chart.resize()
+  })
+
+  var option = {
+    series: [{
+      type: 'liquidFill',
+      data: [percent],
+      label: {
+		normal:{
+			formatter:formatter,
+			show: true,
+			fontSize: '22',
+		},
+        //position: ['50%', '50%'],
+        //fontSize: 30,
+        //color: 'rgb(49,78,151)',
+      }
+    }],
+
+  };
+
+  chart.setOption(option);
+}
+
+function initTable(){
+  var clsArr = [
+    {type:"numbers",title:'序号',align:'center',width:80},
+    // {field:'name',title:'项目名称',align:'center'},
+    {field:'className',title:'班级',align:'center',sort:true},
+      {field:'studentCount',title:'学生人数',align:'center',sort:true},
+    {field:'paymentCount',title:'缴费人数',align:'center',sort:true},
+    {field:'percent',title:'缴费率',align:'center',sort:true}
+  ];
+  table.render({
+    id:'tableList'
+    ,elem: '#tableList'
+    ,cols:[clsArr]
+    ,data:tableData
+    ,page:true
+    ,limit:10
+  });
+}
+
+
+function GetQueryString(name) {
+  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+  var r = window.location.search.substr(1).match(reg);
+  if (r != null) return decodeURIComponent(decodeURIComponent(unescape(r[2])));
+  return null;
+}
+</script>
+
+<script src="../../common/otherConfig.jsp" type="text/javascript"></script>
+</body>
+</html>
+

@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+ul.dtree_con { }
+ul.dtree_con li {font-weight: normal; margin-left:5px;  height:30px; overflow:hidden; word-break:keep-all;white-space:nowrap;text-overflow:ellipsis;}
+ul.dtree_con li a {display:inline-block; overflow:hidden; word-break:keep-all;white-space:nowrap;text-overflow:ellipsis; font-size:14px; }
+ul.dtree_con li a.cur_tree {color: blue; overflow: hidden; word-break:keep-all;white-space:nowrap;text-overflow:ellipsis; }
+ul.dtree_con h2 {font-size:16px; color:#888; height:30px; overflow:hidden; display:block; word-break:keep-all; white-space:nowrap; text-overflow:ellipsis; margin-top:5px;}
+ul.dtree_con h2 span{ }
+ a.cur_tree {color: blue;  display:inline-block; overflow:hidden; word-break:keep-all;white-space:nowrap;text-overflow:ellipsis; font-size:14px;}
+
+
+.menu_list_bk{clear:both;margin:10px 5px; line-height:30px; height:600px; overflow-y:auto;  }
+.menu_list_bk ul>li{padding-left: 10px; font-weight: normal;}
+.menu_head_bk{height:30px;line-height:30px;padding-left:5px;font-size:16px; color: #777; font-weight: bold; cursor:pointer;position:relative; overflow:hidden; word-break:keep-all;white-space:nowrap;text-overflow:ellipsis;}
+.menu_list_bk .current{ }
+.menu_body_bk{ margin: 0 10px;}

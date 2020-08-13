@@ -1,0 +1,15 @@
+@charset "gb2312";
+/* CSS Document */
+.focus {width:100%;  float:right; background:url(../images/bannerBg.jpg) no-repeat top left; text-align:center; display:block; position:relative; z-index:5; overflow:hidden;}
+.focus.tb{margin-right: 0px; margin-bottom: 10px;}
+.w1200 .focus{width: 100%;}
+
+.focus li img,.focus img {width: 100%; height: 170px; overflow: hidden;}
+.w1200 .focus li img,.w1200 .focus img {  margin-left:0;  }
+.focus_full {width:1200px; height:200px; overflow:hidden; text-align:center; display:block; position:relative; z-index:5; }
+.focus_full li { height:200px; background-repeat:no-repeat; background-position:center center;margin-left:-15px;}
+.focus.bg2 {background-image:url(../images/bannerBg2.jpg);}
+.focus.bg3 {background-image:url(../images/bannerBg3.jpg);}
+.flash_bar { width:99%;  z-index:10000; height:30px; overflow:hidden; display:block; position:absolute; top:83%; left:0; text-align:right;}
+.flash_bar .dq { display:inline-block; *display:inline; *zoom:1; text-align:right; width:13px; height:13px; margin:5px 2px 0 0; cursor:pointer; background:url(../images/tg_flash_p.png) no-repeat 0px 0px; font-size:0;}
+.flash_bar .no { display:inline-block; *display:inline; *zoom:1; text-align:right; width:13px; height:13px; margin:5px 2px 0 0; cursor:pointer; background:url(../images/tg_flash_p2.png) no-repeat 0px 0px; font-size:0;}

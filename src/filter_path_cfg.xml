@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="GBK"?>
+<vcom>
+<!-- 过滤模式 do-filter：配置的路径是需要过滤的，其他路径不需要过滤；不过滤模式 no-filter：配置路径是不需要过滤的，其他路径需要过滤 -->
+<!-- <filter-mode>do-filter</filter-mode>  -->
+<filter-mode>do-filter</filter-mode>
+<cfg-filter-paths>
+	<cfg-filter-path>   
+		<path>/loginaction.action</path>
+		<desp>登录后进入拦截认证</desp>	
+	</cfg-filter-path>  
+	<cfg-filter-path>   
+		<path>/webindex.action</path>
+		<desp>登录后主页框架拦截认证</desp>	
+	</cfg-filter-path>
+	<cfg-filter-path>
+         <path>/parentindex.action</path>
+         <desp>家长首页拦截认证</desp>
+    </cfg-filter-path> 
+    <cfg-filter-path>
+         <path>/teacherindex.action</path>
+         <desp>教师首页拦截认证</desp>
+    </cfg-filter-path>
+	<cfg-filter-path>
+         <path>/studentindex.action</path>
+         <desp>学生首页拦截认证</desp>
+    </cfg-filter-path> 
+	<cfg-filter-path>
+         <path>/space/returntopay.jsp</path>
+         <desp>支付拦截认证</desp>
+    </cfg-filter-path>
+	<cfg-filter-path>
+         <path>/manage/*</path>
+         <desp>管理员空间认证</desp>
+    </cfg-filter-path>
+	
+</cfg-filter-paths>
+</vcom>  

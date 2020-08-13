@@ -1,0 +1,615 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{SEOKEY}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<link rel="shortcut" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="icon" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="bookmark"  href="{ICOIMG}" type="image/x-icon" />
+<meta name="keywords"	content="{SEOKEY}" />
+<link rel="stylesheet" type="text/css" href="login/default/style/jquery.autocomplete.css" />
+<link href="login/fjxm/public/style/common.css" rel="stylesheet" type="text/css" />
+<link href="login/fjxm/css/xm_sy.css?v=18102" rel="stylesheet" type="text/css" />
+<script type='text/javascript' src="script/jquery.js"></script>
+<script type='text/javascript' src="script/jquery-migrate-ada.js"></script>
+<script type="text/javascript" src="login/fjxm/js/fullPage.min.js"></script>
+<script type="text/javascript" src="login/fjxm/js/jquery.SuperSlide.2.1.1.js"></script>
+<script type='text/javascript' src="script/jquery.cookie.js"></script>
+<script type='text/javascript' src="script/jquery.qrcode.js"></script>
+<script type='text/javascript' src="login/fjxm/script/utfparse.js"></script>
+<script type='text/javascript' src="space/script/artDialog.js?skin=default"></script>
+<script type='text/javascript' src="script/base64.js"></script>
+<script type='text/javascript' src="script/js_md5.js"></script>
+<script type='text/javascript' src="script/js_rsa.js"></script>
+<script type='text/javascript' src="login/fjxm/script/util.js?day={DAYSTAMP}" ></script>
+<script type="text/javascript" src="common/config.jsp?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="login/fjxm/script/loginobj.js?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="login/fjxm/script/loginpage.js?day={DAYSTAMP}"></script>
+<script type="text/javascript">
+$(".textbox1").live("keyup",function(eve){ //账号信息输入框绑定回车事件
+	if(eve.which==13){  
+		tologin();
+	}         
+});
+function hidTips() {//隐藏温馨提示
+    $('#tips').slideUp(600);
+}
+var otherConfig = decodeURIComponent(decodeURIComponent(portal_config.otherConfig));
+//默认Logo
+var defaultlogo="logo.png";
+//优教家族代码中使用
+var cmsPath =protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/";
+</script>
+</head>
+<script>
+
+function contentPosition(){
+	var con_height =$(window).height(); //获取页面可见高度
+	var con_height_half=(con_height-114-32-498)/2+114;
+	if (con_height <= 700){
+	   $('.content').css('top',con_height_half+'px').css('margin-top','0');		   
+	}else{		   
+	   $('.content').css('top','50%').css('margin-top','-350px');
+	}
+}
+$(window).resize(function() {
+	contentPosition();
+ })
+//游客登录
+function visitorLogin(){
+}
+</script>
+<body >
+<div class="tips" id="tips" >&nbsp;</div>
+<!-- 控件加载判断 -->
+<OBJECT ID="ocx" width="0" height="0" CLASSID="CLSID:B02201C9-1789-4FF0-B95F-C1A03D8B6B99">
+	<PARAM NAME="_Version" VALUE="65536">
+	<PARAM NAME="_ExtentX" VALUE="10583">
+	<PARAM NAME="_ExtentY" VALUE="10583">
+	<PARAM NAME="_StockProps" VALUE="0">
+</OBJECT>
+<div class="head_bg" style="position:fixed;width:100%;z-index:999;top:0;">
+  <div class="w1239">
+    <div class="logo-xm"><img src="login/fjxm/images/xm-logo.png"></div>
+    <div class="twhite1">
+      <ul id="navBar">
+        <li data-menuanchor="page1" data-page="0" class="active"><a href="#page1"><img src="login/fjxm/images/snav-home.png"><br>
+          首 页</a></li>
+        <li data-menuanchor="page2" data-page="1"><a href="#page2"><img src="login/fjxm/images/snav1.png"><br>
+          应用推荐</a></li>
+        <li data-menuanchor="page3" data-page="2"><a href="#page3"><img src="login/fjxm/images/snav2.png"><br>
+          人气学校</a></li>
+        <!--   <li data-menuanchor="page4" data-page="3"><a href="#page4"><img src="login/fjxm/images/snav3.png"><br>
+          名 师</a></li> -->
+        <li data-menuanchor="page5" data-page="4"><a href="#page5"><img src="login/fjxm/images/snav4.png"><br>
+          简介动态</a></li>
+<!--
+        <li data-menuanchor="page1" data-page="0"><a href="#" onclick="visitorLogin();return false;" ><img src="login/fjxm/images/snav5.png"><br>
+          游客登录</a></li>
+-->
+      </ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<div id="pageContain" >
+  <div class="page bg1 current" >
+    <div class="section section1">
+      <div class="xm-left"><img src="login/fjxm/images/yyico_cur_r3_c4.png" width="550" height="269" alt=""/></div>
+      <div class="xm-right"> 
+        <!--这里的HTML没动，html内容来自官网，开始{-->
+        <div class="loginBox">
+          <div class="loginBoxIn">
+            <form id="loginForm" name="loginForm" action="" method="post" target="">
+              <div class="loginForm">
+                <div id="loginTab" class="tabTitle"> <a class="active" href="javascript:;" id="teacher">教师<span class="active"></span></a> <a href="javascript:;" id="student">学生<span class="active"></span></a> <a href="javascript:;" id="parent">家长<span class="active"></span></a> <a href="javascript:;" id="manager">管理员<span class="active"></span></a> </div>
+                <input type="hidden" id="loginUsertype" name="loginUsertype" value=""/>
+                <input type="hidden" id="gjpt" name="gjpt"/>
+                <div class="tabContent">
+                  <p/>
+                  <input class="login_input" id="inputname" name="inputname" type="text" placeholder="用户名" onkeyup="loginutil.getPhoneRoles()" />
+                  <div id="roleDiv" phonenum="" class="ac_results" style="left:50px;top:200px;display:none;width:240px;position:absolute">
+                    <ul id="roleList" style="overflow:hidden">
+                    </ul>
+                  </div>
+                  <input type="hidden" name="username" id="username"/>
+                  <input type="hidden" name="sfp" id="sfp" value=""/>
+                  <p>
+	              <input class="login_input" type="password" autocomplete="new-password" placeholder="密码" id="inpwd" />
+	              <input type="hidden"  id="pwd" name="pwd" value="" />
+                  </p>
+                  <input id="isPortalisPortal" name="isPortal" type="hidden" value="1"/>
+                  <input id="data" name="data" type="hidden" value=""/>
+                  <p class="code">
+                    <input name="validateCode" id="validateCode" type="text" placeholder="验证码">
+                    <img id="codeimg" src="login/default/images/hide.gif" alt=""></p>
+                  <p class="savePass">
+                    <input id="savepass" type="checkbox">
+                    <label for="savepass">记住密码</label>
+                    <a style="margin-left:90px" id="getKey" href="#" ><label >找回密码</label></a>
+                  </p>
+                  <button type="button" class="loginBtn" id="loginbuttion" onClick="tologin();return false;">登　录 </button>
+                  <button type="button" class="greenBtn" id="regbuttion" onClick="zcClick(null);return false;">注　册 </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!--}结束，这里的HTML没动，html内容来自官网--> 
+        
+      </div>
+    </div>
+    <div class="zytm tongji">
+      <div class="w1200">
+        <div><span><i><img src="login/fjxm/images/zytm.png" width="35" height="35" alt=""></i>上周资源更新：<em  id="top_tj_res_week"></em>条</span><span><i><img src="login/fjxm/images/zytm1.png" width="35" height="35" alt=""></i>资源总数：<em  id="top_tj_res_all"></em>条</span><span><i><img src="login/fjxm/images/zytm2.png" width="35" height="35" alt=""></i>上周试题更新：<em  id="top_tj_tq_week"></em>条</span><span><i><img src="login/fjxm/images/zytm3.png" width="35" height="35" alt=""></i>试题总数：<em  id="top_tj_tq_all"></em>条</span><span><i><img src="login/fjxm/images/zytm4.png" width="35" height="35" alt=""></i>总容量：<em id="top_tj_size"></em>T</span></div>
+      </div>
+    </div>
+	
+	<div class="con1 " >
+	  <div class="con1_1">
+		<ul>
+		  <li><a href="" class="icon1" title="优教信使"></a><span>优教信使</span></li>
+		  <li><a href="" class="icon2" title="优教助手"></a><span>优教助手</span></li>
+		  <li><a href="" class="icon3" title="班班通"></a><span>班班通</span></li>
+		  <li><a href="" class="icon4" title="英语练"></a><span>英语练</span></li>
+		  <li><a href="" class="icon5" title="电子书包"></a><span>电子书包</span></li>
+		  <li class="w80"><a href="" class="icon6" title="同步作业网"></a><span>同步作业网</span></li>
+		</ul>
+		<div class="clear"></div>
+	  </div>
+	</div>
+  </div>
+  <div class="page page2 bg1" >
+    <div class="section section2">
+      <div class="content">
+        <div class="tit1">应用推荐</div>
+        <div class="yy_wrap">
+          <div class="row">
+            <div class="zcol-4"><a href="" class="bg10"><img src="login/fjxm/public/images/xm/mke.png" width="100" height="100" alt=""/><span>厦门慕课教与学服务平台</span></a></div>
+            <div class="zcol-4" ><a href="" class="bg2"><img src="login/fjxm/public/images/xm/gz.png" width="100" height="100" alt=""/><span>国家教育资源公共服务平台</span></a></div>
+            <div class="zcol-4"><a href="" class="bg3"><img src="login/fjxm/public/images/xm/tsg.png" width="100" height="100" alt=""/><span>厦门市图书馆</span></a></div>
+          </div>
+          <div class="row">
+            <div class="zcol-4"><a href="" class="bg4"><img src="login/fjxm/public/images/xm/fjzy.png" width="100" height="100" alt=""/><span>福建省教育资源公共服务平台</span></a></div>
+            <div class="zcol-4"><a href="" class="bg5"><img src="login/fjxm/public/images/xm/ta.png" width="100" height="100" alt=""/><span>同安教育公共服务平台</span></a></div>
+            <div class="zcol-4"><a href="" class="bg6"><img src="login/fjxm/public/images/xm/yj.png" width="100" height="100" alt=""/><span>翔安区教育资源公共服务平台</span></a></div>
+          </div>
+          <div class="row">
+            <div class="zcol-4"><a href="" class="bg7"><img src="login/fjxm/public/images/xm/cnki.png" width="100" height="100" alt=""/><span>厦门教育CNKI平台</span></a></div>
+            <div class="zcol-4"><a href="" class="bg8"><img src="login/fjxm/public/images/xm/apabi.png" width="100" height="100" alt=""/><span>厦门教育Apabi电子书平台</span></a></div>
+            <div class="zcol-4"><a href="" class="bg9"><img src="login/fjxm/public/images/xm/hc.png" width="100" height="100" alt=""/><span>海沧区教育公共服务平台</span></a></div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+ <div class="page page3 bg1 " >
+    <div class="section section3">
+      <div class="content">
+        <div class="tit1">名校</div>
+        <div class="clear"></div>
+        <div class="mx_list">
+          <div class="row" id="ming_xiao" >
+          	<dl><span class="pming red">1</span>
+            <dt><img src="login/fjxm/upload/mx_r1_c1.png" width="187" height="215" alt=""/></dt>
+            <dd><span class="name_bg"></span><span class="name">厦门一中</span></dd>
+          </dl>
+            <dl><span class="pming red">2</span>
+            <dt><img src="login/fjxm/upload/mx_r1_c4.png" width="187" height="215" alt=""/></dt>
+            <dd><span class="name_bg"></span><span class="name">厦门三中</span></dd>
+          </dl>
+            <dl><span class="pming red">3</span>
+            <dt><img src="login/fjxm/upload/mx_r1_c8.png" width="187" height="215" alt=""/></dt>
+            <dd><span class="name_bg"></span><span class="name">厦门艺术学校</span></dd>
+          </dl>
+            <dl><span class="pming ">4</span>
+            <dt><img src="login/fjxm/upload/mx_r1_c12.png" width="187" height="215" alt=""/></dt>
+            <dd><span class="name_bg"></span><span class="name">厦门一中</span></dd>
+          </dl>
+            <dl><span class="pming ">5</span>
+            <dt><img src="login/fjxm/upload/mx_r1_c16.png" width="187" height="215" alt=""/></dt>
+            <dd><span class="name_bg"></span><span class="name">厦门一中</span></dd>
+          </dl>
+          </div>
+          <div class="row fr bianju" id="ming_xiao2" >
+          	<dl><span class="pming ">6</span>
+            <dt><img src="login/fjxm/upload/mx_r3_c2.png" width="187" height="215" alt=""/></dt>
+            <dd><span class="name_bg"></span><span class="name">厦门一中</span></dd>
+          </dl>
+            <dl><span class="pming ">7</span>
+            <dt><img src="login/fjxm/upload/mx_r3_c6.png" width="187" height="215" alt=""/></dt>
+            <dd><span class="name_bg"></span><span class="name">厦门一中</span></dd>
+          </dl>
+            <dl><span class="pming ">8</span>
+            <dt><img src="login/fjxm/upload/mx_r3_c10.png" width="187" height="215" alt=""/></dt>
+            <dd><span class="name_bg"></span><span class="name">厦门一中</span></dd>
+          </dl>
+            <dl><span class="pming ">9</span>
+            <dt><img src="login/fjxm/upload/mx_r3_c14.png" width="187" height="215" alt=""/></dt>
+            <dd><span class="name_bg"></span><span class="name">厦门海沧实验中学</span></dd>
+          </dl>
+            <dl><span class="pming ">10</span>
+            <dt><img src="login/fjxm/upload/mx_r3_c18.png" width="187" height="215" alt=""/></dt>
+            <dd><span class="name_bg"></span><span class="name">厦门集美中学</span></dd>
+          </dl>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="page page4 bg1 ">
+    <div class="section section4">
+      <div class="content">
+        <div class="tit1"><span><a href="#" target="_blank" id="ming_shi_more">更多&gt;&gt;</a></span>名师</div>
+        <div class="clear"></div>
+        <div class="ms_list" id="ming_shi" >
+          <dl>
+            <span class="pming red">1</span>
+            <dt><a href="#"><img src="login/fjxm/upload/te_r2_c1.jpg" width="132" height="132" alt=""/></a></dt>
+            <dd class="tit"><a href="">张玉兰</a></dd>
+          </dl>
+          <dl>
+            <span class="pming red">2</span>
+            <dt><a href="#"><img src="login/fjxm/upload/te_r1_c3.jpg" width="132" height="132" alt=""/></a></dt>
+            <dd class="tit"><a href="">周娜娜</a></dd>
+          </dl>
+          <dl>
+            <span class="pming red">3</span>
+            <dt><a href="#"><img src="login/fjxm/upload/te_r3_c5.jpg" width="132" height="132" alt=""/></a></dt>
+            <dd class="tit"><a href="">高永清</a></dd>
+          </dl>
+          <dl>
+            <span class="pming ">4</span>
+            <dt><a href="#"><img src="login/fjxm/upload/te_r2_c1.jpg" width="132" height="132" alt=""/></a></dt>
+            <dd class="tit"><a href="">孟菲菲</a></dd>
+          </dl>
+          <dl>
+            <span class="pming ">5</span>
+            <dt><a href="#"><img src="login/fjxm/upload/te_r2_c1.jpg" width="132" height="132" alt=""/></a></dt>
+            <dd class="tit"><a href="">高永清</a></dd>
+          </dl>
+          <dl>
+            <span class="pming ">6</span>
+            <dt><a href="#"><img src="login/fjxm/upload/te_r2_c1.jpg" width="132" height="132" alt=""/></a></dt>
+            <dd class="tit"><a href="">张玉兰</a></dd>
+          </dl>
+          <dl>
+            <span class="pming ">7</span>
+            <dt><a href="#"><img src="login/fjxm/upload/te_r1_c3.jpg" width="132" height="132" alt=""/></a></dt>
+            <dd class="tit"><a href="">周娜娜</a></dd>
+          </dl>
+          <dl>
+            <span class="pming ">8</span>
+            <dt><a href="#"><img src="login/fjxm/upload/te_r3_c5.jpg" width="132" height="132" alt=""/></a></dt>
+            <dd class="tit"><a href="">高永清</a></dd>
+          </dl>
+          <dl>
+            <span class="pming ">9</span>
+            <dt><a href="#"><img src="login/fjxm/upload/te_r2_c1.jpg" width="132" height="132" alt=""/></a></dt>
+            <dd class="tit"><a href="">孟菲菲</a></dd>
+          </dl>
+          <dl>
+            <span class="pming ">10</span>
+            <dt><a href="#"><img src="login/fjxm/upload/te_r2_c1.jpg" width="132" height="132" alt=""/></a></dt>
+            <dd class="tit"><a href="">高永清</a></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>-->
+  <div class="page page5 bg1  ">
+    <div class="section section4">
+      <div class="content">
+        <div class="tit1">简介动态</div>
+        <div class="clear"></div>
+        <div class="con_l">
+        	<h2>云平台介绍</h2>
+        	<div class="jianjie">
+        		<ul class="layui-timeline" id="infolist4">
+  <li class="layui-timeline-item">
+    <i class="cur layui-timeline-axis"></i>
+    <div class="layui-timeline-content layui-text">
+      <h3 class="layui-timeline-title">2018-1-15</h3>
+     在全国平台规模化应用试点会议上介绍<br/>我省开放平台介绍经验在全国平台规模化<br/>应用试点会议上介绍<br/>
+    </div>
+  </li>
+  <li class="layui-timeline-item">
+     <i class=" layui-timeline-axis"></i>
+    <div class="layui-timeline-content layui-text">
+      <h3 class="layui-timeline-title">2017-12-15</h3>
+     全省教育技术能力提升培训会，明确我省<br/>开放平台建设思路和推进策略
+    </div>
+  </li>
+
+  <li class="layui-timeline-item">
+      <i class=" layui-timeline-axis"></i>
+    <div class="layui-timeline-content layui-text">
+      <h3 class="layui-timeline-title">2017-6-15</h3>
+     完成一师一优课，名师工作室等对接工作
+    </div>
+  </li>
+  <li class="layui-timeline-item">
+  <i class=" layui-timeline-axis"></i>
+    <div class="layui-timeline-content layui-text">
+      <h3 class="layui-timeline-title">2016-12-01</h3>
+      开放云平台试运行
+    </div>
+  </li>
+</ul>
+        	</div>
+        	
+        	
+        </div>
+        <div class="con_r">
+        	
+        	 <div  class="news_xm_wrap" >
+        <h1 ><span class="xm_news " style="display: table-cell"><a href="javascript:void(0);" class="cur_2" id="13Tab_0" onclick="Show_Tab_List2(3,0,13);">公告通知</a> <a href="javascript:void(0);"  id="13Tab_1" onclick="Show_Tab_List2(3,1,13);">平台动态</a> <a href="javascript:void(0);"  id="13Tab_2" onclick="Show_Tab_List2(3,2,13);">近期活动</a></span></h1>
+        <div class="clearfix"></div>
+        <div id="13s_0">
+          <div class="xm_tj" >
+            <ul  style="width: 95%;" id="infolist1">
+              <li><span class="fr">3月27日</span><a href="#">· 教育部颁布30条开学"监督令"禁设重点班</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养 叫停很必要</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 国家教育部2018年11月18日重要通知</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 教育部颁布30条开学"监督令"禁设重点班</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养 叫停很必要</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 国家教育部2018年11月18日重要通知</a></li>
+               <li><span class="fr">3月27日</span><a href="#">· 国家教育部2018年11月18日重要通知</a></li>
+                <li><span class="fr">3月27日</span><a href="#">· 国家教育部2018年11月18日重要通知</a></li>
+                <li><span class="fr">3月27日</span><a href="#">· 国家教育部2018年11月18日重要通知</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 教育部颁布30条开学"监督令"禁设重点班</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养 叫停很必要</a></li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div id="13s_1" style="display: none">
+          <div class="xm_tj" >
+            <ul  style="width: 95%;" id="infolist2">
+              <li><span class="fr">3月27日</span><a href="#">· 专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养 叫停很必要</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 国家教育部2018年11月18日重要通知</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 教育部颁布30条开学"监督令"禁设重点班</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养 叫停很必要</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养 叫停很必要</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 国家教育部2018年11月18日重要通知</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 国家教育部2018年11月18日重要通知</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 教育部颁布30条开学"监督令"禁设重点班</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养 叫停很必要</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 教育部颁布30条开学"监督令"禁设重点班</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养 叫停很必要</a></li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div id="13s_2" style="display: none">
+          <div class="xm_tj" >
+            <ul  style="width: 95%;" id="infolist3">
+              <li><span class="fr">3月27日</span><a href="#">· 教育部颁布30条开学"监督令"禁设重点班</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养 叫停很必要</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 国家教育部2018年11月18日重要通知</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 教育部颁布30条开学"监督令"禁设重点班</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养 叫停很必要</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 国家教育部2018年11月18日重要通知</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 国家教育部2018年11月18日重要通知</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 教育部颁布30条开学"监督令"禁设重点班</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养 叫停很必要</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 教育部颁布30条开学"监督令"禁设重点班</a></li>
+              <li><span class="fr">3月27日</span><a href="#">· 专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养专家称奥数不是创新人才培养 叫停很必要</a></li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+        	
+        	
+        	
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="bot">
+ <div class="w1280 twhite1">网站备案/许可证号：<a href="http://www.beian.miit.gov.cn/state/outPortal/loginPortal.action">闽ICP备05020931号-1</a>   &nbsp; &nbsp;   主办单位：厦门市教育事务受理中心   &nbsp; &nbsp;   服务支撑单位： 郑州威科姆教育科技有限公司     &nbsp; &nbsp;    服务热线：400-699-3111</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+		var _type4OtherConfig="login";
+</script>
+<script type="text/javascript" src="common/otherConfig.jsp?day={DAYSTAMP}"></script>
+<script type="text/javascript">
+try{
+$.getScript(protocol+sysconfig.CMS+"/pic/jsondata/toptqres/top_tq_res.js",function(){
+	if(typeof(top_tq_res)!="undefined"){
+		$("#top_tj_tq_week").html(top_tq_res.tqnum2);
+		$("#top_tj_tq_all").html(top_tq_res.tqtotal2);
+		$("#top_tj_res_week").html(top_tq_res.resnum2);
+		$("#top_tj_res_all").html('4351804');
+		var allsize=top_tq_res.capacity2;
+		if(top_tq_res.capacity2 && top_tq_res.capacity2.indexOf(".")>0){
+			allsize=top_tq_res.capacity2.substring(0,top_tq_res.capacity2.indexOf("."));
+		}
+		$("#top_tj_size").html(allsize+".00");
+	}	
+});
+}catch(e){}
+var cmsCounter1=0;
+var cmsCounter2=0;
+var cmsCounter3=0;
+function cmsParse(temp,data){
+	cmsCounter++;
+	if(data && data.data && data.data.outfiles){
+		return temp.replace("~num~",cmsCounter).replace("~outfile~",protocol+sysconfig["CMS"]+data.data.outfiles);
+	}
+	return temp.replace("~num~",cmsCounter);
+}
+function cmsParse2(temp,data){
+	cmsCounter2++;
+	if(cmsCounter2>5){
+		temp=templet_mingxiao;
+	}else{
+		temp="";
+	}
+	if(data && data.data && data.data.outfiles){
+		return temp.replace("~num~",cmsCounter).replace("~outfile~",protocol+sysconfig["CMS"]+data.data.outfiles);
+	}
+	return temp.replace("~num~",cmsCounter);
+}
+function cmsParse3(temp,data){
+	cmsCounter3++;
+	return temp.replace("~num~",cmsCounter);
+}
+//名校
+var templet_mingxiao='<dl><span class="pming red">~num~</span><dt><img src="~outfile~" width="187" height="215" alt="~text~"/></dt><dd><span class="name_bg"></span><span class="name">~text~</span></dd></dl>';
+util.getCommonCMS("ming_xiao","CMS.JSON.A01055004",5,0,templet_mingxiao,false,cmsParse);
+cmsCounter=0;
+util.getCommonCMS("ming_xiao2","CMS.JSON.A01055004",10,0,"templet",false,cmsParse2);
+//名师
+var templet_mingshi='<dl><span class="pming ">~num~</span><dt><a href="~url~"><img src="~img~" width="132" height="132" alt="~text~"/></a></dt><dd class="tit"><a href="">~text~</a></dd></dl>';
+util.getCommonCMS("ming_shi","CMS.JSON.A01055005",10,0,templet_mingshi,false,cmsParse3);
+$("#ming_shi_more").attr("href",protocol+sysconfig["CMS"]+"/A01/A01055/A01055005/list_1.html");
+
+var desTemplet='<li class="layui-timeline-item"><i class="cur layui-timeline-axis"></i><div class="layui-timeline-content layui-text"><h3 class="layui-timeline-title">~time~</h3>~desc~</div></li>';
+util.getCommonCMS("infolist4","CMS.JSON.A01055006",6,0,desTemplet,false);
+
+util.getCommonCMS("infolist1","CMS.JSON.A01055007",11,0,'<li><span class="fr">~date~</span><a href="~url~">· ~text~</a></li>',false);
+util.getCommonCMS("infolist2","CMS.JSON.A01055008",11,0,'<li><span class="fr">~date~</span><a href="~url~">· ~text~</a></li>',false);
+util.getCommonCMS("infolist3","CMS.JSON.A01055009",11,0,'<li><span class="fr">~date~</span><a href="~url~">· ~text~</a></li>',false);
+
+</script>
+<script>
+    //登录区域，身份切换状态
+    $("#loginTab a").click(function(){
+    	loginutil.changeLoginRole($(this));
+        $(this).addClass("active").siblings().removeClass("active");
+    })
+    //年级切换状态
+    $("#classifyTab li").click(function(){
+        $(this).addClass("active").siblings().removeClass("active");
+        switch($(this).index()){
+            case 0: getgradelist(1); break;
+            case 1: getgradelist(2); break;
+            case 2: getgradelist(3); break;
+        }
+    })
+</script>
+<script>
+var indexUrl=window.location.href;
+var itemIndex=0;
+if(indexUrl.indexOf("#page")!=-1){
+	var pageID=indexUrl.substring(indexUrl.lastIndexOf('#page')+5,indexUrl.length);
+	pageID=parseInt(pageID)-1;
+	if(pageID<10){
+		itemIndex=pageID;
+		if(pageID > 1){
+			$('.pf_con').show();
+		}else{
+			$('.pf_con').hide();
+		}		
+	}	
+}
+var runPage;
+runPage = new FullPage({
+	id: 'pageContain',
+	slideTime: 800,
+	effect: {
+		transform: {
+			translate : 'Y',          // 'X'|'Y'|'XY'|'none'
+ 		    scale : [.1, 1],           // [scalefrom, scaleto]
+      		rotate : [0, 0]
+		},
+		opacity: [0, 1]
+	},
+	pageNow:itemIndex,
+	callback:function(index){
+		if(index >= 1){
+			$('#sy_pfcon').animate({bottom:'-114px'},1000);
+			$('#sy_pfcon').css('z-index','10');
+			$('.pf_con').show();
+		}else{
+			$('#sy_pfcon').animate({bottom:'32px'},1000);
+			$('.pf_con').hide();
+		}
+	},
+  	continuous:true,
+	mode: 'wheel, touch, nav:navBar',
+	easing: 'ease'
+});
+
+function Show_Tab_List2(num,active,where){
+	for(var i=0;i<num;i++){
+		if(i!=active){
+			document.getElementById(where+"s_"+i).style.display="none";
+			document.getElementById(where+"Tab_"+i).className="";
+			}else{
+			document.getElementById(where+"s_"+i).style.display="block";
+			document.getElementById(where+"Tab_"+i).className="cur_2";
+			}
+	}
+}
+
+//用户类型切换处理
+//登陆角色切换处理,thisobj为当前点击的角色div
+LoginObj.prototype.changeLoginRole=function(thisobj){
+	$(thisobj).siblings().removeClass();
+		//登录角色
+		$("#loginUsertype").attr("value",$(thisobj).attr("id"));
+		
+		$(thisobj).siblings().removeClass();
+		
+		if(util.isBlank(usertype)){//门户登陆页
+			 $(thisobj).addClass("sel");
+			 if(showRegedit == "0"){
+				$("#loginbuttion").css("width","310px");
+				$(".greenBtn").hide();
+			}else{
+				if($("#loginUsertype").val() == "student" || $("#loginUsertype").val() == "teacher"){
+					$("#loginbuttion").css("width","150px");
+					$(".greenBtn").fadeIn(300);
+				}else{
+					$("#loginbuttion").css("width","310px");
+					$(".greenBtn").hide();
+				}
+			}
+		 }else{//空间内登录
+			 $(thisobj).addClass("cur_5");
+		 }
+		//重置用户选择学生/家长
+		$("#username").attr("value","");
+		//调用选择账号接口
+		$("#roleDiv").attr("phonenum","");
+		//手机多账号选择
+		loginutil.getPhoneRoles();
+		//根据时间刷新验证码
+		//loginutil.refreshCodeImg();
+}
+//同郑州定制注册
+function zcClick(param){
+	if("undefined"==typeof(param) || param==null){
+		param=document.getElementById("loginUsertype").value;
+	}
+	if(param=='parent'){
+		param="student";
+	}
+	var loginUsertype="teacher";
+	if(param==null || param==""){
+		if($("#loginUsertype").val()==""){ //默认老师
+			loginUsertype = "teacher";
+		}else{
+			loginUsertype = $("#loginUsertype").val();
+		}
+	}else if(param=='student' || param =='teacher'){
+		loginUsertype=param;
+	}
+	//郑州教师注册定制
+	if("teacher"==loginUsertype){								
+		window.open(protocol+sysconfig.TMS+"/tms/register/regTeacher.do");
+	}else{
+		window.open(protocol+sysconfig.TMS+"/tms/register/register.do");
+	}
+}
+</script>

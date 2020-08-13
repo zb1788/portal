@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="ie-stand">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="shortcut" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="icon" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="bookmark"  href="{ICOIMG}" type="image/x-icon" />
+<meta name="keywords"	content="{SEOKEY}" />
+<meta name="description" content="{SEOKEY}，全国首家在线同步教与学平台，专注为中小学教师、学生、家长、管理者提供高品质的同步教学、同步学习、互动沟通 、教学管理服务。" />
+<title>{SEOKEY}</title>
+<link rel="stylesheet" type="text/css" href="login/default/style/jquery.autocomplete.css" />
+<link rel="stylesheet" type="text/css" href="space/style/common.css" />
+<link rel="stylesheet" type="text/css" href="login/default/style/login.css" />
+<link rel="stylesheet" type="text/css" href="login/default/style/logincode.css" />
+<script type='text/javascript' src="script/jquery.js"></script>
+<script type='text/javascript' src="script/jquery-migrate-ada.js"></script>
+<script type='text/javascript' src="script/jquery.cookie.js"></script>
+<script type='text/javascript' src="script/jquery.qrcode.js"></script>
+<script type='text/javascript' src="script/utfparse.js"></script>
+<script type="text/javascript" src="login/default/script/swfobject.js"></script>
+<script type='text/javascript' src="space/script/artDialog.js?skin=default"></script>
+<script type='text/javascript' src="script/base64.js"></script>
+<script type='text/javascript' src="script/js_md5.js"></script>
+<script type='text/javascript' src="script/js_rsa.js"></script>
+<script type='text/javascript' src="script/util.js?day={DAYSTAMP}" ></script>
+<script type="text/javascript" src="common/config.jsp?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="script/loginobj.js?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="script/loginpage.js?day={DAYSTAMP}"></script>
+<script type="text/javascript" src="login/default/script/logincode.js?day={DAYSTAMP}"></script>
+<script type="text/javascript">
+$(".textbox1").live("keyup",function(eve){ //账号信息输入框绑定回车事件
+	if(eve.which==13){  
+		tologin();
+	}         
+});
+function hidTips() {//隐藏温馨提示
+    $('#tips').slideUp(600);
+}
+var otherConfig = decodeURIComponent(decodeURIComponent(portal_config.otherConfig));
+//默认Logo
+var defaultlogo="logo.png";
+//优教家族代码中使用
+var cmsPath =protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/";
+</script>
+</head>
+<body>
+<div class="tips" id="tips" >&nbsp;</div>
+<!-- 控件加载判断 -->
+<OBJECT ID="ocx" width="0" height="0" CLASSID="CLSID:B02201C9-1789-4FF0-B95F-C1A03D8B6B99">
+	<PARAM NAME="_Version" VALUE="65536">
+	<PARAM NAME="_ExtentX" VALUE="10583">
+	<PARAM NAME="_ExtentY" VALUE="10583">
+	<PARAM NAME="_StockProps" VALUE="0">
+</OBJECT>
+
+<div class="w980">
+  <div class="logo_login"> <span class="logo1"><img src="login/default/images/login/logo.png" width="360" height="60"></span> <span class="city"></span> <span class="swap_city"><a href="#" style="color:#999;">[切换城市]</a></span> </div>
+  <div class="tel400">
+    <li class="mt10"><img src="login/default/images/login/tel.png"></li>
+    <li><a href="http://n.eduyun.cn" target="_blank"><img src="login/default/images/login/friend_adv.png"></a></li>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<div id="flash">
+  <div class="w980">
+    <div class="posRe">
+      <div class="mask_login"></div>
+      <!--黑色遮罩-->
+      <div class="inputBox">
+      	<div class="scan"><span class="scan-ts">扫码登录更安全</span><span ><a class="qrcode_target" href="#" onclick="codelogin.changeLoginType()"></a></span></div>
+        <form id="loginForm" name="loginForm" action="" method="post" target="">
+          <h2 class="tab gly"> <a class="sel" href="javascript:;"  id="teacher">教师</a><a href="javascript:;"  id="student">学生</a><a href="javascript:;" id="parent">家长</a><a href="javascript:;" style="margin-right:0;" id="manager">管理员</a> </h2>
+          <input type="hidden" id="loginUsertype" name="loginUsertype"/>
+          <input type="hidden" id="gjpt" name="gjpt" />
+          
+        <div class="loginBg pt" id="codeLogin" style="display:none;text-align:center">
+        	<h2>打开优教信使或微信<br> 扫一扫   快速登录</h2>
+        	<p class="ma" id="qrcodeCanvas" style="width:230px;height:230px;margin-left:auto;margin-right:auto"></p>
+         	<p class="link"><a href="#" target="_blank" id="helplink" >帮助</a></p>
+        </div>
+        
+        <div class="loginBg" id="pwdLogin">
+            <div class="posRe">
+              <!-- 多账号选择层 -->
+              <div id="roleDiv" phonenum="" class="ac_results" style="left:5px;top:40px;display:none;position:absolute" >
+                <ul id="roleList" style="overflow:hidden" >
+                </ul>
+              </div>
+              <p class="bor">
+                <label class="user"></label>
+                <input type="text"  id="inputname" name="inputname" class="textbox1" def="请输入账号/手机号" value="请输入账号/手机号" onFocus="focuss(this);clearusername();" onKeyUp="clearusername();" onChange="clearusername();" onBlur="blurr(this)"  />
+                <input type="hidden" name="username" id="username"/>
+                <input type="hidden" name="sfp" id="sfp" value="" />
+                <span class="name" style="background:none;background-color:none;display:none" id="changename"></span> <a title='手机号登陆用户，点击此处选择角色' onClick="getRoles(1)" class="arr_1" ></a> </p>
+            </div>
+            <p class="bor">
+              <label class="password"></label>
+              <input type="password" placeholder="请输入密码" id="inpwd" class="textbox1" onFocus="focuss(this);" onBlur="blurr(this)"  />
+              <input type="hidden"  id="pwd" name="pwd" value="" />
+              <input id="isPortalisPortal" name="isPortal" type="hidden" value="1" />
+              <input id="data" name="data" type="hidden" value="" />
+            </p>
+            <p class="bor" style="width:120px;float:left;">
+              <label class="check_code"></label>
+              <input type="text" name="validateCode" id="validateCode"  class="textbox1" style="width:50px;" maxlength="4" def="验证码" value="验证码" onFocus="focuss(this);" onBlur="blurr(this);" />
+            </p>
+            <span class="yanz"> <img src="login/default/images/hide.gif" width="58" height="28" /> </span>
+            <div class="getKey">
+              <input type="checkbox"  value="1" id="savepass" />
+              &nbsp;记住密码　<a href="#" class="blue">找回密码</a>　 <a class="blue" href="#" id="helplink" target="_blank" >帮助</a></div>
+            <p class="mt20">
+              <input type="button" value="登&nbsp;录"  class="loginBtn"  id="loginbuttion" onClick="tologin();"/>
+              <input type="button" class="greenBtn" style="display:none" value="优教卡注册" id="zcButton" onClick="zcClick(null);"/>
+            </p>
+          </div>
+        </form>
+      </div>
+      <!--会员登录结束-->
+    </div>
+  </div>
+  <ul id="tp">
+  </ul>
+  <div class="flash_bar" id="an"> </div>
+  <script>
+			var currentindex=1;
+			var numbers = 1;
+			function changeflash(i) {	
+			currentindex=i;
+			for (j=1;j<=numbers;j++){
+				if (j==i) 
+				{$("#flash"+j).fadeIn("normal");
+				$("#flash"+j).css("display","block");
+				$("#f"+j).removeClass();
+				$("#f"+j).addClass("dq");
+				}
+				else
+				{$("#flash"+j).css("display","none");
+				$("#f"+j).removeClass();
+				$("#f"+j).addClass("no");}
+			}}
+			function startAm(){
+			timerID = setInterval("timer_tick()",8000);
+			}
+			function stopAm(){
+			clearInterval(timerID);
+			}
+			function timer_tick() {
+				if(currentindex<=numbers){
+					changeflash(currentindex);
+					currentindex++;
+				}else{
+					currentindex = 1;
+					changeflash(currentindex);
+					currentindex++;
+				}
+			}
+			$(document).ready(function(){
+				$(".flash_bar div").mouseover(function(){stopAm();}).mouseout(function(){startAm();});
+				startAm();
+			});
+		</script>
+  <!--Flash end-->
+</div>
+<div class="block1 tongji">
+        	<div class="w980">
+            <div ><span><i><img src="login/default/images/login/tm_r1_c1.png" width="35" height="35"  alt=""/></i>上周资源更新：<em class="redFon" id="top_tj_res_week" ></em>条</span><span><i><img src="login/default/images/login/tm_r3_c1.png" width="35" height="35"  alt=""/></i>资源总数：<em class="redFon" id="top_tj_res_all"></em>条</span><span><i><img src="login/default/images/login/tm_r5_c1.png" width="35" height="35"  alt=""/></i>上周试题更新：<em class="redFon"  id="top_tj_tq_week"></em>条</span><span><i><img src="login/default/images/login/tm_r7_c1.png" width="35" height="35"  alt=""/></i>试题总数：<em class="redFon" id="top_tj_tq_all"></em>条</span><span><i><img src="login/default/images/login/tm_r9_c1.png" width="35" height="35"  alt=""/></i>总容量：<em class="redFon"  id="top_tj_size"> </em>T</span></div>
+            </div>
+</div>
+<script type="text/javascript">
+try{
+$.getScript(protocol+sysconfig.CMS+"/pic/jsondata/toptqres/top_tq_res.js",function(){
+	if(typeof(top_tq_res)!="undefined"){
+		$("#top_tj_tq_week").html(top_tq_res.tqnum2);
+		$("#top_tj_tq_all").html(top_tq_res.tqtotal2);
+		$("#top_tj_res_week").html(top_tq_res.resnum2);
+		$("#top_tj_res_all").html(top_tq_res.restotal2);
+		var allsize=top_tq_res.capacity2;
+		if(top_tq_res.capacity2 && top_tq_res.capacity2.indexOf(".")>0){
+			allsize=top_tq_res.capacity2.substring(0,top_tq_res.capacity2.indexOf("."));
+		}
+		$("#top_tj_size").html(allsize);
+	}	
+});
+}catch(e){}
+</script>
+<div class="block1">
+  <div class="w980">
+    <div class="video">
+      <div class="v_left">
+        <dt id="player1">
+          <script type="text/javascript">
+										window.onresize = function(){
+												changePlayerWidth();
+										};
+										$(document).ready(function(){
+											changePlayerWidth();
+										});
+										function changePlayerWidth(){
+											var screen_width = window.screen.width;
+											var browser_width = document.body.clientWidth;
+											var block_width = "";
+											//防止浏览器缩放影响页面播放器样式效果
+											if(browser_width<screen_width){
+												block_width = browser_width;
+											}else{
+												block_width = screen_width;
+											}
+											if(block_width>1280){
+												s1 = new SWFObject(protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/public/flash/flvplayer.swf","single","340","290","7");
+				                s1.addParam("allowfullscreen","true");
+				                s1.addVariable("autostart","false");	
+				                s1.addVariable("file",protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/public/flash/searchguy.mp4");
+				                s1.addVariable("image",protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/public/images/login/video.jpg");	
+				                s1.addVariable("width","340");
+				                s1.addVariable("height","290");
+				                s1.write("player1");
+											}else{
+												s1 = new SWFObject(protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/public/flash/flvplayer.swf","single","300","240","7");
+				                s1.addParam("allowfullscreen","true");
+				                s1.addVariable("autostart","false");	
+				                s1.addVariable("file",protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/public/flash/searchguy.mp4");
+				                s1.addVariable("image",protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/public/images/login/video.jpg");	
+				                s1.addVariable("width","300");
+				                s1.addVariable("height","240");
+				                s1.write("player1");
+											}
+										}
+	            		</script>
+        </dt>
+      </div>
+      <div class="v_right"> <span class="dbt">优教：为你的每一"课"</span> <span class="zhengwen">优教，全国首家在线同步教与学平台，致力于"让每位教师成为名师，让每个学生爱上学习"，专注为 中小学（小学一年级至高三）教师、学生、家长、管理者提供高品质的同步教学、同步学习、互动沟通 、教学管理服务，是教师的最佳助手、学生的良师益友、家长的忠诚伙伴。在优教，遇见更好的自己！</span> </div>
+      <div class="clearfix"></div>
+    </div>
+    <div id="yjjz"></div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+<!--end block1-->
+<div class="block1 teacher">
+  <div class="w980">
+    <div class="text_con" style="margin-top:20px;">
+      <h1 class="dbt white">我是教师，我要高效教</h1>
+      <ul class="zhengwen white">
+        课前：智能提供精准学情、多资源多模式辅助教学设计<br>
+        课中：反馈学情，利用资源针对互动，发布作业<br>
+        课后：发布作业，诊断测评；发布导学，温故知新<br>
+        每周：优教名师帮您辅导学生
+        <div class="btnArea"> <span class="btn blue"><a href="#" onClick="loginClick('teacher')"><s class="log"></s>登录</a><span id="kqzc1"> 
+        <a href="javascript:;" onClick="zcClick('teacher');"><s class="reg"></s>注册</a> </span></span> <span class="more">
+          <a id="tea" href="" target="_blank">了解更多>></a></span> </div>
+      </ul>
+    </div>
+    <div class="peitu"><span class="img01"></span>
+      <p class="ble"><img src="login/default/images/login/jiaoxue.png" width="250" height="42"  alt=""/></p>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <!--end w1200-->
+</div>
+<!--end block1-->
+<div class="block1 student">
+  <div class="w980">
+    <div class="text_con">
+      <h1 class="dbt student">我是学生，我要快乐学</h1>
+      <ul class="zhengwen">
+        <h2 class="bt2">快乐学就是---</h2>
+        1.做好预习，课堂事半功倍<br>
+        2.与老师、同学、家长一起互动学习<br>
+        3.针对课堂知识，温故知新<br>
+        4.名师帮我诊断、吃透、强化知识点
+        <div class="btnArea"> <span class="btn green"><a href="#" onClick="loginClick('student')"><s class="log"></s>登录</a> <span id="kqzc2"> 
+        <a href="javascript:;" onClick="zcClick('student');"><s class="reg"></s>注册</a> </span> </span> <span class="more black">
+        <a id="stu" href="" target="_blank">了解更多>></a></span> </div>
+      </ul>
+    </div>
+    <div class="peitu"><span class="img02"></span>
+      <p><img src="login/default/images/login/xuexi.png" width="250" height="42"  alt=""/></p>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <!--end w1200-->
+</div>
+<!--end block1-->
+<div class="block1 parent">
+  <div class="w980">
+    <div class="text_con">
+      <h1 class="dbt white">我是家长，我要轻松助</h1>
+      <ul class="zhengwen white">
+        同步辅学、家校互动，随时了解学生在校情况<br>
+        班级圈，参与班级互动，与孩子零距离<br>
+        家长学堂，行自我提升，成为更好的家长<br>
+        来优教吧，与孩子一起成长！
+        <div class="btnArea"> <span class="btn yellow"><a href="#" onClick="loginClick('parent')"><s class="log"></s>登录</a>
+          </span> <span class="more"><a id="par" href="" target="_blank">了解更多>></a></span> </div>
+      </ul>
+    </div>
+    <div class="peitu"><span class="img03"></span></div>
+    <div class="clearfix"></div>
+  </div>
+  <!--end w1200-->
+</div>
+<!--end block1-->
+<div class="block1 manage">
+  <div class="w980">
+    <div class="text_con">
+      <h1 class="dbt white">我是学校管理者</h1>
+      <ul class="zhengwen white">
+        应用管理：细化教师使用情况，<br>
+　　　　　
+针对性提升教师信息化水平         <br>
+        资源建设：建设本地资源，促进优质资源共建共享<br>
+        学校通知：校务通知、教务通知，沟通更便捷
+        <div class="btnArea"> <span class="btn manage"><a href="#" onClick="loginClick('manager')"><s class="log"></s>登录</a>
+          </span> </div>
+      </ul>
+    </div>
+    <div class="peitu"><span class="img04"></span></div>
+    <div class="clearfix"></div>
+  </div>
+  <!--end w1200-->
+</div>
+<!--end block1-->
+<div class="liucheng">
+  <div class="w980">
+    <h1><font>使用流程</font></h1>
+    <dl>
+      <dt><a class="ico1_lc"></a></dt>
+      <dd class="bt3">注册/登录</dd>
+      <dd class="intro">教师用户请与学校管理员联系，获得账号；学生用户使用家长手机号注册，自动生成学生和家长账号；登录时请填写手机号、密码及验证码，即可成为优教用户，期待你的加入。</dd>
+    </dl>
+    <dl>
+      <dt><a class="ico2_lc"></a></dt>
+      <dd class="bt3">安装优教助手/信使</dd>
+      <dd class="intro">在"优教家族"选择优教助手，下载并安装至个人电脑后，可直接通过助手登录优教。选择"优教信使"，安装在个人手机设备上，可随时使用优教互动服务及资源服务。</dd>
+    </dl>
+    <dl>
+      <dt><a class="ico3_lc"></a></dt>
+      <dd class="bt3">完善个人信息</dd>
+      <dd class="intro">登录后，在首页或个人中心完善个人学段、年级、班级、姓名等信息，建立个人网络学习空间，开始快速成长提升之旅。</dd>
+    </dl>
+    <dl style="margin-right:0;">
+      <dt><a class="ico4_lc"></a></dt>
+      <dd class="bt3">应用提升</dd>
+      <dd class="intro">根据个人学习需求，学习同步课程、做作业、与同伴互动、做训练、找名师听课程等，总有适合教师的教法，适合学生的学法。在优教，遇见更好的自己。</dd>
+    </dl>
+    <div class="clearfix"></div>
+  </div>
+  <!--end w1200-->
+</div>
+<!--end liucheng-->
+<!--页脚-->
+<iframe style="min-width: 1000px;" id="footiframe" name="footiframe" src="" width="100%" height="190" scrolling="no" frameborder="0"></iframe>
+</body>
+</html>
+<script src="login/default/script/common.js"></script>
+<script src="login/default/script/login.js"></script>
+<script type="text/javascript">
+		var _type4OtherConfig="login";
+		eval(otherConfig);
+</script>

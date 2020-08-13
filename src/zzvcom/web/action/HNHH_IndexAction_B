@@ -1,0 +1,719 @@
+package zzvcom.web.action;
+
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+
+import vcom.sso.vo.AuthResult;
+import vcom.sso.vo.SchoolClass;
+import vcom.sso.vo.Student;
+import vcom.sso.vo.StudyStage;
+import vcom.sso.vo.SysModule;
+import vcom.sso.vo.UserAuthority;
+import zzvcom.util.Common;
+import zzvcom.util.Interface;
+import zzvcom.util.SendSMS;
+import zzvcom.util.StringUtil;
+import zzvcom.util.Vcom_3DES;
+/**
+ * 用户集成首页登录类
+ * @author liuzhiqiang
+ * @email liuzhiqiang@zzvcom.com
+ */
+public class IndexAction extends BaseAction {
+    static Logger logger = Logger.getLogger(IndexAction.class);
+    private List navauthority;//顶部右侧导航菜单列表
+    private List menauthority;//一级、二级栏目列表
+    private List menyUserAuthority;
+    private String commonstring="";
+    private String data="{}";
+    private String classId="";
+    private Student student=new Student();
+    private String logintype="";
+    private String areacode="";
+    private String studyStage="";
+    private String phonenumber;
+    private String phoneActiveState;
+
+    
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+    public String getPhoneActiveState() {
+        return phoneActiveState;
+    }
+    public void setPhoneActiveState(String phoneActiveState) {
+        this.phoneActiveState = phoneActiveState;
+    }
+    public String getStudyStage() {
+        return studyStage;
+    }
+    public void setStudyStage(String studyStage) {
+        this.studyStage = studyStage;
+    }
+    public String getAreacode() {
+        return areacode;
+    }
+    public void setAreacode(String areacode) {
+        this.areacode = areacode;
+    }
+    public String getLogintype() {
+        return logintype;
+    }
+    public void setLogintype(String logintype) {
+        this.logintype = logintype;
+    }
+    public Student getStudent() {
+        return student;
+    }
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+    public String getClassId() {
+        return classId;
+    }
+    public void setClassId(String classId) {
+        this.classId = classId;
+    }
+    public String getData() {
+        return data;
+    }
+    public void setData(String data) {
+        this.data = data;
+    }
+    public String getCommonstring() {
+        return commonstring;
+    }
+    public void setCommonstring(String commonstring) {
+        this.commonstring = commonstring;
+    }
+    public List getMenyUserAuthority() {
+        return menyUserAuthority;
+    }
+    public void setMenyUserAuthority(List menyUserAuthority) {
+        this.menyUserAuthority = menyUserAuthority;
+    }
+    public List getNavauthority() {
+        return navauthority;
+    }
+    public void setNavauthority(List navauthority) {
+        this.navauthority = navauthority;
+    }
+    public List getMenauthority() {
+        return menauthority;
+    }
+    public void setMenauthority(List menauthority) {
+        this.menauthority = menauthority;
+    }
+    /**
+     * 进入系统首页
+     * 
+     * @return
+     */
+    public String index() {
+        String autologin=Interface.getCookie("autologin", request);
+        if(autologin!=null&&!autologin.equals("")){
+            logintype=Interface.getCookie("usertype", request);
+        }else{
+            logintype="";
+        }
+        /*
+        //按域名判断地区编号，放置配置错误。
+        if(Common.areamap!=null){
+            Set<String> areaset=Common.areamap.keySet();
+            for (String string : areaset) {
+                if(string.indexOf(request.getScheme() + "://"+ request.getServerName())>=0){
+                    areacode=Common.areamap.get(string);
+                }
+            }
+        }
+        */
+        areacode=((Map<String,String>)request.getAttribute("ConfigMap")).get("areacode");
+        Integer useragetn=Interface.getSystemUserAgent(request);
+        Interface.addCookie("localAreaCode", areacode,response);
+        if(useragetn==0)return SUCCESS;
+        else return "mobile";
+    }
+    /**
+     * 发送验证码
+     */
+    public void sendVicode(){
+        SendSMS send=new SendSMS();
+        String back="";
+        AuthResult authResult=Common.getSessiongUser(this.request);
+        //if(true){
+        if(phoneActiveState!=null&&phoneActiveState.equals("1")){
+            String content=Common.getVsms_content();
+            int rand=Common.getrandom(6);
+            try{
+                boolean sendtype=send.sendMobileSMS(request,phonenumber, content.replace("###", String.valueOf(rand)));
+                if(sendtype){
+                    request.getSession().setAttribute("vicode", rand);
+                    back="{'type':'1','message':'','icode':'"+rand+"'}";
+                }else{
+                    back="{'type':'0','message':'重新发送短信失败!'}";
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+                back="{'type':'0','message':'发送短信失败!'}";
+            }
+        }else{
+            back="{'type':'0','message':'手机号未绑定.请联系管理员!'}";
+        }
+        try {
+            response.setCharacterEncoding("utf-8");
+            response.getWriter().write(back);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 退出登录
+     * @return
+     */
+    public String loginout(){
+        request.getSession().removeAttribute(Common.usersessionname);
+        
+        return SUCCESS;
+    }
+    /**
+     * 登陆系统
+     * @return
+     */
+    public String loginaction(){
+        return SUCCESS;
+    }
+    /**
+     * 学生查看测评
+     * @return
+     */
+    public String onlineExam(){
+        return SUCCESS;
+    }
+    /**
+     * 教师批改测评
+     * @return
+     */
+    public String markexam(){
+        return SUCCESS;
+    }
+    /**
+     * 空间首页
+     * @return
+     */
+    public String webindex(){
+        AuthResult authResult=Common.getSessiongUser(this.request);
+        //组合学制和年级eduAndGrade放入后台session
+        HttpSession session = request.getSession();
+        areacode=((Map<String,String>)request.getAttribute("ConfigMap")).get("areacode");
+        //
+        if("2".equals(authResult.getUser().getUsertype()) || "3".equals(authResult.getUser().getUsertype()) || "".equals(authResult.getUser().getUsertype()) ){
+            session.setAttribute("eduAndGrade", "");
+        }else{
+            session.setAttribute("eduAndGrade", authResult.getUser().getSchool().getEduYears()+"|"+authResult.getUser().getGrade().getGradeCode());
+            Interface.addCookie("eduYears", authResult.getUser().getSchool().getEduYears(), response);
+        }
+        Vcom_3DES vcom3DES = new Vcom_3DES();
+        vcom3DES.setKeyStr(Common.getVcom3dskey());
+        vcom3DES.setIsEncrypt(1);
+        vcom3DES.setMessage(authResult.getUser().getUsername());
+        String outStr = vcom3DES.Vcom3DESChiper();
+        authResult.getUser().setNickname(outStr);
+        //System.out.println(PortalCache.getCache(authResult.getUser().getUsertype()+"_nav"));
+        //静态化权限数据
+//      if(PortalCache.getCache(authResult.getUser().getUsertype()+"_nav")==null){
+//          Object[] module=authResult.getUserAuthoritys();
+//          navauthority=Common.changetoList(((UserAuthority)( module[0])).getModules());
+//          PortalCache.pugCatche(authResult.getUser().getUsertype()+"_nav", navauthority);
+//          //Common.rolePer.put(authResult.getUser().getUsertype()+"_nav", navauthority);
+//          menauthority=Common.changetoList(((UserAuthority)( module[1])).getModules());
+//          PortalCache.pugCatche(authResult.getUser().getUsertype()+"_mena", menauthority);
+//          //Common.rolePer.put(authResult.getUser().getUsertype()+"_mena", menauthority);
+//      }
+//      if(Common.rolePer.get(authResult.getUser().getUsertype()+"_nav")==null){
+//          Object[] module=authResult.getUserAuthoritys();
+//          navauthority=Common.changetoList(((UserAuthority)( module[0])).getModules());
+//          Common.rolePer.put(authResult.getUser().getUsertype()+"_nav", navauthority);
+//          menauthority=Common.changetoList(((UserAuthority)( module[1])).getModules());
+//          Common.rolePer.put(authResult.getUser().getUsertype()+"_menu", menauthority);
+//          menyUserAuthority=hebingarray();
+//          Common.rolePer.put("all_menu", menyUserAuthority);
+//      }else{
+//          navauthority=Common.rolePer.get(authResult.getUser().getUsertype()+"_nav");
+//          menauthority=Common.rolePer.get(authResult.getUser().getUsertype()+"_menu");
+//          menyUserAuthority=Common.rolePer.get("all_menu");
+//      }
+        Object[] module=authResult.getUserAuthoritys();
+        
+        if(authResult.getUser().getUsertype().equals("0")){
+            //获取家长的孩子
+            String back=Interface.getMyChildren(request,authResult);
+            if(back!=null){
+                JSONObject js = JSONObject.fromObject(back);
+                JSONArray jsarray = JSONArray.fromObject(js.get("rtnArray"));
+                if(jsarray.size()>0){
+                    if(student!=null && student.getStudentNumber()!=null){
+                        student=getChildren(authResult,jsarray,student.getStudentNumber());
+                    }else{
+                        student=getChildren(authResult,jsarray,null);
+                    }
+                    request.getSession().setAttribute("student",student);
+                }else{
+                    request.setAttribute("loginCheck", "4");
+                    return "err";
+                }
+            }
+        }else if(authResult.getUser().getUsertype().equals("4")){//学生
+            if(authResult.getUser().getSchoolClasses().length>0){
+                SchoolClass sc=authResult.getUser().getSchoolClasses()[0];
+                if(sc!=null&&sc.getClassId()!=null){
+                    if(authResult.getUser().getStudyStage().length>0){
+                        StudyStage ss=(StudyStage)authResult.getUser().getStudyStage()[0];
+                        studyStage=ss.getStudyStageCode();
+                    }
+                    student.setSchoolClassId(sc.getClassId());
+                    student.setSchoolId(sc.getSchoolId());
+                    student.setStudentNumber(authResult.getUser().getUsername());//登录账户
+                    student.setGradeCode(sc.getGradeCode());
+                    request.getSession().setAttribute("student",student);
+                }
+            }
+        }else{
+            StudyStage[] ss=authResult.getUser().getStudyStage();
+            for (StudyStage studyStages : ss) {
+                if(studyStage.equals("")){
+                    studyStage=studyStages.getStudyStageCode();
+                }else{
+                    studyStage=studyStage+","+studyStages.getStudyStageCode();
+                }
+            }
+            //request.getSession().removeAttribute("student");
+            if(authResult.getUser().getSchool()!=null){
+                student.setSchoolId(authResult.getUser().getSchool().getSchoolId());
+            }
+            request.getSession().setAttribute("student",student);
+        }
+        Map<String,String> pMap = new HashMap<String,String>();
+        pMap.put("userAreaId", authResult.getUser().getArea().getAreaId());
+        pMap.put("schoolId", student.getSchoolId());
+        pMap.put("gradeCode",student.getGradeCode());
+        pMap.put("classId",student.getSchoolClassId());
+        pMap.put("studentId",student.getStudentNumber());
+        pMap.put("schoolStage",studyStage);
+        pMap.put("username",authResult.getUser().getUsername());
+        pMap.put("usertype",authResult.getUser().getUsertype());
+        pMap.put("regFlg",authResult.getUser().getRegFlg());
+        pMap.put("areaCode",areacode);
+        pMap.put("telNumber",authResult.getUser().getLink());
+        pMap.put("trueName",authResult.getUser().getTruename());
+        if(authResult.getUser()!=null && authResult.getUser().getSchool()!=null && authResult.getUser().getSchool().getAreaId()!=null){
+            pMap.put("SchoolAreaCode",authResult.getUser().getSchool().getAreaId());
+            pMap.put("schoolName",authResult.getUser().getSchool().getSchoolName());
+        }else{
+            pMap.put("SchoolAreaCode","");
+            pMap.put("schoolName","");
+        }
+        String usertype = authResult.getUser().getUsertype();
+        //默认老师
+        String module_json = "{\"appFlg\":\"PORTAL_USR_APP\",\"appFlgNo\":\"22\",\"appName\":\"用户应用\",\"modules\":[{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"\",\"c3\":\"\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.00\",\"modulename\":\"首页\",\"moduleurl\":\"\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":-1,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"WEBMAIL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.18\",\"modulename\":\"家校互动\",\"moduleurl\":\"/src/msgInterFace.php?command=pcIndex&username=$username$&usertype=$usertype$&p=2\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":4,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PORTAL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.04\",\"modulename\":\"课外阅读\",\"moduleurl\":\"/space/qikan.jsp?lmtype=jszy\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":8,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"\",\"c3\":\"CMS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.16\",\"modulename\":\"课程开发\",\"moduleurl\":\"/A01/A01074/A01074019/list_1.html?param=1\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":10,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.17\",\"modulename\":\"本地资源\",\"moduleurl\":\"/youjiao/statAreaContent.do?areaId=$SchoolAreaCode$&schoolCode=$schoolId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":11,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PORTAL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.01\",\"modulename\":\"期刊杂志\",\"moduleurl\":\"/space/qikan.jsp?lmtype=jszy\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":1,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.02\",\"modulename\":\"国学教育\",\"moduleurl\":\"/youjiaoIFrame/sinologyEducationAction.do?currentMenuCode=0001110801&mainMenuCode=00011108&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":2,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.03\",\"modulename\":\"科普知识\",\"moduleurl\":\"/youjiaoIFrame/sinologyEducationAction.do?currentMenuCode=0001111001&mainMenuCode=00011110&username=02424&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":3,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.04\",\"modulename\":\"艺术天地\",\"moduleurl\":\"/youjiaoIFrame/sinologyEducationAction.do?currentMenuCode=0001110201&mainMenuCode=00011102&username=02424&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":4,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.05\",\"modulename\":\"学科专题\",\"moduleurl\":\"/youjiaoIFrame/sinologyEducationAction.do?currentMenuCode=0001110601&mainMenuCode=00011106&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":5,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.06\",\"modulename\":\"团队活动\",\"moduleurl\":\"/youjiaoIFrame/sinologyEducationAction.do?currentMenuCode=0001110301&mainMenuCode=00011103&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":6,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PORTAL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.07\",\"modulename\":\"心理健康\",\"moduleurl\":\"/space/qikan.jsp?lmtype=xljk\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":7,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PORTAL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.08\",\"modulename\":\"电子图书\",\"moduleurl\":\"/space/qikan.jsp?lmtype=dzts\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":8,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"\",\"c3\":\"RLMS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.17.06\",\"modulename\":\"直播课堂\",\"moduleurl\":\"/rlms/ucBc/showAllBcTeachInform.do\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":15,\"parentid\":\"22.17\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"WEBMAIL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.18.01\",\"modulename\":\"收发信息\",\"moduleurl\":\"/src/msgInterFace.php?command=pcIndex&username=$username$&usertype=$usertype$&p=2\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":1,\"parentid\":\"22.18\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"QBMS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.18.02\",\"modulename\":\"布置网上作业\",\"moduleurl\":\"/tqms/hw/onlineSelect.action?curCatalog=lession\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":2,\"parentid\":\"22.18\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"WEBMAIL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.18.06\",\"modulename\":\"发送离线作业\",\"moduleurl\":\"/src/msgInterFace.php?command=pcIndex&username=$username$&usertype=$usertype$&p=7\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":3,\"parentid\":\"22.18\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"CJGL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.18.03\",\"modulename\":\"成绩管理\",\"moduleurl\":\"/cjgl/cjmanager.action?param=1\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":4,\"parentid\":\"22.18\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"WEBMAIL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.18.04\",\"modulename\":\"通知公告\",\"moduleurl\":\"/src/msgInterFace.php?command=pcIndex&username=$username$&usertype=$usertype$&p=3\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":5,\"parentid\":\"22.18\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"TMS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.18.05\",\"modulename\":\"我的积分\",\"moduleurl\":\"/tms/uc/teacher/index_jf.jsp\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":6,\"parentid\":\"22.18\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.30\",\"modulename\":\"平安考勤\",\"moduleurl\":\"http://pathn.czbanbantong.com:8888/patmail/Index?param=1\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":30,\"parentid\":\"22\"}]}";
+        if("2".equals(usertype) || "3".equals(usertype)){
+            module_json = "{\"appFlg\":\"PORTAL_USR_APP\",\"appFlgNo\":\"22\",\"appName\":\"用户应用\",\"modules\":[{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"\",\"c3\":\"\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.00\",\"modulename\":\"首页\",\"moduleurl\":\"\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":-1,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"WEBMAIL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.18\",\"modulename\":\"家校互动\",\"moduleurl\":\"/src/msgInterFace.php?command=pcIndex&username=$username$&usertype=$usertype$&p=2\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":4,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PORTAL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.04\",\"modulename\":\"课外阅读\",\"moduleurl\":\"/space/qikan.jsp?lmtype=jszy\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":8,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"\",\"c3\":\"CMS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.16\",\"modulename\":\"课程开发\",\"moduleurl\":\"/A01/A01074/A01074019/list_1.html?param=1\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":10,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.17\",\"modulename\":\"本地资源\",\"moduleurl\":\"/youjiao/statAreaContent.do?areaId=$SchoolAreaCode$&schoolCode=$schoolId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":11,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PORTAL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.01\",\"modulename\":\"期刊杂志\",\"moduleurl\":\"/space/qikan.jsp?lmtype=jszy\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":1,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.02\",\"modulename\":\"国学教育\",\"moduleurl\":\"/youjiaoIFrame/sinologyEducationAction.do?currentMenuCode=0001110801&mainMenuCode=00011108&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":2,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.03\",\"modulename\":\"科普知识\",\"moduleurl\":\"/youjiaoIFrame/sinologyEducationAction.do?currentMenuCode=0001111001&mainMenuCode=00011110&username=02424&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":3,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.04\",\"modulename\":\"艺术天地\",\"moduleurl\":\"/youjiaoIFrame/sinologyEducationAction.do?currentMenuCode=0001110201&mainMenuCode=00011102&username=02424&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":4,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.05\",\"modulename\":\"学科专题\",\"moduleurl\":\"/youjiaoIFrame/sinologyEducationAction.do?currentMenuCode=0001110601&mainMenuCode=00011106&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":5,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.06\",\"modulename\":\"团队活动\",\"moduleurl\":\"/youjiaoIFrame/sinologyEducationAction.do?currentMenuCode=0001110301&mainMenuCode=00011103&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":6,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PORTAL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.07\",\"modulename\":\"心理健康\",\"moduleurl\":\"/space/qikan.jsp?lmtype=xljk\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":7,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PORTAL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.04.08\",\"modulename\":\"电子图书\",\"moduleurl\":\"/space/qikan.jsp?lmtype=dzts\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":8,\"parentid\":\"22.04\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"\",\"c3\":\"RLMS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.17.06\",\"modulename\":\"直播课堂\",\"moduleurl\":\"/rlms/ucBc/showAllBcTeachInform.do\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":15,\"parentid\":\"22.17\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"WEBMAIL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.18.01\",\"modulename\":\"收发信息\",\"moduleurl\":\"/src/msgInterFace.php?command=pcIndex&username=$username$&usertype=$usertype$&p=2\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":1,\"parentid\":\"22.18\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"QBMS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.18.02\",\"modulename\":\"布置网上作业\",\"moduleurl\":\"/tqms/hw/onlineSelect.action?curCatalog=lession\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":2,\"parentid\":\"22.18\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"WEBMAIL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.18.06\",\"modulename\":\"发送离线作业\",\"moduleurl\":\"/src/msgInterFace.php?command=pcIndex&username=$username$&usertype=$usertype$&p=7\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":3,\"parentid\":\"22.18\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"CJGL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.18.03\",\"modulename\":\"成绩管理\",\"moduleurl\":\"/cjgl/cjmanager.action?param=1\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":4,\"parentid\":\"22.18\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"WEBMAIL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.18.04\",\"modulename\":\"通知公告\",\"moduleurl\":\"/src/msgInterFace.php?command=pcIndex&username=$username$&usertype=$usertype$&p=3\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":5,\"parentid\":\"22.18\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"TMS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.18.05\",\"modulename\":\"我的积分\",\"moduleurl\":\"/tms/uc/teacher/index_jf.jsp\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":6,\"parentid\":\"22.18\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.30\",\"modulename\":\"平安考勤\",\"moduleurl\":\"http://pathn.czbanbantong.com:8888/patmail/Index?param=1\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":30,\"parentid\":\"22\"}]}";
+        }else if("4".equals(usertype)){
+            module_json = "{\"appFlg\":\"PORTAL_USR_APP\",\"appFlgNo\":\"22\",\"appName\":\"用户应用\",\"modules\":[{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"\",\"c3\":\"\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.00\",\"modulename\":\"首页\",\"moduleurl\":\"\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":-1,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"ILEARN\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.02\",\"modulename\":\"互动学习\",\"moduleurl\":\"/s_view.action?param=1\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":1,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.20\",\"modulename\":\"课外阅读\",\"moduleurl\":\"/ztjy/index.do?username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$&gradeCode=$gradeCode$&classId=$classId$&studentId=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":9,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.20.01\",\"modulename\":\"国学馆\",\"moduleurl\":\"/ztjy/ztSearch.do?ksCode=00011108&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$&gradeCode=$gradeCode$&classId=$classId$&studentId=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"ico_1\",\"moveoutpic\":\"\",\"orderid\":1,\"parentid\":\"22.20\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.20.02\",\"modulename\":\"科普馆\",\"moduleurl\":\"/ztjy/ztSearch.do?ksCode=00011110&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$&gradeCode=$gradeCode$&classId=$classId$&studentId=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"ico_2\",\"moveoutpic\":\"\",\"orderid\":2,\"parentid\":\"22.20\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.20.03\",\"modulename\":\"艺术馆\",\"moduleurl\":\"/ztjy/ztSearch.do?ksCode=00011102&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$&gradeCode=$gradeCode$&classId=$classId$&studentId=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"ico_3\",\"moveoutpic\":\"\",\"orderid\":3,\"parentid\":\"22.20\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.20.04\",\"modulename\":\"学科园地\",\"moduleurl\":\"/ztjy/ztSearch.do?ksCode=00011106&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$&gradeCode=$gradeCode$&classId=$classId$&studentId=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"ico_4\",\"moveoutpic\":\"\",\"orderid\":4,\"parentid\":\"22.20\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.20.05\",\"modulename\":\"团队活动室\",\"moduleurl\":\"/ztjy/ztSearch.do?ksCode=00011103&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$&gradeCode=$gradeCode$&classId=$classId$&studentId=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"ico_5\",\"moveoutpic\":\"\",\"orderid\":5,\"parentid\":\"22.20\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PORTAL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.20.06\",\"modulename\":\"学生期刊\",\"moduleurl\":\"/space/qikan.jsp?lmtype=xszy\",\"moduleurl_3g\":\"\",\"moveinpic\":\"ico_6\",\"moveoutpic\":\"\",\"orderid\":6,\"parentid\":\"22.20\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PORTAL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.20.07\",\"modulename\":\"电子图书\",\"moduleurl\":\"/space/qikan.jsp?lmtype=dzts\",\"moduleurl_3g\":\"\",\"moveinpic\":\"ico_7\",\"moveoutpic\":\"\",\"orderid\":7,\"parentid\":\"22.20\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.30\",\"modulename\":\"平安考勤\",\"moduleurl\":\"http://pathn.czbanbantong.com:8888/patmail/Index?param=1\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":30,\"parentid\":\"22\"}]}";
+        }else{
+            module_json ="{\"appFlg\":\"PORTAL_USR_APP\",\"appFlgNo\":\"22\",\"appName\":\"用户应用\",\"modules\":[{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"\",\"c3\":\"\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.00\",\"modulename\":\"首页\",\"moduleurl\":\"\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":-1,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"WEBMAIL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.21\",\"modulename\":\"家校互动\",\"moduleurl\":\"/src/msgInterFace.php?command=pcIndex&username=$username$&usertype=$usertype$&student=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":4,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.20\",\"modulename\":\"课外阅读\",\"moduleurl\":\"/ztjy/index.do?username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$&gradeCode=$gradeCode$&classId=$classId$&studentId=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":9,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"CMS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.22\",\"modulename\":\"家长学堂\",\"moduleurl\":\"/A01/A01074/A01074010/A01074010002/A01074010002001/list_1.html?param=1\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":9,\"parentid\":\"22\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.20.01\",\"modulename\":\"国学馆\",\"moduleurl\":\"/ztjy/ztSearch.do?ksCode=00011108&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$&gradeCode=$gradeCode$&classId=$classId$&studentId=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"ico_1\",\"moveoutpic\":\"\",\"orderid\":1,\"parentid\":\"22.20\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.20.02\",\"modulename\":\"科普馆\",\"moduleurl\":\"/ztjy/ztSearch.do?ksCode=00011110&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$&gradeCode=$gradeCode$&classId=$classId$&studentId=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"ico_2\",\"moveoutpic\":\"\",\"orderid\":2,\"parentid\":\"22.20\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.20.03\",\"modulename\":\"艺术馆\",\"moduleurl\":\"/ztjy/ztSearch.do?ksCode=00011102&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$&gradeCode=$gradeCode$&classId=$classId$&studentId=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"ico_3\",\"moveoutpic\":\"\",\"orderid\":3,\"parentid\":\"22.20\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.20.04\",\"modulename\":\"学科园地\",\"moduleurl\":\"/ztjy/ztSearch.do?ksCode=00011106&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$&gradeCode=$gradeCode$&classId=$classId$&studentId=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"ico_4\",\"moveoutpic\":\"\",\"orderid\":4,\"parentid\":\"22.20\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"1\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PLS\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.20.05\",\"modulename\":\"团队活动室\",\"moduleurl\":\"/ztjy/ztSearch.do?ksCode=00011103&username=$username$&usertype=$usertype$&schoolStage=$schoolStage$&schoolId=$schoolId$&gradeCode=$gradeCode$&classId=$classId$&studentId=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"ico_5\",\"moveoutpic\":\"\",\"orderid\":5,\"parentid\":\"22.20\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PORTAL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.20.06\",\"modulename\":\"学生期刊\",\"moduleurl\":\"/space/qikan.jsp?lmtype=xszy\",\"moduleurl_3g\":\"\",\"moveinpic\":\"ico_6\",\"moveoutpic\":\"\",\"orderid\":6,\"parentid\":\"22.20\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"PORTAL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.20.07\",\"modulename\":\"电子图书\",\"moduleurl\":\"/space/qikan.jsp?lmtype=dzts\",\"moduleurl_3g\":\"\",\"moveinpic\":\"ico_7\",\"moveoutpic\":\"\",\"orderid\":7,\"parentid\":\"22.20\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"WEBMAIL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.21.01\",\"modulename\":\"跟教师互动\",\"moduleurl\":\"/src/msgInterFace.php?command=pcIndex&username=$username$&usertype=$usertype$&student=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":1,\"parentid\":\"22.21\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"WEBMAIL\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"3\",\"moduleid\":\"22.21.02\",\"modulename\":\"跟孩子互动\",\"moduleurl\":\"/src/msgInterFace.php?command=studentIndex&username=$username$&usertype=$usertype$&student=$studentId$\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":2,\"parentid\":\"22.21\"},{\"allowshow\":\"\",\"allowuse\":\"\",\"c1\":\"5\",\"c2\":\"63|0001,63|0002,63|0003,63|0004,63|0005,63|0006,63|0007,63|0008,63|0009,63|0011,63|0012,63|0013,54|0001,54|0002,54|0003,54|0004,54|0005,54|0006,54|0007,54|0008,54|0009,54|0011,54|0012,54|0013\",\"c3\":\"\",\"c4\":\"\",\"enable_3g\":\"0\",\"icon_3g\":\"\",\"moduleLevel\":\"2\",\"moduleid\":\"22.30\",\"modulename\":\"平安考勤\",\"moduleurl\":\"http://pathn.czbanbantong.com:8888/patmail/Index?param=1\",\"moduleurl_3g\":\"\",\"moveinpic\":\"\",\"moveoutpic\":\"\",\"orderid\":30,\"parentid\":\"22\"}]}";
+        }
+        JSONObject js = JSONObject.fromObject(module_json);
+        module[1] = JSONObject.toBean(js, UserAuthority.class);
+        if(module.length>=2){
+            navauthority=Common.changetoList(((UserAuthority)( module[0])).getModules(),pMap,new ArrayList<String>());
+            menauthority=Common.changetoList(((UserAuthority)( module[1])).getModules(),pMap,new ArrayList<String>());
+            menyUserAuthority=hebingarray();
+        }
+        
+        /*try {
+            Interface.addCookie("truename", URLEncoder.encode(URLEncoder.encode(authResult.getUser().getTruename(),"utf-8"),"utf-8"),response);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }*/
+        request.getSession().setAttribute("mustudyStage",studyStage);
+        //将一些参数存入cookie中，一共后边的全国运营链接参数替换使用
+        Interface.addCookie("regFlg", authResult.getUser().getRegFlg(),response);
+        Interface.addCookie("username", authResult.getUser().getUsername(),response);
+        Interface.addCookie("usertype", authResult.getUser().getUsertype(),response);
+        //Interface.addCookie("vcom3dsusername", authResult.getUser().getNickname(),response);
+        Interface.addCookie("localAreaCode",areacode,response);
+        Interface.addCookie("schoolStage", studyStage,response);
+        Interface.addCookie("gradeCode", student.getGradeCode(),response);
+        Interface.addCookie("schoolId", student.getSchoolId(),response);
+        String defaultStage = StringUtil.getStrFromNull(studyStage);
+        int stageIndex = StringUtil.getStrFromNull(studyStage).indexOf(",");
+        if(stageIndex>-1){
+            defaultStage=defaultStage.substring(0,stageIndex);
+        }
+        Interface.addCookie("defaultStage", defaultStage,response);
+        Interface.addCookie("classId", student.getSchoolClassId(),response);
+        Interface.addCookie("studentId", student.getStudentNumber(),response);
+        if(authResult.getUser()!=null && authResult.getUser().getSchool()!=null && authResult.getUser().getSchool().getAreaId()!=null){
+            Interface.addCookie("schoolAreaCode", authResult.getUser().getSchool().getAreaId(),response);
+            Interface.addCookie("areacode", authResult.getUser().getSchool().getAreaId(),response);
+        }else{
+            Interface.addCookie("schoolAreaCode", "",response);
+            Interface.addCookie("areacode","" ,response);
+        }
+        Interface.addCookie("telNumber", authResult.getUser().getLink(),response);
+        //处理地区标示
+        /*
+        Map<String, AreaCodeMessage> areamap=Common.getAreamessage();
+        if(Common.areamap!=null){
+            Set<String> areaset=Common.areamap.keySet();
+            if(areamap.size()==0)
+                Common.init();
+            areaset=Common.areamap.keySet();
+            for (String string : areaset) {
+                if(string.indexOf(request.getScheme() + "://"+ request.getServerName())>=0){
+                    areacode=Common.areamap.get(string);
+                    
+                    Set<String> areakeyset=areamap.keySet();
+                    for (String object : areakeyset) {
+                        if(object.equals(areacode))areamessage=areamap.get(areacode);
+                    }
+                }
+            }
+        }
+        */
+        Integer useragetn=Interface.getSystemUserAgent(request);
+        if(useragetn==0)return SUCCESS;
+        else return "mobile";
+    }
+    
+    //处理家长的学生数据
+    private Student getChildren(AuthResult authResult ,JSONArray jsarray ,String stid){
+        Student tstu = null;
+        //获取孩子
+        if(stid!=null && stid.trim().length()>0){//显示选择的孩子
+            for (Object object : jsarray) {
+                JSONObject chidren = JSONObject.fromObject(object);
+                JSONObject chidrens = JSONObject.fromObject(chidren.get("student"));
+                Student students=(Student)chidrens.toBean(chidrens,Student.class);
+                if(students.getStudentNumber()!=null && students.getStudentNumber().equals(stid)){
+                    tstu=students;
+                    JSONObject studyStagejson = JSONObject.fromObject(chidren.get("studyStage"));
+                    StudyStage[] st=new StudyStage[1];
+                    st[0]=(StudyStage)studyStagejson.toBean(studyStagejson,StudyStage.class);
+                    if(st[0]!=null)studyStage=st[0].getStudyStageCode();
+                    authResult.getUser().setStudyStage(st);
+                    break;
+                }
+            }
+            if(tstu==null || tstu.getSchoolId()==null){
+                JSONObject chidren = JSONObject.fromObject(jsarray.get(0));
+                JSONObject chidrens = JSONObject.fromObject(chidren.get("student"));
+                Student students=(Student)chidrens.toBean(chidrens,Student.class);
+                tstu=students;
+            }
+        }else{//显示第一个孩子
+            JSONObject chidren = JSONObject.fromObject(jsarray.get(0));
+            JSONObject chidrens = JSONObject.fromObject(chidren.get("student"));
+            JSONObject studyStagejson = JSONObject.fromObject(chidren.get("studyStage"));
+            tstu=(Student)chidrens.toBean(chidrens,Student.class);
+            StudyStage[] st=new StudyStage[1];
+            st[0]=(StudyStage)studyStagejson.toBean(studyStagejson,StudyStage.class);
+            if(st[0]!=null)studyStage=st[0].getStudyStageCode();
+            authResult.getUser().setStudyStage(st);
+        }
+        return tstu;
+    }
+    /**
+     * 教师首页
+     * @return
+     */
+    public String teacherindex(){
+        menyUserAuthority=hebingarray();
+        AuthResult authResult=Common.getSessiongUser(this.request);
+        SchoolClass[] classs=authResult.getUser().getSchoolClasses();
+        List<JSONObject> list = new ArrayList<JSONObject>();
+        if(request.getSession().getAttribute("LastCode")==null){
+            request.getSession().setAttribute("LastCode", Interface.getLastMenuCode(request,authResult.getUser().getUsername(),""));
+        }
+        for (SchoolClass schoolClass : classs) {
+            commonstring+=schoolClass.getClassId()+",";
+            //构造一个map，存放classid和classname，并转成json对象
+            Map<String,String> classesMap = new HashMap<String, String>();
+            classesMap.put("classid", schoolClass.getClassId());
+            classesMap.put("classname", schoolClass.getClassName());
+            JSONObject jsonobj = JSONObject.fromObject(classesMap); 
+            list.add(jsonobj);
+        }
+        Map oo = new HashMap(); 
+        oo.put("classes",list.toArray()); 
+        JSONObject jsonobj = JSONObject.fromObject(oo); 
+        this.request.getSession().setAttribute("classJson", jsonobj.toString());
+        commonstring=commonstring.replaceAll(",$", "");
+        
+        return SUCCESS;
+    }
+    /**
+     * 教师首页
+     * @return
+     */
+    public static void main (String atString[]){
+        List<JSONObject> list = new ArrayList<JSONObject>(); 
+        //构造一个map，存放classid和classname，并专程json对象
+            Map<String,String> classesMap = new HashMap<String, String>();
+            classesMap.put("classid", "001");
+            classesMap.put("classname", "班级1");
+            JSONObject jsonobj1 = JSONObject.fromObject(classesMap);  
+            Map<String,String> classesMap2 = new HashMap<String, String>();
+            classesMap2.put("classid", "002");
+            classesMap2.put("classname", "班级2");
+            JSONObject jsonobj2 = JSONObject.fromObject(classesMap2);
+            Map<String,String> classesMap3 = new HashMap<String, String>();
+            classesMap3.put("classid", "003");
+            classesMap3.put("classname", "班级3");
+            JSONObject jsonobj3 = JSONObject.fromObject(classesMap3); 
+            list.add(jsonobj1);
+            list.add(jsonobj2);
+            list.add(jsonobj3);
+            Map oo = new HashMap(); 
+            oo.put("classes",list.toArray()); 
+            JSONObject jsonobj = JSONObject.fromObject(oo); 
+            System.out.println(jsonobj.toString()); 
+    }
+    
+    /**
+     * 学生首页
+     * @return
+     */
+    public String studentindex(){
+        menyUserAuthority=hebingarray();
+        AuthResult authResult=Common.getSessiongUser(this.request);
+        SchoolClass[] classs=authResult.getUser().getSchoolClasses();
+        for (SchoolClass schoolClass : classs) {
+            commonstring+=schoolClass.getClassId()+",";
+        }
+        commonstring=commonstring.replaceAll(",$", "");
+        request.getSession().setAttribute("Favorite", Interface.getMyFavorite(request,authResult.getUser().getUsertype(), authResult.getUser().getUsername()));
+        request.getSession().setAttribute("LastCode", Interface.getLastMenuCode(request,authResult.getUser().getUsername(),""));
+        //判断当前登陆账号是小学还是初高中
+        SchoolClass sc = null;
+        if (null != classs && classs.length>0) {
+             sc = classs[0];
+        }
+        if(sc!=null&&sc.getClassId()!=null){
+            if(authResult.getUser().getStudyStage().length>0){
+                StudyStage ss=(StudyStage)authResult.getUser().getStudyStage()[0];
+                if (null != ss) {
+                    studyStage=ss.getStudyStageCode();
+                    String gradecode = authResult.getUser().getGrade().getGradeCode();
+                    if (StringUtils.isNotBlank(studyStage)) {
+                        if ("0001".equals(studyStage) || "0006".equals(gradecode)) { //小学学段或6年级跳转小学生页面
+                            //跳转到小学页面
+                            return SUCCESS;
+                        } else {
+                            //跳转到初高中页面
+                            return "zhongxue";
+                        }
+                    }
+                }
+            }
+        }
+        return SUCCESS;
+    }
+    /**
+     * 加载首页
+     * @return
+     */
+    public String parentindex(){
+        menyUserAuthority=hebingarray();
+        AuthResult authResult=Common.getSessiongUser(this.request);
+        Student student = (Student) request.getSession().getAttribute("student");
+        if(student==null){
+            String back=Interface.getMyChildren(request,authResult);
+            if(back!=null){
+                JSONObject js = JSONObject.fromObject(back);
+                JSONArray jsarray = JSONArray.fromObject(js.get("rtnArray"));
+                if(jsarray.size()>0){
+                    if(student!=null && student.getStudentNumber()!=null){
+                        student=getChildren(authResult,jsarray,student.getStudentNumber());
+                    }else{
+                        student=getChildren(authResult,jsarray,null);
+                    }
+                    request.getSession().setAttribute("student",student);
+                }
+            }
+        }
+        request.getSession().setAttribute("Favorite", Interface.getMyFavorite(request,"4", student.getStudentNumber()));
+        request.getSession().setAttribute("LastCode", Interface.getLastMenuCode(request,student.getStudentNumber(),""));
+        SchoolClass[] classs=authResult.getUser().getSchoolClasses();
+        for (SchoolClass schoolClass : classs) {
+            commonstring+=schoolClass.getClassId()+",";
+        }
+        commonstring=commonstring.replaceAll(",$", "");
+        return SUCCESS;
+    }
+    /**
+     * 进入应用定制页面
+     * @return
+     */
+    public String todengzhipage(){
+        //menyUserAuthority=hebingarray();
+        return SUCCESS;
+    }
+    /**
+     * 进入班级空间页面
+     * @return
+     */
+    public String toclassspacepage(){
+        //menyUserAuthority=hebingarray();
+        JSONObject js = JSONObject.fromObject(this.getData());
+        this.setClassId(js.getString("classId"));
+        AuthResult authResult=  (AuthResult) request.getSession().getAttribute("authResult");
+        if(authResult!=null)
+        {
+            String classid=this.getClassId();
+            SchoolClass[] schoolClasses= authResult.getUser().getSchoolClasses();
+            if(schoolClasses!=null)
+            {
+                for(SchoolClass item : schoolClasses)
+                {
+                    if(item.getClassId().equals(classid))
+                    {
+                        schoolClass=item;
+                        this.request.getSession().setAttribute("schoolClass", schoolClass);
+                        break;
+                    }
+                }
+                if(schoolClass==null){
+                    String getschoolclass=Interface.getSchoolClass(request,this.getClassId());
+                    if(getschoolclass!=null){
+                        JSONObject sc = JSONObject.fromObject(getschoolclass);
+                        schoolClass.setClassId(sc.getString("classId"));
+                        schoolClass.setSchoolId(sc.getString("schoolId"));
+                        schoolClass.setGradeCode(sc.getString("gradeCode"));
+                        schoolClass.setClassCode(sc.getString("classCode"));
+                        schoolClass.setCreateYear(sc.getString("createYear"));
+                        schoolClass.setClassName(sc.getString("className"));
+                        schoolClass.setClassSecond_name(sc.getString("classSecond_name"));
+                        schoolClass.setClassType(sc.getString("classType"));
+                        schoolClass.setClassTeacher(sc.getString("classTeacher"));
+                        schoolClass.setClassMonitor(sc.getString("classMonitor"));
+                        schoolClass.setClassRemark(sc.getString("classRemark"));
+                        schoolClasses[schoolClasses.length+1]=schoolClass;
+                        this.request.getSession().setAttribute("schoolClass", schoolClass);
+                    }
+                }
+            }
+            
+        }
+        
+        
+        return SUCCESS;
+    }
+    /**
+     * 进入班级空间右边页面
+     * @return
+     */
+    public String toclassspacepageright(){
+        //menyUserAuthority=hebingarray();
+        JSONObject js = JSONObject.fromObject(this.getData());
+        this.setClassId(js.getString("classId"));
+        return SUCCESS;
+    }
+    private SchoolClass schoolClass=new SchoolClass();
+    
+    /**
+     * @return the schoolClass
+     */
+    public SchoolClass getSchoolClass() {
+        return schoolClass;
+    }
+    /**
+     * @param schoolClass the schoolClass to set
+     */
+    public void setSchoolClass(SchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
+    }
+    /**
+     * 进入班级空间body页面
+     * @return
+     */
+    public String toclassspacepagebody(){
+        //menyUserAuthority=hebingarray();
+        JSONObject js = JSONObject.fromObject(this.getData());
+        this.setClassId(js.getString("classId"));
+        AuthResult authResult=  (AuthResult) request.getSession().getAttribute("authResult");
+        if(authResult!=null)
+        {
+            String classid=this.getClassId();
+            SchoolClass[] schoolClasses= authResult.getUser().getSchoolClasses();
+            if(schoolClasses!=null)
+            {
+                for(SchoolClass item : schoolClasses)
+                {
+                    if(item.getClassId().equals(classid))
+                    {
+                        schoolClass=item;
+                        break;
+                    }
+                }
+            }
+            
+        }
+        
+        return SUCCESS;
+    }
+    /**
+     * 合并两个菜单数组
+     * @return
+     */
+    public List hebingarray(){
+        AuthResult authResult=Common.getSessiongUser(this.request);
+        List list=new ArrayList();
+        if(authResult==null || authResult.getUserAuthoritys()==null || authResult.getUserAuthoritys().length<2){
+            return list;
+        }
+        Object[] module=authResult.getUserAuthoritys();
+        Object[] menyUserAuthority0=((UserAuthority)( module[0])).getModules();
+        Object[] menyUserAuthority1=((UserAuthority)( module[1])).getModules();
+        if(menyUserAuthority0!=null){
+            for(int i=0;i<menyUserAuthority0.length;i++){
+                list.add(menyUserAuthority0[i]);
+            }
+        }
+        if(menyUserAuthority1!=null){
+            for(int i=0;i<menyUserAuthority1.length;i++){
+                SysModule smodule=(SysModule)menyUserAuthority1[i];
+                if(smodule.getModuleLevel().equals("3")){
+                    list.add(menyUserAuthority1[i]);
+                }
+            }
+        }
+        return list;
+    }
+    
+    public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
+    }
+    public void setServletResponse(HttpServletResponse response) {
+        this.response = response;
+    }
+}

@@ -1,0 +1,113 @@
+/*公共头部*/
+.clHeader{
+  height: 188px;
+.clHeaderIn{
+@extend %content;
+  position: relative;
+  height: 118px;
+}
+  .clLogo{
+    background: url("../images/logo.png") no-repeat;
+    width: 386px;
+    height: 72px;
+    text-indent: -9999px;
+    position: absolute;
+    left: 0;
+    top: 25px;
+  }
+  .clNav{
+    background: #0d94ea;
+    ul{
+      overflow: hidden;
+      @extend %content;
+      li{
+        height: 70px;
+        float: left;
+        a{position: relative;
+          margin: 0 3px;
+          margin-top: 13px;
+          display: block;
+          color: #ffffff;
+          font-size: 20px;
+          padding: 0 25px;
+          border-radius: 20px;
+          behavior: url(css/PIE.htc);
+          height: 44px;
+          line-height: 44px;
+          &:hover{
+            color: #0d94ea;
+            background: #ffffff;
+            .clHeaderNavActiveIco{
+              display: block;}
+          }
+        }
+        &.active{
+          a{
+            color: #0d94ea;
+            background: #ffffff;
+            .clHeaderNavActiveIco{
+              display: block;}
+          }
+        }
+        .clHeaderNavActiveIco{
+          display: none;
+          position: absolute;
+          left: 50%;
+          bottom: -8px;
+          margin-left: -8px;
+          width: 17px;
+          height: 8px;
+          background: url("../images/clHeaderNavActiveIco.png");
+        }
+      }
+    }
+  }
+  .clHeaderUserBox{
+    background: #efefef;
+    height: 58px;
+    line-height: 58px;
+    color: #555555;
+    font-size: 18px;
+    border-radius: 25px;
+    behavior: url(css/PIE.htc);
+    position: absolute;
+    right: 0;
+    top: 38px;
+    a{
+      color: #555555;}
+    .clHeaderUserPhoto{
+      border: 8px solid #fff;
+      border-radius: 50%;
+      behavior: url(css/PIE.htc);
+      width: 58px;
+      height: 58px;
+      display: block;
+      position: absolute;
+      top: -8px;
+      left: -35px;
+      outline: none;
+    }
+    .clHeaderLogOut{
+      color: #8fc31f;
+      display: inline-block;
+      border-radius: 20px;
+      behavior: url(css/PIE.htc);
+      margin-right: 8px;
+      margin-left: 16px;
+      text-align: center;
+      width: 89px;
+      height: 44px;
+      line-height: 44px;
+      background: #fff;
+      border: 1px solid #eeeeee;
+      position: relative;
+
+    }
+    .clHeaderDownloadLink{
+      margin-left: 35px;}
+    .clHeaderUserName{
+      margin-right: 7px;
+      margin-left: 67px;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{ margin:0; padding:0;}
+li{list-style-type:none;}
+a{ text-decoration:none; }
+img{ border:0 none; display:block;}
+input{ border:0 none;}
+
+.turn-off{ float:right;}
+body{ background-image:url(../../images/w1200/bj.png);}
+.bjbox{ background-image:url(../../images/w1200/T-index-bj.png); margin:0 auto;width:1200px; height:2400px; position:relative;}
+.ydbox{
+	background-image: url(../../images/w1200/T-index-sy.png);
+	width: 1184px;
+	height: 915px;
+	position: absolute;
+	left: 14px;
+	top: 359px;
+}
+.btn{ width:190px; height:56px; display:block; margin-top:858px; margin-left:734px;}

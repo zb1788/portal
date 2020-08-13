@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gb2312">
+<title>教师首页引导</title>
+<link href="../css/w1200/T-index.css" id="cssName" rel="stylesheet" type="text/css">
+</head>
+<script src="../jquery/jquery.js"></script>
+<script type="text/javascript">
+	function getRequest() { 
+		var url = location.search; //获取url中"?"符后的字串 
+		var theRequest = new Object(); 
+		if (url.indexOf("?") != -1) { 
+			var str = url.substr(1); 
+			strs = str.split("&"); 
+			for(var i = 0; i < strs.length; i ++) { 
+				theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]); 
+			} 
+		} 
+		return theRequest; 
+	} 
+	var param = new Object(); 
+	param = getRequest();
+	var path = param["path"];
+	$(document).ready(function(){
+		$("#yindao_s").attr("href","T-inde-yindao.html?path="+path);
+		$("#yindao_x").attr("href","T-inde-yindao.html?path="+path);
+	});
+</script>
+<script>
+ $(function(){
+	 $(".btn1").click(
+  function(
+  ){
+	  $(".index").hide();
+	  $(".tbxx").fadeIn(300);
+	  $("#mainBg").attr("class","bj2-img");
+	  })
+	 })
+ $(function(){
+	 $(".btn2").click(
+  function(
+  ){
+	  $(".tbxx").hide();
+	  $(".hdxx").fadeIn(300);
+	  $("#mainBg").attr("class","bj3-img");
+	  })
+	 })
+ $(function(){
+	 $(".btn3").click(
+  function(
+  ){
+	  $(".hdxx").hide();
+	  $(".mzyl").fadeIn(300);
+	  $("#mainBg").attr("class","bj4-img");
+	  })
+	 })
+ $(function(){
+	 $(".btn4").click(
+  function(
+  ){
+	  $(".mzyl").hide();
+	  $(".zwzd").fadeIn(300);
+	  $("#mainBg").attr("class","bj5-img");
+	  })
+	 })
+$(function(){
+	 $(".btn5").click(
+  function(
+  ){
+	  $(".zwzd").hide();
+	  $(".msty").fadeIn(300)
+	  })
+	 })
+$(function(){
+	 $(".btn6").click(
+  function(
+  ){
+	  $(".msty").hide();
+	  $(".index").fadeIn(300);
+	  $("#mainBg").attr("class","bj-img");
+	  })
+	 })
+</script>
+
+<body>
+<div class="bigbox">
+  <div id="mainBg" class="bj-img">
+      <div class="turn-off">
+        <a href="#" id="yindao_s"><img src="../images/w1200/tun-off.png"></a>
+      </div>
+       <div class="yindaobox">
+          <div class="index">
+             <a  href="#" class="btn1"></a>
+          </div>
+         <div class="tbxx">
+             <a  href="#" class="btn2"></a>
+          </div>
+         <div class="hdxx">
+          <a  href="#" class="btn3"></a>
+          </div>
+          <div class="mzyl">
+             <a  href="#" class="btn4"></a>
+          </div>
+         <div class="zwzd">
+             <a  href="#" class="btn5"></a>
+         </div>
+            <div class="msty">
+             <a  href="#" class="btn6"></a>
+             <a href="#" id="yindao_x" class="btn7"></a>
+          </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+<script>
+$(document).ready(function(){
+	var clienW =($(window).width()); //浏览器时下窗口可视区域宽度 
+	if (clienW >= 1280) {
+		$("#cssName").attr("href","../css/w1200/T-index.css");
+	}else{
+		$("#cssName").attr("href","../css/w980/T-index.css");
+		}
+	
+	
+});
+//调整窗口宽度时，批量替换页面中的样式。
+function resizeWidth(){
+	var clienW =($(window).width()); //浏览器时下窗口可视区域宽度 
+	if (clienW >= 1280) {
+		$("#cssName").attr("href","../css/w1200/T-index.css");
+	}else{
+		$("#cssName").attr("href","../css/w980/T-index.css");
+		}
+	}
+
+$(window).resize(function(){
+	setTimeout(resizeWidth,500);
+})
+</script>

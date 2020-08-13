@@ -1,0 +1,122 @@
+.clWrapper{@extend %content}
+/*我的应用，开始{*/
+.clMyApplying{
+  float: left;
+  width: 298px;
+  border: 1px solid #e8e8e8;
+  h3{
+    height: 70px;
+    line-height: 70px;
+    background: #8fc31f;
+    color: #ffffff;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .clApplyingLinks{
+    overflow: hidden;
+    .clAppLying{
+      float: left;
+      display: block;
+      margin-left: 28px;
+      margin-bottom: 27px;
+      figure{
+        img{
+          width: 108px;
+          height: 108px;
+          display: block;
+        }
+        figcaption{
+          margin-top: 10px;
+          text-align: center;
+          color: #9b9b9b;
+          font-size: 18px;
+
+        }
+      }
+    }
+  }
+}
+/*}结束，我的应用*/
+.clContent{
+  float: right;
+  width: 880px;}
+/*搜索，开始{*/
+.clSearchBox{
+  margin-bottom: 16px;
+  background: #dfdfdf;
+  height: 70px;
+  .clSearchTxt{
+    font-size: 14px;
+    border:none;
+    width: 390px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 15px;
+    margin:15px 0 0 13px;
+    vertical-align: middle;
+    float: left;
+  }
+  .clSearchBtn{
+    background: url("../images/clSearchBtn.png") no-repeat;
+    width: 40px;
+    height: 40px;
+    border:none;
+    margin-top: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+}
+/*}结束，搜索*/
+/*选项卡列表，开始{*/
+#clRecommendList{
+  border: 1px solid #e8e8e8;
+  margin-top: 16px;
+  .clTabTitleBox{
+    background: #f6f6f6;
+    border-bottom: 1px solid #e8e8e8;
+    height: 65px;
+    li{
+      float: left;
+      height: 59px;
+      line-height: 53px;
+      width: 160px;
+      text-align: center;
+      color: #9b9b9b;
+      font-size: 20px;
+      background: url("../images/clTabSplitBg.png") right center no-repeat;
+      border-right: 1px solid #f6f6f6;
+      border-top: 6px solid #f6f6f6;
+      cursor: pointer;
+      &.active{
+        background:#fff;
+        border-right: 1px solid #e8e8e8;
+        color: #98c73b;
+        border-top: 6px solid #98c73b;
+      }
+    }
+  }
+  .clTabContentBox{
+    padding-top: 30px;
+    padding-bottom: 34px;
+    ul{
+      padding: 0 38px;
+      li{
+        height: 39px;
+        line-height: 39px;
+        overflow: hidden;
+        a{
+          float: left;
+          color: #555555;
+          font-size: 16px;
+        }
+        time{
+          float: right;
+          color: #555555;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+/*}结束，选项卡列表*/

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+<link rel="shortcut" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="icon" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="bookmark"  href="{ICOIMG}" type="image/x-icon" />
+<meta name="keywords"	content="{SEOKEY}" />
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Content-Type" content="X-Content-Type-Options=nosniff; X-XSS-Protection:1;mode=block;" />
+
+<meta name="description" content="{SEOKEY}，全国首家在线同步教与学平台，专注为中小学教师、学生、家长、管理者提供高品质的同步教学、同步学习、互动沟通 、教学管理服务。" />
+<title>{SEOKEY}</title>
+<link rel="stylesheet" type="text/css" href="login/main/style/jquery.autocomplete.css" />
+<link href="login/main/style/common.css" rel="stylesheet" type="text/css" />
+<link href="login/main/style/login_new_one.css" rel="stylesheet" type="text/css" />
+<link href="login/main/style/font_quan.css" rel="stylesheet" type="text/css" />
+<link href="login/main/css/top_foot.css" rel="stylesheet" type="text/css" />
+<link href="common/style/checkuser.css" rel="stylesheet" type="text/css" />
+<link href="manage/layuiadmin/layui/css/layui.css" rel="stylesheet" type="text/css" />
+<script type='text/javascript' src="script/jquery.js"></script>
+<script type='text/javascript' src="script/jquery-migrate-ada.js"></script>
+
+<script type='text/javascript' src="script/jquery.qrcode.js"></script>
+<script type='text/javascript' src="script/utfparse.js?day={DAYSTAMP}"></script>
+<script type="text/javascript" src="login/default/script/swfobject.js"></script>
+<script type='text/javascript' src="space/script/artDialog.js?skin=default"></script>
+<script type='text/javascript' src="script/base64.js"></script>
+<script type='text/javascript' src="script/js_md5.js"></script>
+<script type='text/javascript' src="script/js_rsa.js"></script>
+<script type='text/javascript' src="script/util.js?day={DAYSTAMP}" ></script>
+<script type="text/javascript" src="common/config.jsp?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="login/main/script/loginobj.js?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="login/main/script/logincode.js?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="login/main/script/loginpage.js?day={DAYSTAMP}"></script>
+
+<!-- 
+
+<script type='text/javascript' src="script/loginpage.js"></script>
+<script type="text/javascript" src="login/default/script/logincode.js"></script>
+ -->
+</head>
+
+<body>
+<div class="tips" id="tips" >&nbsp;</div>
+<script type="text/javascript">
+codelogin.width=160;
+codelogin.height=160;
+var otherConfig = decodeURIComponent(decodeURIComponent(portal_config.otherConfig));
+var flashChannelCode="CMS.JSON.A01074015001";
+//默认Logo
+var defaultlogo="yj_n.png";
+//平台配置
+$(function(){
+	util.getCMSData("CMS.JSON.A01063001002",20,true,function(dlist){
+	var acode1=new Array();
+	var acode2=new Array();
+	var acode3=new Array();
+	for(var i=0;i<dlist.length;i++){
+		var tdata=dlist[i];
+		var url=tdata.a15;
+		var target="";
+		var oclass="";//是否显示可点击效果
+		
+		if(tdata.a9=="当前页"){
+			target = "";
+		}else if(tdata.a9=="不打开"){
+			infourll="javascript:;"
+			target="";
+			oclass=" class=\"none\" ";
+		}else if(tdata.a9=="新开"){
+			target="_blank";
+		}
+		if(util.isBlank(url)){
+			url="javascript:";
+			target="";
+			oclass=" class=\"none\" ";
+		}
+		if(!util.isBlank(tdata.data.a1)){
+			(","+tdata.data.a1).indexOf(","+portal_config.areacode);
+		}
+		if(!util.isBlank(tdata.data.a2)){
+			url=protocol+sysconfig[tdata.data.a2]+url;
+		}
+		var shownew=false;
+		//判断是否显示new标志
+		if("1"==tdata.data.a3){
+			shownew=true;
+		}
+		var newFlag='<p class="new_lk"><img src="login/main/images/new2.gif" alt=""></p>'
+		var tcode='<li '+oclass+' ><a id="info'+tdata.id+'" target="'+target+'" href="'+url+'" ><img src="'+protocol+sysconfig.CMS+tdata.data.outfiles+'" width="120" height="120" alt=""/><span>'+tdata.title+'</span></a></li>';
+		if(shownew){
+			tcode='<li '+oclass+' >'+newFlag+'<a id="info'+tdata.id+'" target="'+target+'" href="'+url+'" ><img src="'+protocol+sysconfig.CMS+tdata.data.outfiles+'" width="120" height="120" alt=""/><span>'+tdata.title+'</span></a></li>';
+		}
+		if(tdata.channelcode=="A01063001002001"){
+			acode1.push(tcode);
+		}else if(tdata.channelcode=="A01063001002002"){
+			acode2.push(tcode);
+		}else if(tdata.channelcode=="A01063001002003"){
+			acode3.push(tcode);
+		}
+		$("#modelink1").html(acode1);
+		$("#modelink2").html(acode2);
+		$("#modelink3").html(acode3);
+	}
+	});
+	//友情链接
+	util.getCommonCMS("youQingLianJie","CMS.JSON.A01063001006",30,0,'<a target="~target~" href="~url~">~spcode~</a>',true,function(tcode,tdata,index,rlength){
+		if(index==0){
+			tcode='<div class="tulink mt15">'+tcode;
+		}
+		if(index==5){
+			tcode='</div><div class="zilink mt15">'+tcode;
+		}
+		if(index==(rlength-1)){
+			tcode=tcode+'</div><div class="clearfix"></div>';
+		}
+		if(index<5){
+			tcode=tcode.replace("~spcode~",'<img src=\"~img~\" width="239" height="71"  alt="~text~" />');
+		}else{
+			tcode=tcode.replace("~spcode~","~text~");
+		}
+		return tcode;
+	});
+	util.getCommonCMS("jingCaiHuoDong","CMS.JSON.A01063001003",3,0,'<li><a target="~target~" href="~url~"><img src="~img~" width="320" height="131"  alt=""/><span class="tit">~text~</span></a><span>~desc~</span></li>',true);
+	util.getCommonCMS("zhiHuiJiaoYu","CMS.JSON.A01063001004",6,0,'<li><span class="fr">~date~</span><a target="~target~" href="~url~">~text~</a></li>',true);
+	util.getCommonCMS("shiYongAnLi","CMS.JSON.A01063001005",6,0,'<li><span class="fr">~date~</span><a target="~target~" href="~url~">~text~</a></li>',true);
+	
+	$("[fbind]").hide();
+	util.getIcodeScript("VFS.PORTALSTAT");
+	
+	$("#zhiHuiJiaoYu_more").attr("href",util.makeUrl("CMS","CMS.PAGE.A01063001004"));
+	$("#shiYongAnLi_more").attr("href",util.makeUrl("CMS","CMS.PAGE.A01063001005"));
+});
+</script>
+<OBJECT style="display:none" ID="ocx" width="0" height="0" codebase="http://plshenan.czbanbantong.com:80/office/officdown.cab#version=1,0,1,4"
+	CLASSID="CLSID:B02201C9-1789-4FF0-B95F-C1A03D8B6B99">
+	<PARAM NAME="_Version" VALUE="65536">
+	<PARAM NAME="_ExtentX" VALUE="10583">
+	<PARAM NAME="_ExtentY" VALUE="10583">
+	<PARAM NAME="_StockProps" VALUE="0">
+</OBJECT>
+<div class="tblock">
+  <div class="w980" icodeurl='true'>
+    <div class="logo_login"> <span class="logo1"><img id="logoimg" src="login/main/images/new_yh/logo_new.png" ></span> <span id="areaname" class="city">地区</span> <span class="swap_city"><a href="" style="color:#999;">[切换城市]</a></span> </div>
+    <div class="tel400"> <span class="fr"><img src="login/main/images/new_yh/tel.png" width="182" height="44" alt=""/></span> <a id="appdown" target="_blank" href="{{icode:CMS.SETUPFILE}}" class="khd_down">客户端下载 </a> </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+<div id="flash">
+  <div class="w980">
+    <div class="posRe" icodeurl='true' >
+      <div class="mask_login"></div>
+      
+      <!--黑色遮罩-->
+      <div class="inputBox" id="codeLogin" style="display:none">
+      	<div class="scan"><span ><a class="qrcode_target" href="javascript:" >&nbsp;</a></span></div>
+     
+        <div class="loginBg pt">
+        <h2>打开优教信使或微信<br>扫一扫   快速登录</h2>
+        <p class="ma" id="qrcodeCanvas" style="width:160px;height:160px;margin-left:auto;margin-right:auto;margin-top:10px;margin-bottom:10px;padding:17px;background-color:#FFF"></p>
+         <p class="link"> <a target="_blank" href="{{icode:CMS.PAGE.USEGUIDE}}" >帮助</a></p>
+         	
+        </div>
+      </div>
+      
+      <div class="inputBox" id="pwdLogin">
+      	<div class="scan"><span class="scan-ts">扫码登录更安全</span><span ><a class="qrcode_target" href="javascript:" >&nbsp;</a></span></div>
+        <h2 class="tab gly"><a id="teacher" href="javascript:;">教师</a><a id="student" href="javascript:;">学生</a><a id="parent" href="javascript:;" >家长</a><a id="manager" href="javascript:;" style="margin-right:0;">管理员</a></h2>
+        <form id="loginForm" name="loginForm" action="" method="post" target="">
+        <div class="loginBg">
+			<input type="hidden" id="loginUsertype" name="loginUsertype"/>
+			<input type="hidden" id="gjpt" name="gjpt" />
+			<input type="hidden" name="username" id="username"/>
+			<input type="hidden" name="sfp" id="sfp" value="" />
+			<input type="hidden"  id="pwd" name="pwd" value="" />
+			<input id="isPortalisPortal" name="isPortal" type="hidden" value="1" />
+			<input id="data" name="data" type="hidden" value="" />
+			
+          <!-- 多账号选择层 -->
+          <div id="roleDiv" phonenum="" class="ac_results" style="left:17px;top:120px;width:;275px;display:none;position:absolute" >
+            <ul id="roleList" style="overflow:hidden" >
+            </ul>
+          </div>
+          <p class="bor">
+            <label class="user"></label>
+            <input type="text" id="inputname" name="inputname" class="textbox1" value="" placeholder="用户名" />
+          </p>
+          <p class="bor">
+            <label class="password"></label>
+            <input type="password" id="inpwd" autocomplete="new-password" placeholder="密　码" class="textbox1" />
+          </p>
+          <p class="bor" style="width:120px;float:left;">
+            <label class="check_code"></label>
+            <input type="text" name="validateCode" id="validateCode" class="textbox1" style="width:60px;" maxlength="4" value="" placeholder="验证码" />
+          </p>
+          <span class="yanz"><img id="validateImg" src="login/main/images/code.png" width="58" height="28" /></span>
+          <div class="getKey">
+            <input id="savepass" type="checkbox" />
+            &nbsp;记住密码　　<a href="{{icode:TMS.803}}" class="blue">找回密码</a> <a class="blue" target="_blank" href="{{icode:CMS.PAGE.USEGUIDE}}" target="_blank" >帮助</a>
+          </div>
+          <p class="mt20 qk2">
+            <input type="button" value="登&nbsp;录"  class="loginBtn"  id="loginbuttion" />
+            <input type="button" class="greenBtn" style="display:none" id="zcButton" value="注&nbsp;册" />
+          </p>
+        </div>
+      </form>
+      
+      </div>
+      <!--会员登录结束--> 
+      
+    </div>
+    <!--end posRe--> 
+  </div>
+  <!--end w980-->
+  
+  <ul id='flashul' >
+  </ul>
+  <div class="w980">
+    <div class="flash_bar">
+    </div>
+  </div>
+  
+</div>
+<div class="block1"  style="padding: 0 0 30px 0;">
+<h2 class="lm_bt bdnone mt0">
+  <div class="w980"> <span class="dzan mr-15" >平台推荐</span> <span class="tab_news " ><a href="javascript:void(0);" class="cur_2" id="12Tab_0" onclick="Show_Tab_List2(3,0,12);">教学平台</a> <a href="javascript:void(0);"  id="12Tab_1" onclick="Show_Tab_List2(3,1,12);">管理平台</a><a href="javascript:void(0);"  id="12Tab_2" onclick="Show_Tab_List2(3,2,12);">教学工具</a></span> </div>
+</h2>
+<div class="w980  ">
+  <div class="kjtj_con">
+    <div id="12s_0">
+      <div class="pt_tj ">
+        <ul id="modelink1">
+          <li><a href="#" ><img src="login/main/images/new_yh/pttj_r1_c1.png" width="120" height="120" alt=""/><span>同步课堂</span></a></li>
+          <li><a href="#"> <img src="login/main/images/new_yh/pttj_r1_c3.png" width="120" height="120" alt=""/><span>学情分析</span></a></li>
+          <li><a href="#" > <img src="login/main/images/new_yh/pttj_r1_c5.png" width="120" height="120" alt=""/><span>名校名师</span></a></li>
+          <li><a href="#"> <img src="login/main/images/new_yh/pttj_r1_c7.png" width="120" height="120" alt=""/><span>名师微课</span></a></li>
+          <li><a href="#" > <img src="login/main/images/new_yh/pttj_r1_c9.png" width="120" height="120" alt=""/><span>名校名卷</span></a></li>
+         
+          <div class="clearfix"></div>
+        </ul>
+      </div>
+    </div>
+    <div id="12s_1" style="display: none;">
+      <div class="pt_tj ">
+        <ul id="modelink2">
+         <li><a href="#" ><img src="login/main/images/new_yh/gl-1.png" width="120" height="120" alt=""/><span>质量测评</span></a></li>
+          <li><a href="#"> <img src="login/main/images/new_yh/gl-2.png" width="120" height="120" alt=""/><span>综合素质</span></a></li>
+          <li><a href="#" > <img src="login/main/images/new_yh/gl-3.png" width="120" height="120" alt=""/><span>新高考</span></a></li>
+          <li><a href="#"> <img src="login/main/images/new_yh/gl-4.png" width="120" height="120" alt=""/><span>师生成长</span></a></li>
+          <li><a href="#" > <img src="login/main/images/new_yh/gl-5.png" width="120" height="120" alt=""/><span>家校共育</span></a></li>
+          <li><a href="#"> <img src="login/main/images/new_yh/gl-6.png" width="120" height="120" alt=""/><span>教育管理</span></a></li>
+          <div class="clearfix"></div>
+         
+        </ul>
+      </div>
+    </div>
+    <div id="12s_2"  style="display: none;">
+      <div class="pt_tj ">
+        <ul id="modelink3">
+          <li><a href="#"> <img src="login/main/images/new_yh/jx-1.png" width="120" height="120" alt=""/><span>优教信使</span></a></li>
+          <li><a href="#" > <img src="login/main/images/new_yh/jx-2.png" width="120" height="120" alt=""/><span>班班通授课</span></a></li>
+          <li><a href="#"> <img src="login/main/images/new_yh/jx-3.png" width="120" height="120" alt=""/><span>备课助手</span></a></li>
+          <li><a href="#" > <img src="login/main/images/new_yh/jx-4.png" width="120" height="120" alt=""/><span>授课助手</span></a></li>
+          <li><a href="#"> <img src="login/main/images/new_yh/jx-5.png" width="120" height="120" alt=""/><span>电子书包</span></a></li>
+          <div class="clearfix"></div>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+	</div>
+<div class="block1 hei-bg" style="padding: 0 0 30px 0;">
+  <h2 class="lm_bt tb hei tac"> <span > 数据统计</span></h2>
+  <div class="w980">
+    <div class="row">
+      <div class="zcol-6">
+        <h1 class="tj_num"><span>已开通空间</span> <em id="allSpaceNum">--</em></h1>
+        <ul class="tj_js" fbind="stat" >
+          <li><a ><img src="login/main/images/new_yh/tjjs_r1_c1.png" width="70" height="70" alt=""/> </a> <span>学校</span>
+            <p>{{fdata:SCHOOL_STAT[0].SCHOOL}}</p>
+          </li>
+          <li><a ><img src="login/main/images/new_yh/tjjs_r1_c3.png" width="70" height="70" alt=""/> </a> <span>教师</span>
+            <p>{{fdata:SCHOOL_STAT[0].TEACHER}}</p>
+          </li>
+          <li><a ><img src="login/main/images/new_yh/tjjs_r1_c5.png" width="70" height="70" alt=""/> </a> <span>学生</span>
+            <p>{{fdata:SCHOOL_STAT[0].STUDENT}}</p>
+          </li>
+          <li><a ><img src="login/main/images/new_yh/tjjs_r1_c7.png" width="70" height="70" alt=""/> </a> <span>家长</span>
+            <p>{{fdata:SCHOOL_STAT[0].PARENT}}</p>
+          </li>
+        </ul>
+      </div>
+      <div class="zcol-6">
+        <h1 class="tj_num fr"><span>资源总容量</span> <em id="top_tj_size"></em></h1>
+        <div class="tj_num_con fr">
+          <div class="tj_num_con_l  fl">
+            <h4>资源总数</h4>
+            <p id="top_tj_res_all" ></p>
+            <h4>上周更新</h4>
+            <p id="top_tj_res_week" ></p>
+          </div>
+          <div class="tj_num_con_r fr">
+            <h4>试题总数</h4>
+            <p id="top_tj_tq_all"></p>
+            <h4>上周更新</h4>
+            <p id="top_tj_tq_week"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+try{
+$.getScript(protocol+sysconfig.CMS+"/pic/jsondata/toptqres/top_tq_res.js",function(){
+	if(typeof(top_tq_res)!="undefined"){
+		$("#top_tj_tq_week").html(top_tq_res.tqnum2);
+		$("#top_tj_tq_all").html(top_tq_res.tqtotal2);
+		$("#top_tj_res_week").html(top_tq_res.resnum2);
+		$("#top_tj_res_all").html(top_tq_res.restotal2);
+		var allsize=top_tq_res.capacity2;
+		if(top_tq_res.capacity2 && top_tq_res.capacity2.indexOf(".")>0){
+			allsize=top_tq_res.capacity2.substring(0,top_tq_res.capacity2.indexOf("."));
+		}
+		allsize=Number(allsize)*1024+"G";
+		$("#top_tj_size").html(allsize);
+	}	
+});
+}catch(e){}
+</script>
+<!--  block1 end-->
+
+<div class="block1 hui-bg" style="padding: 0 0 30px 0;">
+  <h2 class="lm_bt tb red tac"> <span > 精彩活动</span></h2>
+  <div class="w980">
+    <div class="tulist2" >
+      <ul id="jingCaiHuoDong">
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="block1" style="padding: 0;">
+  <h2 class="lm_bt bdnone mt0">
+    <div class="w980"> <span class="dzan mr-15" >人气学校推荐</span> <!--<span class="tab_news " ><a href="javascript:void(0);" class="cur_2" id="13Tab_0" onclick="Show_Tab_List2(3,0,13);">学校空间</a> <a href="javascript:void(0);"  id="13Tab_1" onclick="Show_Tab_List2(3,1,13);">名师空间</a><a href="javascript:void(0);"  id="13Tab_2" onclick="Show_Tab_List2(3,2,13);">学生空间</a></span> --></div>
+  </h2>
+  <div class="w980  ">
+    <div class="kjtj_con">
+      <div id="13s_0">
+        <div class="xx_lie_sy ">
+          <ul fbind="stat" >
+          <li class="bg2"><span>{{fdata:SCHOOL_LOGIN_RANK_LIST[0].SCHOOL_NAME}}</span></li>
+          <li class="bg2"><span>{{fdata:SCHOOL_LOGIN_RANK_LIST[1].SCHOOL_NAME}}</span></li>
+          <li class="bg2"><span>{{fdata:SCHOOL_LOGIN_RANK_LIST[2].SCHOOL_NAME}}</span></li>
+          <li class="bg2"><span>{{fdata:SCHOOL_LOGIN_RANK_LIST[3].SCHOOL_NAME}}</span></li>
+          <li class="bg2"><span>{{fdata:SCHOOL_LOGIN_RANK_LIST[4].SCHOOL_NAME}}</span></li>
+          <li class="bg6"><span>{{fdata:SCHOOL_LOGIN_RANK_LIST[5].SCHOOL_NAME}}</span></li>
+          <li class="bg6"><span>{{fdata:SCHOOL_LOGIN_RANK_LIST[6].SCHOOL_NAME}}</span></li>
+          <li class="bg6"><span>{{fdata:SCHOOL_LOGIN_RANK_LIST[7].SCHOOL_NAME}}</span></li>
+          <li class="bg6"><span>{{fdata:SCHOOL_LOGIN_RANK_LIST[8].SCHOOL_NAME}}</span></li>
+          <li class="bg6"><span>{{fdata:SCHOOL_LOGIN_RANK_LIST[9].SCHOOL_NAME}}</span></li>
+          <!-- 
+            <li class="bg2"><span>郑州一中</span></li>
+            <li class="bg2"><span>郑州六中</span></li>
+            <li class="bg2"><span>新密市第二高级中学</span></li>
+            <li class="bg2"><span>郑州一中</span></li>
+            <li class="bg2"><span>郑州六中</span></li>
+            <li class="bg6"><span>新密市第二高级中学</span></li>
+            <li class="bg6"><span>郑州六中</span></li>
+            <li class="bg6"><span>新密市第二高级中学</span></li>
+            <li class="bg6"><span>郑州一中</span></li>
+            <li class="bg6"><span>新密市第二高级中学</span></li>
+             -->
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+      </div>
+      <!--
+      <div id="13s_1" style="display: none;">
+      <div class="ms_lie_sy">
+          <ul>
+            <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">崔艳丽</a></span></li>
+            <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">刘晓芬</a></span></li>
+            <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">欧阳娜娜</a></span></li>
+            <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">刘晓芬</a></span></li>
+            <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">欧阳娜娜</a></span></li>
+             <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">崔艳丽</a></span></li>
+            <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">刘晓芬</a></span></li>
+            <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">欧阳娜娜</a></span></li>
+            <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">刘晓芬</a></span></li>
+           
+             <div class="clearfix"></div>
+          </ul>
+        </div>
+    </div>
+--> 
+      <!--
+     <div id="13s_2"  style="display: none;">
+      <div class="ms_lie_sy">
+          <ul>
+            <li><a href="#"><img src="../img/login_zz/photo3.jpg" width="100" height="100"  alt=""/></a><span><a href="#">欧阳娜娜</a></span></li>
+            <li><a href="#"><img src="../img/login_zz/photo3.jpg" width="100" height="100"  alt=""/></a><span><a href="#">刘晓芬</a></span></li>
+            <li><a href="#"><img src="../img/login_zz/photo3.jpg" width="100" height="100"  alt=""/></a><span><a href="#">欧阳娜娜</a></span></li>
+            <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">崔艳丽</a></span></li>
+            <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">刘晓芬</a></span></li>
+             <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">崔艳丽</a></span></li>
+            <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">刘晓芬</a></span></li>
+            <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">欧阳娜娜</a></span></li>
+            <li><a href="#"><img src="../img/login_zz/teacher01.jpg" width="77" height="108"  alt=""/></a><span><a href="#">刘晓芬</a></span></li>
+          
+             <div class="clearfix"></div>
+           
+          </ul>
+        </div>
+    </div>
+--> 
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+      <div class="zcol-6">
+        <h2 class="lm_bt tl"><em class="fr"><a id="zhiHuiJiaoYu_more" target="_blank" href="#">更多>></a></em> <span >智慧教育</span></h2>
+        <div class="news_tj" >
+          <ul  style="width: 95%;" id="zhiHuiJiaoYu">
+            <li><span class="fr"></span><a href="#">加载中...</a></li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+      <div class="zcol-6">
+        <h2 class="lm_bt tl"><em class="fr"><a id="shiYongAnLi_more" target="_blank" href="#">更多>></a></em> <span >使用案例</span></h2>
+        <div class="news_tj" >
+          <ul  style="width: 95%;" id="shiYongAnLi">
+            <li><span class="fr"></span><a href="#">加载中...</a></li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="block1 hui-bg" style="padding: 0px 0 30px 0;">
+  <h2 class="lm_bt tb  tac" > <span >友情链接</span></h2>
+  <div class="w980">
+    <div class="link" id="youQingLianJie">
+      <div class="tulink mt15"></div>
+      <div class="zilink mt15">
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--页脚-->
+<iframe style="min-width: 1000px;" id="footiframe" name="footiframe" src="" width="100%" height="190" scrolling="no" frameborder="0"></iframe>
+<!--end footer--> 
+<!--客服电话
+<div class="kfQQ">
+  <h1><a href="javascript:void(0);" id="kf_btn" class="close_2"></a>
+    <div id="goTop"><a href="javascript:void(0);" onclick="goTop2();"></a></div>
+  </h1>
+  <div class="kf_Tel">
+    <ul>
+      <li> <a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&amp;uin=8983659&amp;site=www.cactussoft.cn&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=2:8983659:41"></a></li>
+      <li> <a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&amp;uin=8983659&amp;site=www.cactussoft.cn&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=2:8983659:41"></a></li>
+      <li> <a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&amp;uin=8983659&amp;site=www.cactussoft.cn&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=2:8983659:41"></a></li>
+    </ul>
+    <h4></h4>
+  </div>
+</div>
+-->
+<!--end-->
+
+</body>
+</html>
+<!--<script charset="gbk" src="login/main/script/login.js"></script>-->
+<script charset="gbk" src="login/main/script/common.js"></script>
+<SCRIPT charset="gbk" src="login/main/script/kefu.js"></SCRIPT>
+<SCRIPT charset="gbk" src="login/main/script/kefu.js"></SCRIPT>
+<script src="manage/layuiadmin/layui/layui.js?t=1"></script>
+<SCRIPT src="script/customerService.js"></SCRIPT>
+<script type="text/javascript">
+		var _type4OtherConfig="login";
+</script>
+<script type="text/javascript" src="common/otherConfig.jsp?day={DAYSTAMP}"></script>

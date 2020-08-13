@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  	<script type="text/javascript" src="../js/lib/jquery.js"></script>
+  	<script src="../script/artDialog/artDialog.source.js?skin=default"></script>
+		<script src="../script/artDialog/plugins/iframeTools.source.js"></script>
+		<script src="../script/util.js"></script>
+		<script src="../script/base64.js"></script>
+	<script type="text/javascript" src="configparam.js"></script>
+    <script type="text/javascript" src="../common/config.jsp?domain=default&redirect=false"></script>
+    <title>共建平台</title>
+		<script type="text/javascript">
+			var test = art.dialog.data('test').split("\|");
+			$("document").ready(function(){
+				//初始化共建平台模板选择项
+				for(var module in moduleconfig){
+					$("#module").append("<option value="+moduleconfig[module]+">"+module+"</option>");
+				}
+				//初始化空间模板目录
+				$("#spacedir").html("");
+				for(var sindex=0;sindex<spacedirlist.length;sindex++){
+					var asp=spacedirlist[sindex];
+					$("#spacedir").append("<option value="+asp.key+">"+asp.name+"</option>");
+				}
+				
+				//登陆logo初始
+				var pic1 = window.parent.document.getElementById("loginlogo_sel");
+				for (var pi1 = 1; pic1!=null && pi1 < pic1.length; pi1++) {
+		  			$("#loginlogo_select").append("<option value="+pic1[pi1].value+">"+pic1[pi1].value+"</option>");
+				}
+				//空间logo初始
+				var pic2 = window.parent.document.getElementById("indexlogo_sel");
+				for (var pi2 = 1; pic2!=null && pi2 < pic2.length; pi2++) {
+		  			$("#indexlogo_select").append("<option value="+pic2[pi2].value+">"+pic2[pi2].value+"</option>");
+				}
+				//ico初始
+				var pic3 = window.parent.document.getElementById("ico_sel");
+				for (var pi3 = 1; pic3!=null && pi3 < pic3.length; pi3++) {
+		  			$("#ico_select").append("<option value="+pic3[pi3].value+">"+pic3[pi3].value+"</option>");
+				}
+
+				var de  = new Base64();
+				//若为修改则初始化各配置项
+				if(test[0]!=""){
+					var gjptpz = "{"+de.decode(test[0])+"}";
+					gjptpz = $.parseJSON(gjptpz);
+					var json = eval('gjptpz.'+test[1])[0];
+					$("#gjpt").val(test[1].replaceAll("_","."));
+					$("#alias").val(json.alias);
+					$("#module").val(json.module);
+					$("#areaname").val(json.areaname);
+					$("#areacode").val(json.areacode);
+					$("#sysConfigs").val(decodeURIComponent(decodeURIComponent(json.sysConfigs)));
+					$("#interfaceConfigs").val(decodeURIComponent(decodeURIComponent(json.interfaceConfigs)));
+					$("#otherConfigs").val(decodeURIComponent(decodeURIComponent(json.otherConfigs)));
+					$("#seokey").val(decodeURIComponent(decodeURIComponent(json.seokey)));
+					$("#spacedir").val(decodeURIComponent(decodeURIComponent(json.spacedir)));
+					if("undefined"==typeof(json.ubName)){json.ubName="";}
+					$("#ubName").val(decodeURIComponent(decodeURIComponent(json.ubName)));
+					
+					if("0"!=json.showindex){
+						$(":radio[name='showindex'][value='1']").prop("checked", "checked");
+					}else{
+						$(":radio[name='showindex'][value='0']").prop("checked", "checked");
+					}
+					
+					$("#loginlogo_select").val(json.logo);
+					$("#loginlogo_select").change();
+					$("#indexlogo_select").val(json.indexlogo);
+					$("#indexlogo_select").change();
+					$("#ico_select").val(decodeURIComponent(decodeURIComponent(json.icoimg)));
+					
+					
+					
+					/*
+					上面change已经赋值了
+					$("#logo").val(json.logo);
+					$("#indexlogo").val(json.indexlogo);
+					$("#icoimg").val(decodeURIComponent(decodeURIComponent(json.icoimg)));
+					*/
+				}
+			});
+			// 关闭
+			function gback(){
+				art.dialog.close();
+			}
+			// 关闭并返回数据到主页面
+			function exit(){
+				var origin = artDialog.open.origin;
+				if($("#gjpt").val().trim()=="" ){ //校验共建平台域名是否配置
+					alert("请先输入共建平台域名再保存！");
+					return false;
+				}
+				var pzx = "";//portal_config.gjptpz;//不验证以往保存的配置，只验证当前是否冲突
+				var gjlist = origin.document.getElementsByName("pz");//获取当前页共建配置
+				for(var gli=0;gli<gjlist.length;gli++){
+					pzx=pzx+",\""+gjlist[gli].id+"\"";
+				}
+				if(test[1]=="" && pzx!=undefined && pzx.indexOf('"'+$("#gjpt").val().replaceAll(".","_")+'"')!=-1){
+					alert("您输入共建平台域名已经存在，请不要重复录入！");
+					return false;
+				}
+				var input = origin.document.getElementById("ptpz");
+				if(test[1]!=""){//若为修改则先删除后添加
+					var tr = origin.document.getElementById(test[1]+"_tr");
+					$(tr).remove();
+				}
+				var otherConfigs=encodeURIComponent(encodeURIComponent($("#otherConfigs").val()));
+				var sysConfigs = encodeURIComponent(encodeURIComponent($("#sysConfigs").val()));
+				var interfaceConfigs = encodeURIComponent(encodeURIComponent($("#interfaceConfigs").val()));
+				var showindex= $('input[name="showindex"]:checked').val();;
+				var gjpt = $("#gjpt").val().replaceAll(".","_");
+				var json ="\""+gjpt+"\":[{\"module\":\""+$("#module").val()+"\",\"alias\":\""+$("#alias").val()+"\",\"logo\":\""+$("#logo").val()+"\",\"indexlogo\":\""+$("#indexlogo").val()+"\",\"areaname\":\""+$("#areaname").val()+"\",\"areacode\":\""+$("#areacode").val()+"\",\"seokey\":\""+$("#seokey").val()+"\",\"sysConfigs\":\""+sysConfigs+"\",\"interfaceConfigs\":\""+interfaceConfigs+"\",\"spacedir\":\""+$("#spacedir").val()+"\",\"icoimg\":\""+$("#icoimg").val()+"\",\"otherConfigs\":\""+otherConfigs+"\",\"showindex\":\""+showindex+"\",\"ubName\":\""+$("#ubName").val()+"\"}]";
+				var de  = new Base64();
+				json = de.encode(json);
+				var tr = new Array();
+				tr.push("<tr id='"+gjpt+"_tr' >");
+				tr.push("<td><input id='"+gjpt+"' name='pz' value='"+json+"' type='radio'/></td>");
+				tr.push("<td id='"+gjpt+"_gjpt'>"+$("#gjpt").val()+"</td>");
+				tr.push("<td id='"+gjpt+"_alias'>"+$("#alias").val()+"</td>");
+				tr.push("<td id='"+gjpt+"_showindex' >"+showindex+"</td>");
+				tr.push("<td id='"+gjpt+"_module'>"+$("#module").val()+"</td>");
+				tr.push("<td id='"+gjpt+"_spacedir'>"+getSpaceDirName($("#spacedir").val())+"</td>");
+				tr.push("<td id='"+gjpt+"_logo' >"+$("#logo").val()+"</td>");
+				tr.push("<td id='"+gjpt+"_indexlogo' >"+$("#indexlogo").val()+"</td>");
+				tr.push("<td id='"+gjpt+"_areaname' >"+$("#areaname").val()+"</td>");
+				tr.push("<td id='"+gjpt+"_areacode' >"+$("#areacode").val()+"</td></tr>");
+				$(input).append(tr.join(""));
+				art.dialog.close();
+			}
+			//预览
+			function viewModule(obj){
+				if($("#module").val()!=""){
+					window.open("http://"+sysconfig.PORTAL+"/index.action?module="+$("#module").val());
+				}else{
+					alert("请先选择模板后在预览！");
+				}
+			}
+		</script>
+		<style type="text/css">
+			body,table{
+				font-size:12px;
+			}
+			table{
+				table-layout:fixed;
+				empty-cells:show; 
+				border-collapse: collapse;
+				margin:0 auto;
+			}
+			h1{
+				font-size:14px;
+				margin:0;
+				padding:0;
+			}
+			.title{
+			background: #FFF;
+			border: 1px solid #9DB3C5;
+			padding: 1px; 
+			width:90%;
+			margin:1px auto; 
+			}
+			.title h1 {
+			line-height: 31px; 
+			text-align:center; 
+			background: #2F589C url(<%=path%>/dataconfigs/pic/th_bg2.gif); 
+			background-repeat: repeat-x;
+			background-position: 0 0;
+			}
+			.title th, .title td {
+			border: 1px solid #CAD9EA; 
+			padding: 5px;
+			font-weight:bold
+			}
+			table.t2{
+			border:1px solid #9db3c5;
+			color:#666;
+			}
+			table.t2 th{
+			background:#2F589C  url(<%=path%>/dataconfigs/pic/th_bg2.gif);
+			height:25px;
+			background-repeat:repeat-x;
+			}
+			table.t2 td{
+			border:1px dotted #cad9ea;
+			padding:0 2px 0;
+			}
+			table.t2 tr.a1{
+			background-color:#e8f3fd;
+			}
+			table.t2 td.h{
+			font-weight:bold;
+			}
+			table.t2 td.h font{
+			padding-left:3px;font-weight:normal;
+			}
+		</style>
+  </head>
+  <body>
+  <table width="100%" border="1" class="t2">
+	   <tr>
+	  	<td style="width:12%;text-align: center;" title="形式如：henan.czbanbantong.com不要含下划线,如果登录后进入相同域名，需要配置对应的平台PORTAL系统配置">共建平台域名</td>
+	  	<td colspan="2" style="width:28%" title="形式如：henan.czbanbantong.com不要含下划线,如果登录后进入相同域名，需要配置对应的平台PORTAL系统配置">
+	  		<input  id="gjpt" style="width:155px" />
+	  		<font color=red>*</font>
+	  	</td>
+	  	<td style="width:12%;text-align: center;" title="形式如：henan.czbanbantong.com多个中间别名以英文逗号分隔" >域名别名</td>
+	  	<td  colspan="2" style="width:28%"  title="形式如：henan.czbanbantong.com多个别名中间以英文逗号分隔" >
+	  		<input  id="alias" style="width:155px" />
+	  	</td>
+	  </tr>
+	  <tr>
+	  	<td style="width:12%;text-align: center;">区域名称</td>
+	  	<td style="width:24%" colspan="2"><input type="text" id="areaname" style="width:155px"/></td>
+	  	<td style="width:12%;text-align: center;">地区代码</td>
+	  	<td style="width:24%" colspan="2"><input type="text" id="areacode" style="width:155px"/></td>
+	  </tr>
+	  <tr>
+	  	<td style="width:12%;text-align: center;">登陆页logo预览</td>
+  		<td style="width:24%" colspan="2" ><img height="30" id="loginlogoreview" src="../login/logo/logo.png" />
+  		</td>
+	  	<td style="width:12%;text-align: center;" >空间页logo预览</td>
+	  	<td style="width:24%" colspan="2" >
+	  	<img height="30" id="indexlogoreview" src="../space/images/logo/logo.png" />
+	  <tr>
+	  	<td style="width:12%;text-align: center;" title="图片放于login/logo/路径下，输入框中直接录入图片文件名">登录页logo</td>
+	  	<td style="width:24%" colspan="2" title="图片放于login/logo/路径下，输入框中直接录入图片文件名">
+	  		<input type="text" id="logo" style="width:155px"/>
+	  		<select id="loginlogo_select" onchange="if($(this).val()!=''){$('#loginlogoreview').attr('src','../login/logo/'+$(this).val());$('#loginlogoreview').show();}else{$('#loginlogoreview').hide();}$('#logo').val($(this).val());" >
+				<option value="">默认</option>
+  			</select>
+	  	</td>
+	  	<td style="width:12%;text-align: center;" title="图片放于space/images/logo/路径下，输入框中直接录入图片文件名">空间页logo</td>
+	  	<td style="width:24%" colspan="2" title="图片放于space/images/logo/路径下，输入框中直接录入图片文件名">
+	  		<input type="text" id="indexlogo" style="width:155px"/>
+	  		<select id="indexlogo_select" onchange="if($(this).val()!=''){$('#indexlogoreview').attr('src','../space/images/logo/'+$(this).val());$('#indexlogoreview').show();}else{$('#indexlogoreview').hide();}$('#indexlogo').val($(this).val());" >
+				<option value="">默认</option>
+	  		</select>
+	  	</td>
+	  </tr>
+	  <tr>
+	  	<td style="width:12%;text-align: center;">登录页模板</td>
+	  	<td  colspan="2" style="width:90%" >
+	  		<select id="module" style="width:161px;line-height:18px">
+	          <option value="" selected="selected">无</option>
+	      </select>
+	  		<font color=red>*</font>
+	  		<input type="button" onclick="viewModule();" style="margin-left:10px;width:60px" value="预  览" />
+	  	</td>
+	  	<td title="图片放于ico/路径下，输入框中直接录入图片文件名" style="width:12%;text-align: center;">页面ico图标</td>
+	  	<td title="图片放于ico/路径下，输入框中直接录入图片文件名" style="width:24%" colspan="2">
+	  		<input type="text" id="icoimg" style="width:155px"/>
+	  		<select id="ico_select" onchange="$('#icoimg').val($(this).val())" >
+			<option value="">默认</option>
+  		</select>
+	  	</td>
+	  </tr>
+	  <tr>
+	  	<td style="width:12%;text-align: center;">空间首页模板</td>
+	  	<td style="width:24%"  colspan="2" ><select id="spacedir" style="width:161px;line-height:18px"><option value="" selected="selected">联通</option></select></td>
+	  	<td style="width:12%;text-align: center;">平台名关键词</td>
+	  	<td style="width:24%" ><input type="text" id="seokey" style="width:90%"/></td>
+	  </tr>
+	  <tr>
+	  	<td style="width:12%;text-align: center;">处理(首页/data)默认选中</td>
+	  	<td style="width:24%"  colspan="2" >
+	  	<input  type="radio" name="showindex"   value="1" />是
+	  	<input  type="radio" name="showindex"   value="0" />否
+	  	</td>
+	  	<td style="width:12%;text-align: center;">优币名称</td>
+	  	<td style="width:24%" ><input type="text" id="ubName" style="width:90%"/></td>
+	  </tr>
+	  <tr>
+	  	<td style="width:12%;" colspan=6 >扩展脚本(注意：配置错误将导致页面异常)</td>
+	  </tr>
+	  <tr>
+	  	<td colspan="6" style="width:90%" >
+	  		<textarea id="otherConfigs" rows="8" style="width:100%" ></textarea>
+	  	</td>
+	  </tr>
+	  <tr>
+	  	<td style="width:12%;" colspan=6 >共建平台系统配置(注意：SSO不可配置！！格式与yjtconfig.properties中一致，同名可覆盖yjtconfig.properties中配置)</td>
+	  </tr>
+	  <tr>
+	  	<td colspan="6" style="width:90%">
+	  		<textarea id="sysConfigs" rows="8" style="width:100%" ></textarea>
+	  	</td>
+	  </tr>
+	  <tr>
+	  	<td style="width:12%;" colspan=6 >共建平台接口配置(注意：格式与yjt_interface.properties中一致，同名可覆盖yjt_interface.properties中配置)</td>
+	  </tr>
+	  <tr>
+	  	<td colspan="6" style="width:90%">
+	  		<textarea id="interfaceConfigs" rows="8" style="width:100%" ></textarea>
+	  	</td>
+	  </tr>
+  </table>
+  <br>
+  <div align="center">
+  	<button onclick="return exit()"style="width:70px" >保  存</button>
+  	<button onclick="gback()" style="margin-left:100px;width:70px" >返  回</button>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>教师首页引导</title>
+<link href="../css/w1200/T-index-yindao.css" id="cssName" rel="stylesheet" type="text/css">
+<script src="../jquery/jquery.js"></script>
+<script type="text/javascript">
+	function getRequest() { 
+		var url = location.search; //获取url中"?"符后的字串 
+		var theRequest = new Object(); 
+		if (url.indexOf("?") != -1) { 
+			var str = url.substr(1); 
+			strs = str.split("&"); 
+			for(var i = 0; i < strs.length; i ++) { 
+				theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]); 
+			} 
+		} 
+		return theRequest; 
+	} 
+	var param = new Object(); 
+	param = getRequest();
+	var path = param["path"];
+	$(document).ready(function(){
+		$("#yindao_s").attr("href",path+"/webindex.action");
+		$("#yindao_x").attr("href",path+"/webindex.action");
+	});
+</script>
+</head>
+<body>
+<div class="bjbox">
+   <a href="#"  id="yindao_s"><img class="turn-off" src="../images/w1200/tun-off.png"></a>
+   <div class="ydbox">
+      <a class="btn" href="#"  id="yindao_x"></a>
+   </div>
+</div>
+</body>
+</html>
+
+<script>
+$(document).ready(function(){
+	var clienW =($(window).width()); //浏览器时下窗口可视区域宽度 
+	if (clienW >= 1280) {
+		$("#cssName").attr("href","../css/w1200/T-index-yindao.css");
+	}else{
+		$("#cssName").attr("href","../css/w980/T-index-yindao.css");
+		}
+	
+	
+});
+//调整窗口宽度时，批量替换页面中的样式。
+function resizeWidth(){
+	var clienW =($(window).width()); //浏览器时下窗口可视区域宽度 
+	if (clienW >= 1280) {
+		$("#cssName").attr("href","../css/w1200/T-index-yindao.css");
+	}else{
+		$("#cssName").attr("href","../css/w980/T-index-yindao.css");
+		}
+	}
+
+$(window).resize(function(){
+	setTimeout(resizeWidth,500);
+	
+})
+</script>

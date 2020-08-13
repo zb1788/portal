@@ -1,0 +1,78 @@
+@charset "utf-8";
+/* CSS Document */
+*{ margin:0; padding:0;}
+li{list-style-type:none;}
+a{ text-decoration:none; }
+img{ border:0 none; display:block;}
+input{ border:0 none;}
+
+body{ background-image:url(../../images/w980/bj.png);}
+.bigbox{margin:0 auto; width:980px;}
+.bj-img{ background-image:url(../../images/w980/T-index-bj.png); width:980px; height:2517px; position: relative;}
+.bj2-img{ background-image:url(../../images/w980/T-tbbk-bj.png);width:980px; height:1324px; position: relative;}
+.bj3-img{ background-image:url(../../images/w980/T-tbdx-bj.png);width:980px; height:1779px; position: relative;}
+.bj4-img{ background-image:url(../../images/w980/T-wszy-bj.png);width:980px; height:1831px; position: relative;}
+.bj5-img{ background-image:url(../../images/w980/jxhd.png);width:980px; height:1363px; position: relative;}
+.turn-off img{ width:80px; height:81px; float:right; display:block;}
+
+.index{
+	width: 716px;
+	height: 448px;
+	background-image: url(../../images/w980/T-index.png);
+	position: absolute;
+	left: 0px;
+	top: 117px;
+	
+}
+.btn1{ display:block; width:30px; height:30px; margin-left:668px; margin-top:397px;}
+.tbxx{
+	width: 691px;
+	height: 446px;
+	position: absolute;
+	background-image: url(../../images/w980/T-tbbk.png);
+	left: 63px;
+	top: 117px;
+	display:none;
+}
+.btn2{ display:block; width:30px; height:30px; margin-top:398px; margin-left:635px;}
+.hdxx{
+	width: 654px;
+	height: 470px;
+	position: absolute;
+	background-image: url(../../images/w980/T-tbdx.png);
+	left: 162px;
+	top: 117px;
+    display:none;
+}
+.btn3{ display:block; width:30px; height:30px; margin-top:425px; margin-left:600px;}
+.mzyl{
+	width: 539px;
+	height: 491px;
+	position: absolute;
+	background-image: url(../../images/w980/T-wszy.png);
+	left: 256px;
+	top: 117px;
+	display:none;
+}
+.btn4{ display:block; width:30px; height:30px; margin-top:433px; margin-left:484px;}
+.zwzd{
+	width: 465px;
+	height: 471px;
+	position: absolute;
+	background-image: url(../../images/w980/T-jxhd.png);
+	left: 257px;
+	top: 114px;
+	display:none;
+}
+.btn5{ display:block; width:30px; height:30px; margin-top:413px; margin-left:409px;}
+.msty{
+	width: 486px;
+	height: 242px;
+	background-image: url(../../images/w980/T-jsy.png);
+	position: absolute;
+	left: 276px;
+	top: 379px;
+	display:none;
+}
+.btn6{ display:block; width:126px; height:36px; margin-top:165px; margin-left:128px; float:left;}
+.btn7{ display:block; width:126px; height:36px; margin-top:165px; margin-left:15px; float:left;}

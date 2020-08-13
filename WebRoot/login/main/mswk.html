@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="ie-stand">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="shortcut" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="icon" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="bookmark"  href="{ICOIMG}" type="image/x-icon" />
+<meta name="keywords"	content="{SEOKEY}" />
+<meta name="description" content="{SEOKEY}，全国首家在线同步教与学平台，专注为中小学教师、学生、家长、管理者提供高品质的同步教学、同步学习、互动沟通 、教学管理服务。" />
+<title>{SEOKEY}</title>
+<link rel="stylesheet" type="text/css" href="login/main/style/jquery.autocomplete.css" />
+<link href="login/main/style/common.css" rel="stylesheet" type="text/css" />
+<link href="login/main/style/login_new_one.css" rel="stylesheet" type="text/css" />
+<link href="login/main/style/font_quan.css" rel="stylesheet" type="text/css" />
+<link href="login/main/css/top_foot.css" rel="stylesheet" type="text/css" />
+
+<script type='text/javascript' src="script/jquery.js"></script>
+<script type='text/javascript' src="script/jquery-migrate-ada.js"></script>
+
+<script type='text/javascript' src="script/jquery.qrcode.js"></script>
+<script type='text/javascript' src="script/utfparse.js"></script>
+<script type="text/javascript" src="login/default/script/swfobject.js"></script>
+<script type='text/javascript' src="space/script/artDialog.js?skin=default"></script>
+<script type='text/javascript' src="script/util.js" ></script>
+<script type='text/javascript' src="script/base64.js"></script>
+<script type='text/javascript' src="script/js_md5.js"></script>
+<script type='text/javascript' src="script/js_rsa.js"></script>
+<script type="text/javascript" src="common/config.jsp"></script>
+<script type='text/javascript' src="login/main/script/loginobj.js"></script>
+<script type='text/javascript' src="login/main/script/logincode.js"></script>
+<script type='text/javascript' src="login/main/script/loginpage.js"></script>
+
+<!-- 
+
+<script type='text/javascript' src="script/loginpage.js"></script>
+<script type="text/javascript" src="login/default/script/logincode.js"></script>
+ -->
+</head>
+
+<body>
+<div class="tips" id="tips" >&nbsp;</div>
+<script type="text/javascript">
+codelogin.width=160;
+codelogin.height=160;
+var otherConfig = decodeURIComponent(decodeURIComponent(portal_config.otherConfig));
+//默认Logo
+var defaultlogo="yj_n.png";
+var flashChannelCode="CMS.JSON.A01063004";
+var pdata={
+"teacher":"{channel:\"22.05\"}",
+"student":"{channel:\"22.06\"}"
+}
+function nullToStr(str){
+	if(util.isBlank(str) || str==null || str=="null"){
+		return "";
+	}
+	return str;
+}
+//最受欢迎的课程
+function showCourselist(rdata){
+	var rcode=new Array();
+	var counter=0;
+	for(var i=0;i<rdata.length && counter<4;i++){
+		var temp=rdata[i];
+		var url=protocol+sysconfig.MICRO+"/common/getcatalogInfoPage.action?id="+temp.id;//onerror="this.src=\'login/main/images/defaultrwk.jpg\'" 
+		rcode.push('<dl><dt><a style="cursor:default" target="_blank" href="'+url+'"><img src="'+protocol+sysconfig.VFS+"/ilearn"+temp.posterSmall+'" width="280" height="158"  alt=""/></a><div class="item-status"><span class="fr"><a style="display:none" href="#">推荐</a></span><span class="item-status-step">在学'+temp.studynum+'人</span> </div>');
+        rcode.push('</dt><dd class="tit"><a style="cursor:default" target="_blank" href="'+url+'">'+nullToStr(temp.name)+'</a></dd><dd><span>共'+nullToStr(temp.pitchNumber)+'节</span> '+nullToStr(temp.classifyName)+'</dd>');
+        //<dd style="display:none" ><font>￥0.00</font> <em> 原价：120</em></dd>
+      	rcode.push('</dl>');
+		counter++;
+	}
+	$("#ReDianKeCheng").html(rcode.join(""));
+}
+//活动
+function showwklist(rdata){
+	var rcode=new Array();
+	var counter=0;
+	for(var i=0;i<rdata.length && counter<3;i++){
+		var temp=rdata[i];
+		var url=protocol+sysconfig.MICRO+"/common/getActivityview.action?activity.id="+temp.id;
+		var desc=temp.synopsis;
+		if(util.isBlank(desc)){
+			desc="&nbsp;";
+		}
+		// onerror="this.src=\'login/main/images/defaultwkhd.jpg\'"
+      	rcode.push('<li><a target="_blank" href="'+url+'"><img src="'+protocol+sysconfig.VFS+"/ilearn"+temp.posterpath+'" width="320" height="131"  alt=""/><span class="tit">'+temp.title+'</span></a><span>'+desc+'</span></li>');
+		counter++;
+	}
+	while(rcode.length<3){
+		rcode.push('<li><a href="#" onclick=""><img src="login/main/images/wk_default.png"  width="320" height="131"  alt=""/><span class="tit">丰富教学活动，期待您的加入</span></a><span>精彩活动系列支持教学活动、评课活动、多媒体教研活动、社团活动、写作比赛类活动等，支持文档、图片、动画、视频、音频多种多元化表现形式。</span></li>');
+	}
+	$("#jingCaiHuoDong").html(rcode.join(""));
+}
+$(function(){
+	$("[fbind]").hide();
+	//处理热点微课
+	util.getIcodeScript("VFS.HOTWK");
+	//处理精彩活动列表
+	util.getIcodeScript("VFS.WKACTIVE");
+	
+	//处理登陆统计数据
+	util.getIcodeScript("VFS.PORTALSTAT");
+	//处理联考数据
+	util.getIcodeScript("VFS.PORTALPAPER");
+	
+});
+
+
+</script>
+<OBJECT ID="ocx" style="display:none" width="0" height="0" codebase="http://plshenan.czbanbantong.com:80/office/officdown.cab#version=1,0,1,4"
+	CLASSID="CLSID:B02201C9-1789-4FF0-B95F-C1A03D8B6B99">
+	<PARAM NAME="_Version" VALUE="65536">
+	<PARAM NAME="_ExtentX" VALUE="10583">
+	<PARAM NAME="_ExtentY" VALUE="10583">
+	<PARAM NAME="_StockProps" VALUE="0">
+</OBJECT>
+<div class="tblock" icodeurl='true'>
+  <div class="w980">
+    <div class="logo_login"> <span class="logo1"><img id="logoimg" src="login/main/images/new_yh/mswk.png" ></span><span class="zibt">— 名师微课</span><span id="areaname" class="city">河南</span> <span class="swap_city"><a href="city.html" style="color:#999;">[切换城市]</a></span> </div>
+    <div class="tel400"> <span class="fr"><img src="login/main/images/new_yh/tel.png" width="182" height="44" alt=""/></span> <a href="{{icode:CMS.SETUPFILE}}" class="khd_down">客户端下载 </a> </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+<div id="flash">
+  <div class="w980">
+    <div class="posRe" icodeurl='true'>
+      <div class="mask_login"></div>
+      <!--黑色遮罩-->
+      <div class="inputBox" id="codeLogin" style="display:none">
+      	<div class="scan"><span ><a class="qrcode_target" href="javascript:" >&nbsp;</a></span></div>
+     
+        <div class="loginBg pt">
+        <h2>打开优教信使或微信<br>扫一扫   快速登录</h2>
+        <p class="ma" id="qrcodeCanvas" style="width:160px;height:160px;margin-left:auto;margin-right:auto;margin-top:10px;margin-bottom:10px;padding:17px;background-color:#FFF"></p>
+         <p class="link"> <a target="_blank" href="{{icode:CMS.PAGE.USEGUIDE}}" >帮助</a></p>
+         	
+        </div>
+      </div>
+      
+      <div class="inputBox" id="pwdLogin">
+      	<div class="scan"><span class="scan-ts">扫码登录更安全</span><span ><a class="qrcode_target" href="javascript:" >&nbsp;</a></span></div>
+        <h2 class="tab gly"><a id="teacher" href="javascript:;">教师</a><a id="student" href="javascript:;">学生</a><a id="parent" href="javascript:;" >家长</a><a id="manager" href="javascript:;" style="margin-right:0;">管理员</a></h2>
+        <form id="loginForm" name="loginForm" action="" method="post" target="">
+        <div class="loginBg">
+			<input type="hidden" id="loginUsertype" name="loginUsertype"/>
+			<input type="hidden" id="gjpt" name="gjpt" />
+			<input type="hidden" name="username" id="username"/>
+			<input type="hidden" name="sfp" id="sfp" value="" />
+			<input type="hidden"  id="pwd" name="pwd" value="" />
+			<input id="isPortalisPortal" name="isPortal" type="hidden" value="1" />
+			<input id="data" name="data" type="hidden" value="" />
+			
+          <!-- 多账号选择层 -->
+          <div id="roleDiv" phonenum="" class="ac_results" style="left:17px;top:120px;width:;275px;display:none;position:absolute" >
+            <ul id="roleList" style="overflow:hidden" >
+            </ul>
+          </div>
+          <p class="bor">
+            <label class="user"></label>
+            <input type="text" id="inputname" name="inputname" class="textbox1" placeholder="用户名" />
+          </p>
+          <p class="bor">
+            <label class="password"></label>
+            <input type="password" id="inpwd" placeholder="密　码" class="textbox1" />
+          </p>
+          <p class="bor" style="width:120px;float:left;">
+            <label class="check_code"></label>
+            <input type="text" name="validateCode" id="validateCode" class="textbox1" style="width:60px;" maxlength="4" placeholder="验证码" />
+          </p>
+          <span class="yanz"><img id="validateImg" src="login/main/images/code.png" width="58" height="28" /></span>
+          <div class="getKey">
+            <input id="savepass" type="checkbox" />
+            &nbsp;记住密码　　<a href="{{icode:TMS.803}}" class="blue">找回密码</a> <a class="blue" target="_blank" href="{{icode:CMS.PAGE.USEGUIDE}}" target="_blank" >帮助</a>
+          </div>
+          <p class="mt20 qk2">
+            <input type="button" value="登&nbsp;录"  class="loginBtn"  id="loginbuttion" />
+            <input type="button" class="greenBtn" style="display:none" id="zcButton" value="注&nbsp;册" />
+          </p>
+        </div>
+      </form>
+      
+      </div>
+      <!--会员登录结束--> 
+      
+    </div>
+    <!--end posRe--> 
+  </div>
+  <!--end w980-->
+  
+  <ul id="flashul">
+  
+  </ul>
+  <div class="w980">
+    <div class="flash_bar">
+    
+    </div>
+  </div>
+<!--Flash end--> 
+  
+</div>
+<div class="block1 " style="padding: 0 0 30px 0; " >
+  <h2 class="lm_bt bdnone mt0">
+    <div class="w980"> <span class="dzan mr-15" >应用介绍</span> <span class="tab_news " ><a href="javascript:void(0);" class="cur_2" id="12Tab_0" onclick="Show_Tab_List2(3,0,12);">名师微课</a> </span> </div>
+  </h2>
+  <div class="w980  ">
+    <div class="pt_tj pt20 ">
+      <ul>
+        <li class="none" ><a href="javascript:" ><img src="login/main/images/new_yh/ms_1.png" width="120" height="120" alt=""/><span>名师公开课</span></a></li>
+        <li class="none" ><a href="javascript:"> <img src="login/main/images/new_yh/ms_2.png" width="120" height="120" alt=""/><span>寒暑假公益课堂</span></a></li>
+        <li class="none" ><a href="javascript:" > <img src="login/main/images/new_yh/ms_3.png" width="120" height="120" alt=""/><span>名师微课堂</span></a></li>
+        <li class="none" ><a href="javascript:"> <img src="login/main/images/new_yh/ms_4.png" width="120" height="120" alt=""/><span>微课录制工具</span></a></li>
+        <li class="none" ><a href="javascript:" > <img src="login/main/images/new_yh/ms_5.png" width="120" height="120" alt=""/><span>微课活动</span></a></li>
+        <li class="none" ><a href="javascript:" > <img src="login/main/images/new_yh/ms_6.png" width="120" height="120" alt=""/><span>微课社区</span></a></li>
+        <div class="clearfix"></div>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<!--  block1 end-->
+
+<div class="block1 hui-bg" style="padding: 0 ;">
+  <h2 class="lm_bt tb  tac"> <span > 最受欢迎课程</span></h2>
+  <div class="w980">
+    <div class="sy_mswk pt20" id="ReDianKeCheng" >
+      <dl>
+        数据加载中...
+      </dl>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="block1 hui-bg" style="padding: 0 0 30px 0;">
+  <h2 class="lm_bt tb red tac"> <span > 精彩活动</span></h2>
+  <div class="w980">
+    <div class="tulist2">
+      <ul id="jingCaiHuoDong">
+        <li><a style="cursor:default" href="#" onclick=""><img src="login/main/images/wk_default.png"  width="320" height="131"  alt=""/><span class="tit">丰富教学活动，期待您的加入</span></a><span>精彩活动系列支持教学活动、评课活动、多媒体教研活动、社团活动、写作比赛类活动等，支持文档、图片、动画、视频、音频多种多元化表现形式。</span></li>
+        <li><a style="cursor:default" href="#" onclick=""><img src="login/main/images/wk_default.png"  width="320" height="131"  alt=""/><span class="tit">丰富教学活动，期待您的加入</span></a><span>精彩活动系列支持教学活动、评课活动、多媒体教研活动、社团活动、写作比赛类活动等，支持文档、图片、动画、视频、音频多种多元化表现形式。</span></li>
+        <li><a style="cursor:default" href="#" onclick=""><img src="login/main/images/wk_default.png"  width="320" height="131"  alt=""/><span class="tit">丰富教学活动，期待您的加入</span></a><span>精彩活动系列支持教学活动、评课活动、多媒体教研活动、社团活动、写作比赛类活动等，支持文档、图片、动画、视频、音频多种多元化表现形式。</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="block1 zqing-bg"  style="padding: 0 0 30px 0; ">
+  <h2 class="lm_bt tb hei tac"> <span > 微课数据统计</span></h2>
+  <div class="w980  ">
+    <div class="zh_im_con tubiao">
+<!--      <img src="../img/login_zz/tubiao.png" width="1200" height="300" alt=""/>-->
+      <div class="row mt15">
+        <div class="zcol-6" > <span class="num" fbind="stat">{{fdata:COURSE_NUMBER[0].COURSE_NUMBER}}个</span> <span class="mc">课程数</span> <span class="line">———</span> <span class="bg fr">A</span> </div>
+        <div class="zcol-6" > <span class="bg green">B</span> <span class="num fr" fbind="stat">{{fdata:CATALOG_NUMBER[0].CATALOG_NUMBER}}个</span>   <span  class="mc fr">资源数</span>  <span class="line fr">———</span></div>
+      </div>
+      <div class="row">
+        <div class="zcol-6" > <span class="num" fbind="stat">{{fdata:STUDY_NUMBER[0].STUDY_NUMBER}}个</span> <span  class="mc">在学人数</span> <span class="line">———</span> <span class="bg fr yellow">C</span> </div>
+        <div class="zcol-6" > <span class="bg pink">D</span>  <span class="num fr" fbind="stat">{{fdata:DIANBOSHU[0].DIANBOSHU}}个</span>   <span  class="mc fr">点播次数</span>  <span class="line fr">———</span> </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>
+
+<!--页脚-->
+<iframe style="min-width: 1000px;" id="footiframe" name="footiframe" src="" width="100%" height="190" scrolling="no" frameborder="0"></iframe>
+<!--end footer--> 
+<!--客服电话
+<div class="kfQQ">
+  <h1><a href="javascript:void(0);" id="kf_btn" class="close_2"></a>
+    <div id="goTop"><a href="javascript:void(0);" onclick="goTop2();"></a></div>
+  </h1>
+  <div class="kf_Tel">
+    <ul>
+      <li> <a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&amp;uin=8983659&amp;site=www.cactussoft.cn&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=2:8983659:41"></a></li>
+      <li> <a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&amp;uin=8983659&amp;site=www.cactussoft.cn&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=2:8983659:41"></a></li>
+      <li> <a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&amp;uin=8983659&amp;site=www.cactussoft.cn&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=2:8983659:41"></a></li>
+    </ul>
+    <h4></h4>
+  </div>
+</div>
+-->
+<!--end-->
+
+</body>
+</html>
+<script src="login/main/script/login.js"></script>
+<script src="login/main/script/common.js"></script>
+<SCRIPT src="login/main/script/kefu.js"></SCRIPT>
+<script type="text/javascript">
+		var _type4OtherConfig="mswklogin";
+</script>
+<script type="text/javascript" src="common/otherConfig.jsp?day={DAYSTAMP}"></script>

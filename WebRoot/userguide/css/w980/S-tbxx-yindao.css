@@ -1,0 +1,20 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{ margin:0; padding:0;}
+li{list-style-type:none;}
+a{ text-decoration:none; }
+img{ border:0 none; display:block;}
+input{ border:0 none;}
+
+body{ background-image:url(../../images/w1200/bj.png);}
+.bjbox{ background-image:url(../../images/w1200/tbxx-k.png); margin:0 auto;width:995px; height:1700px; position:relative;}
+.ydbox{
+	background-image: url(../../images/w1200/C-tbxx-yd.png);
+	width: 787px;
+	height: 669px;
+	position: absolute;
+	left: -59px;
+	top: 251px;
+}
+.btn{ width:203px; height:56px; display:block; margin-top:613px; margin-left:370px;}

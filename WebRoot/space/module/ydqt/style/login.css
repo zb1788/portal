@@ -1,0 +1,120 @@
+@charset "gb2312";
+/* CSS Document */
+html{overflow-y: scroll; overflow-x: scroll;}
+body{min-width: 980px;}
+.logo_login{margin: 20px 0; width: 550px; float: left;}
+.w980 .logo_login{width: 530px;}
+.logo_login span{display: block; float: left;}
+span.city{color: #2182cd; font-size: 24px; padding: 0 5px; margin-top: 25px;}
+.w980 span.city{font-size: 22px; margin-top: 27px;}
+span.swap_city{margin-top: 37px;}
+.tel400{width: 450px; float: right; margin: 35px 0 0 0;}
+.w980 .tel400{width: 440px;}
+.tel400 li{float: left; display: block; margin-left: 20px;}
+.tel400.qk3 li{float: right;}
+.tel400 li img{}
+.mt10{margin-top: -5px;}
+.tel400.qk3 li.mt10{margin-top: -4px;}
+#flash{clear: both; width: 100%; min-width: 1000px; height: 524px; position: relative; z-index: 5;}
+#flash li{height: 524px; background: #04485E;;}
+#flash li a{cursor: pointer;}
+#flash li a img{display: block; margin: 0 auto; text-align: center;}
+#flash li span{width: 100%; height: 524px; display: block;}
+.mask_login_wrap{ position:relative; right: 0; top: 12.5%; }
+.mask_login{position: absolute; right: 7.4%; top: 12.5%; width: 459px; height: 369px; display: block; background: #fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;}
+.inputBox{position: absolute; right: 7.4%; top: 12.5%; width: 459px; height: 369px; display: block; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;}
+.inputBox p.bor{height: 40px; line-height: 40px;  color:#adadad; margin-bottom: 10px; border-bottom: 1px solid #ccc;}
+.inputBox p.bor_hover{border-bottom: 1px solid #f8aa76; height: 40px; line-height: 40px; margin-bottom: 10px;}
+.inputBox p label{height: 40px; width: 40px; display: inline-block; vertical-align: middle; float: left;}
+.inputBox p label.user{background: url(../images/qtong/user.png) no-repeat center center;}
+.inputBox p label.password{background: url(../images/qtong/pwd.png) no-repeat center center;}
+.inputBox p label.check_code{background: url(../images/qtong/yzm2.png) no-repeat center center;}
+.textbox1{width: 222px; padding: 0 10px; border: none; background: none; color: #ADADAD; font-size: 16px; height: 40px; line-height: 40px;}
+.loginBg .textbox1{width: auto;}
+span.getPassword{display: block; margin: -10px 5px 20px 5px;}
+span.getPassword font.find{float: right;}
+.loginBtn{background: #3B95F5; width: 310px; height: 40px; border: none; color: #fff; font: normal 18px/40px Microsoft YaHei; text-align: center; cursor: pointer; display: inline-block ; margin-right: 10px; border-radius:3px;}
+.loginBtn:hover{background: #0c7bf1;}
+.greenBtn{background: #23c973; width: 282px; height: 40px; border: none; color: #fff; font: normal 18px/40px Microsoft YaHei; text-align: center; cursor: pointer; display: inline-block;  border-radius:3px;}
+.greenBtn:hover{background: #1b9e5a;}
+.inputBox p.mt20{margin-top: 40px;}
+.inputBox p.mt20.qk2 input{width: 48%;}
+.w107{width: 107px;}
+span.yanz{display: inline-block; float: right;}
+div.getKey{display: block; clear: both; font-size: 12px; line-height: 30px; color: #757575; }
+div.getKey span{padding-right: 10px;}
+div.getKey input[type=checkbox]{
+position: absolute;
+	top: 7px;
+	left: 8px;
+	display: inline-block;
+	width: 16px;
+	height: 16px; 
+	border: 1;
+	outline: 0!important;
+	background-color: transparent;
+	-webkit-appearance: none
+}
+
+div.getKey input[type=checkbox] {
+	font-family: 'FontAwesome';
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 1;
+	text-decoration: none;
+	color: #aaa;
+	border-radius: 0;
+	background: 0 0;
+	-webkit-font-smoothing: antialiased;
+	behavior: url(../css/PIE.htc);
+	
+	
+}
+
+div.getKey input[type=checkbox]:checked{
+	color: #159edc;
+	
+}
+div.getKey input[type=checkbox]:before{
+    content: "\f10c";
+		color: #aaa;
+
+}
+ div.getKey input[type=checkbox]:checked:before{
+		color: #159edc;
+   content: "\f058";
+	
+}
+div.getKey span.jz{margin-left: 30px;}
+h2.tab{height: 60.2px; line-height: 60.2px; display: block;}
+h2.tab a, h2.tab a:visited{display: inline-block; width: 114px; height: 60.2px; margin-right: 1px; text-align: center; color: #56A8FF; font-size: 20px; background: #DEEEFF;}
+h2.tab a:first-child{border-radius: 6px 0 0 0;}
+h2.tab a:last-child{border-radius: 0 6px 0 0; border-right: none;}
+h2.tab a:hover{background-color: #3B95F5; text-decoration: none; color: #fff;}
+h2.tab a.sel{background-color: #3B95F5;; color: #fff;}
+.loginBg{overflow: hidden; padding: 18px;}
+
+
+
+
+/*·µ»Ø¶¥²¿*/
+.scroll-up{background: #525252 url(../images/login/arr_up.png) no-repeat center center; width: 70px; height: 70px; position: fixed; _position: absolute; /*for IE6*/ opacity: 1; filter: Alpha(opacity=100); /*for IE*/ cursor: pointer; display: none; border-radius: 5px; -webkit-transition-property: background-color, opacity; -webkit-transition-duration: 1s; -webkit-transition-timing-function: ease; -moz-transition-property: background-color; -moz-transition-duration: 1s; -moz-transition-timing-function: ease;}
+.scroll-up:hover{background-color: #3d3d3d; opacity: 1;}
+/*deyang*/
+.gg_adv{width: 350px; float: right;}
+.gg_adv img{width: 100%; height: 300px;}
+.w980 .gg_adv{width: 300px;}
+.w980 .gg_adv img{width: 300px; height: 258px;}
+.gg_news{width: 403px; float: left; height: 300px; margin-right: 15px;}
+.w980 .gg_news{width: 330px; margin-right: 10px; height: 258px;}
+.gg_news h3{clear: both; font: normal 16px/50px Î¢ÈíÑÅºÚ; text-align: center; border-bottom: 1px solid #ddd; margin: 0 5px;}
+.tab_news{background: #f4f4f4; height: 33px; border-bottom: 3px solid #ddd;}
+.tab_news li{list-style: none; height: 33px; padding: 0 15px; float: left; margin-right: 5px; display: block; text-align: center; font: normal 16px/33px Î¢ÈíÑÅºÚ; color: #555; cursor: pointer;}
+.tab_news li.cur_hz{background: #e0eefb; color: #016ead; border-bottom: 3px solid #016EAD;}
+.xinwen{clear: both; margin: 10px 5px;}
+.xinwen li{background: url(../images/dot.png) no-repeat 0 8px; padding-left: 12px; line-height: 30px; overflow: hidden; font-size: 16px;}
+.w980 .xinwen li{line-height: 22px;}
+.w980 .xinwen li a{width: 258px; overflow: hidden; font-size: 14px;}
+.xinwen li span{float: right; color: #888; font-size: 12px;}
+/*µÇÂ¼Ò³ÐÂÔö*/
+.H_login_wrap{background: #04485E; height: 524px;}

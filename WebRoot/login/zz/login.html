@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="ie-stand">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="shortcut" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="icon" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="bookmark"  href="{ICOIMG}" type="image/x-icon" />
+<meta name="keywords"	content="{SEOKEY}" />
+<meta name="description" content="{SEOKEY}，郑州教育资源公共服务平台，服务于全市教育行政部门、学校和广大师生的在线同步教与学平台，专注为中小学教师、学生、家长、管理者提供高品质的同步教学、同步学习、互动沟通 、教学管理服务。" />
+<title>{SEOKEY}</title>
+<link href="login/zz/style/common.css" rel="stylesheet" type="text/css" />
+<link href="login/zz/style/login.css" rel="stylesheet" type="text/css" />
+<link href="login/zz/style/login_zz.css" rel="stylesheet" type="text/css" />
+<link href="login/zz/style/font_quan.css" rel="stylesheet" type="text/css" />
+<link href="login/zz/css/top_foot.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="login/default/style/jquery.autocomplete.css" />
+<script src="script/jquery.js"></script>
+<script src="script/jquery-migrate-ada.js"></script>
+<script src="script/jquery.cookie.js"></script>
+<script type="text/javascript" src="login/default/script/swfobject.js"></script>
+<script src="space/script/artDialog.js?skin=default"></script>
+
+<script src="login/zz/script/kefu.js"></script>
+<script src="script/userspace.js?day={DAYSTAMP}" type="text/javascript"></script>
+
+<script type='text/javascript' src="script/base64.js"></script>
+<script type='text/javascript' src="script/js_md5.js"></script>
+<script type='text/javascript' src="script/js_rsa.js"></script>
+<script type='text/javascript' src="script/util.js?day={DAYSTAMP}" ></script>
+<script type="text/javascript" src="common/config.jsp?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="script/loginobj.js?day={DAYSTAMP}"></script>
+
+<!--  script/loginpage.js -->
+<script type="text/javascript">
+
+
+var param = new Object(); 
+param = util.getRequestParams();
+var loginCheck = param["loginCheck"];
+var data = param["data"];
+var tips = param["tip"];//用户中心返回提示信息
+var usertype="";//用户类型
+var showRegedit=portal_config.show_reg;//是否显示注册
+var domain = portal_config.domain;//当前主域
+var areaname = portal_config.areaname;//当前地区名
+var appdown="";
+var upIe="";
+try{
+	appdown=protocol+sysconfig.CMS+interface_config["CMS.SETUPFILE"];
+}catch(e){}
+try{
+	upIe=protocol+sysconfig.CMS+interface_config["CMS.PAGE.IEUPDATE"];
+}catch(e){}
+//支持传递替换logo处理
+if(param["logo"]!=undefined){
+	logo = param["logo"];
+}
+var areacode = portal_config.areacode;
+var localAreaCode = portal_config.areacode;
+//切换到某角色登陆状态
+function loginClick(loginUserType){
+	$("#"+loginUserType).click();
+}
+//页面加载初始化
+$(function(){
+/*
+页面显示，链接，cookie初始化
+*/
+	//加入页面宽度cookie
+	var screen_width = window.screen.width;
+	var screen_width_id = "w1200";
+	if(screen_width>=1280){
+		screen_width_id = "w1200";
+	}else{
+		screen_width_id = "w980";
+	}
+	util.saveCookie("screen_width_id",screen_width_id,1000,"",domain);
+	if(areacode!=""){
+		util.saveCookie("localAreaCode",areacode,1000,"/",domain);
+	}
+	//针对别名支持写入cookie
+	util.getRemoteJson("PORTAL","PORTAL.COOKIER","screen_width_id="+screen_width_id+"&localAreaCode="+areacode,function(r){});
+	
+	//给用户中心传的共建前缀参数
+	$("#gjpt").attr("value",loginutil.getHost(sysconfig.PORTAL));
+	var logo = (portal_config.logo!=""&&portal_config.logo!=undefined)?portal_config.logo:defaultlogo;//当前地区logo图
+	//logo
+	$(".logo1").find("img").attr("src","login/logo/"+logo);
+	//当前城市名
+	$(".city").html(areaname);
+	//切换城市链接
+	var balanceUrl = portal_config.balanceUrl;
+	var swap_city_href = null;
+	if(balanceUrl != null && balanceUrl.indexOf("?") == -1){
+		swap_city_href = balanceUrl + "?areaCode=" + areacode;
+	}else{
+		swap_city_href = balanceUrl + "&areaCode=" + areacode;
+	}
+	if(param["logo"]!=undefined){
+		swap_city_href=swap_city_href+"&logo="+param["logo"];
+	}
+	$(".swap_city").find("a").eq(0).attr("href",swap_city_href);
+	
+	//页脚链接
+	var foot_src = protocol+sysconfig.CMS+interface_config["CMS.PAGE.A01022"];
+	$("#footiframe").attr("src",foot_src);
+	$("#data").attr("value",data);
+	 
+	//找回密码
+	var getKey_url = protocol+sysconfig.TMS+interface_config["TMS.803"]+"&portalUrl="+encodeURI(encodeURI(basePath));
+	$("#findpwd").attr("href",getKey_url);
+	
+	//登陆帮助链接
+	var guide=protocol+sysconfig.CMS+interface_config["CMS.PAGE.USEGUIDE"];
+	$("#helplink").attr("href",guide);
+
+	//各角色链接
+	var par_url = protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/login/parent.html?path="+basePath;
+	$("#par").attr("href",par_url);
+	var tea_url = protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/login/teacher.html?path="+basePath;
+	$("#tea").attr("href",tea_url);
+	var stu_url = protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/login/student.html?path="+basePath;
+	$("#stu").attr("href",stu_url);
+	
+	//展示登陆页焦点图
+	getLoginfocusImg("CMS.JSON.A01074015001");
+	//加载优教家族代码
+	var yjjz_rul = protocol+ sysconfig.CMS+interface_config["CMS.PIC.YJJZ"];
+	$.getScript(yjjz_rul,function(){
+		$("#yjjz").html(yjjz);
+	});
+	//顶部插件及浏览器提示
+	if(!util.browser.msie){
+		$('#tips').html("<font class='redfon2'>温馨提示：</font>为确保更好体验平台资源及应用，请您下载并安装优教助手。只需轻松操作，后续畅享无忧！<a target='_blank' href='"+appdown+"'>点击这里下载</a>，安装后，点击桌面图标<img src='login/default/images/yjzs2.png' />即可访问优教通。");
+		$('#tips').show();
+	}else if("undefined"==typeof(util.browser.version)){
+		$('#tips').html("<font class='redfon2'>温馨提示：</font>为确保更好体验平台资源及应用，请您下载并安装优教助手。只需轻松操作，后续畅享无忧！<a target='_blank' href='"+appdown+"'>点击这里下载</a>，安装后，点击桌面图标<img src='login/default/images/yjzs2.png' />即可访问优教通。");
+		$('#tips').show();
+	}else if(util.browser.version<7){
+		$('#tips').html("<font class='redfon2'>温馨提示：</font>检测到您的浏览器版本过低，将会影响您正常体验平台应用，请立即升级浏览器。<a target='_blank' href='"+upIe+"'>点这里查看升级方法</a>。");
+		$('#tips').show();
+	}else if(screen.width<1024){
+		$('#tips').html("<font class='redfon2'>温馨提示：</font>为了保证您流畅观看网站内容，建议您将屏幕分辨率调至1024×768及以上。");
+		$('#tips').show();
+	}
+/*
+错误提示
+*/
+	loginutil.showLoginMessage(loginCheck);
+	
+/*
+验证码点击，角色切换点击初始化
+*/
+	var yz_url = protocol+sysconfig.SSO+interface_config["SSO.CODE"];
+	$(".yanz").find("img").eq(0).attr("onclick","this.src='"+yz_url+"?r='+Math.floor(Math.random()*10000)");
+	
+	//绑定选择角色点击事件
+	$(".tab a").click(function(){
+		loginutil.changeLoginRole($(this));
+	});
+/*
+cookie默认值处理
+*/
+	//初始化账号
+	if(util.getCookie("inputname")!=''){
+		$("#inputname").attr("value",util.unconfoundInputName(util.getCookie("inputname")));
+	}
+	//初始化密码
+	if(util.getCookie("pwd")!=''){
+		$("#inpwd").attr("value",util.unconfoundInputName(util.getCookie("pwd")));
+		$("#savepass").attr("checked",true);
+	}
+	 //初始化角色选择
+	var selUserType="teacher";
+	//初始化用户角色选中,选中任意角色都会加载验证码
+	if(util.getCookie("loginUsertype")!=''){
+		selUserType=util.getCookie("loginUsertype");
+	}
+	$("#"+selUserType).click();	
+	
+	window.setTimeout('$(".yanz").find("img").eq(0).click()',200);
+});
+//loginpage.js调整找回密码id，帮助id
+
+$(".textbox1").live("keyup",function(eve){ //账号信息输入框绑定回车事件
+	if(eve.which==13){  
+		tologin();
+	}         
+});
+function hidTips() {//隐藏温馨提示
+    $('#tips').slideUp(600);
+}
+var otherConfig = decodeURIComponent(decodeURIComponent(portal_config.otherConfig));
+//默认Logo
+var defaultlogo="zzlogo.png";
+//优教家族代码中使用
+var cmsPath =protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/";
+
+</script>
+<script type="text/javascript">
+
+//页面加载初始化
+$(function(){
+//登陆帮助链接
+var guide=protocol+sysconfig.CMS+interface_config["CMS.PAGE.USEGUIDE"];
+$("#help").attr("href",guide);
+//$("#visitor_login").hide();
+loadCMSInfo();
+//加载版本
+$.ajax({url:protocol+sysconfig.PLS+"/preteach/search/script/searcherKs.js",dataType:"script",scriptCharset:"gbk",success:function(){
+	setPlsDomain(protocol+sysconfig.PLS);
+	loadKsItem("0001",1,"");//只是标记，不调用搜索函数
+}});
+});
+		//游客登录
+		function visitorLogin(){
+			window.location.href=protocol+sysconfig.SSO+"/sso/ssoAuth?loginUsertype=teacher&inputname=youke_teacher&username=youke_teacher&sfp=1&pwd=96e79218965eb72c92a549dd5a330112&isPortal=1&validateCode=1234&gjpt="+$("#gjpt").val()+"&data={setmain:\"PLS.NSEARCH\",icode:\"PLS.NSEARCH\"}";
+		}
+		//游客检索
+		function visitorSearch(parm){
+			window.location.href=protocol+sysconfig.SSO+"/sso/ssoAuth?loginUsertype=teacher&inputname=youke_teacher&username=youke_teacher&sfp=1&pwd=96e79218965eb72c92a549dd5a330112&isPortal=1&validateCode=1234&gjpt="+$("#gjpt").val()+"&data={setmain:\"PLS.NSEARCH\",icode:\"PLS.NSEARCH\",p:\""+parm+"\",sencode:\"true\"}";
+		}
+		//搜索按钮
+		function rsSearch(){
+			var sparam="";
+			var menuCode=$("#ksCode").val();
+			if(menuCode && menuCode!=null && menuCode.length>0){
+				sparam="menuCode="+menuCode;
+			}
+			var skey=$("#rsSearchKey").val();
+			if(skey && skey!=null && skey.length>0 && "搜索您感兴趣的内容"!=skey){
+				if(sparam!=""){
+					sparam=sparam+"&title="+encodeURIComponent(encodeURIComponent(skey));
+				}else{
+					sparam="title="+encodeURIComponent(encodeURIComponent(skey));
+				}
+			}
+			if(sparam!=""){
+				sparam=new Base64().encode(sparam);
+			}
+			visitorSearch(sparam);
+		}
+</script>
+<script type="text/javascript">
+
+//额外随机显示
+//显示位置id,接口编号,显示个数,展示方式(0html,其他append),展示模板(自动替换上述标签内容),是否过滤，额外独有标签处理句柄
+function RandomCMS(showid,icode,ilength,type,templete,filterCMS,shandel){
+	if(util.isBlank(templete)){alert("错误信息：空模板内容!位置："+showid+"，编号:"+icode);return;}
+		util.getCMSData(icode,35,filterCMS,function(data){
+		if(data.length==0){return false;}else{
+			var codeStr=new Array();
+			var i=0;
+			if(data.length>6 && (data.length-3)>ilength){
+				i=Math.round(Math.random()*(data.length-ilength));
+			}
+			var slength=0;
+			for(i;i<data.length;i++){
+				if(slength>=ilength){break;}
+				var tdata = data[i];
+				var target = "_blank";
+				if(tdata.a9=="当前页"){
+					target = "";
+				}else if(tdata.a9=="不打开"){
+					infourll="javascript:;"
+					target="";
+				}
+				var tempcode=null;
+				if(""!=typeof(shandel) && shandel){
+					tempcode=shandel(templete,tdata);
+				}else{
+					tempcode=templete;
+				}
+				codeStr.push(tempcode.replaceAll("~url~",tdata.url).replaceAll("~img~",tdata.pic).replaceAll("~time~",tdata.time).replaceAll("~date~",tdata.time.substring(0,10)).replaceAll("~text~",tdata.title).replaceAll("~desc~",tdata.desc).replaceAll("~target~",target));
+				slength++;
+			}
+			if(codeStr!=null && codeStr.length>0){
+				if(type==0){
+					$("#"+showid).html(codeStr.join(""));
+				}else{
+					$("#"+showid).append(codeStr.join(""));
+				}
+			}
+			codeStr = null;
+			return true;
+		}
+	});
+}
+function loadCMSInfo(){
+	//CMS信息
+	$("#jchdlist").html("<li></li>");
+	util.getCommonCMS("jchdlist","CMS.JSON.A01047006",3,0,"<li><a href=\"~url~\" target=\"_blank\"><img src=\"~img~\" width=\"320\" height=\"131\" alt=\"~text~\"/><span class=\"tit\">~text~</span></a><span>~desc~</span></li>",false);
+	$("#ckjylist").html("<li></li>");
+	$("#ckjy_more").attr("href",util.makeUrl("CMS","CMS.PAGE.A01047003"));
+	util.getCommonCMS("ckjylist","CMS.JSON.A01047003",6,0,"<li><span class=\"fr\">~date~</span><a href=\"~url~\" title=\"~text~\" target=\"_blank\">~text~</a></li>",false);
+	$("#zhktlist").html("<li></li>");
+	$("#zhkt_more").attr("href",util.makeUrl("CMS","CMS.PAGE.A01047004"));
+	util.getCommonCMS("zhktlist","CMS.JSON.A01047004",6,0,"<li><span class=\"fr\">~date~</span><a href=\"~url~\" title=\"~text~\" target=\"_blank\">~text~</a></li>",false);
+	$("#sfxlist").html("<li></li>");
+	$("#sfx_more").attr("href",util.makeUrl("CMS","CMS.PAGE.A01047005001"));
+	RandomCMS("sfxlist","CMS.JSON.A01047005001",3,0,"<li><a href=\"~url~\" target=\"_blank\" ><img src=\"~img~\" width=\"262\" height=\"207\"  alt=\"~text~\"/></a><span><a target=\"_blank\" href=\"~url~\">~text~</a></span></li>",false);
+}
+
+//教育时讯
+function getJysx(lname,lurl,datalist){
+	$("#jysx_more").attr("href",lurl);
+	getStInfo(datalist,"jysxlist");
+}
+//县区动态
+function getXqdt(lname,lurl,datalist){
+	$("#xqdt_more").attr("href",lurl);
+	getStInfo(datalist,"xqdtlist");
+}
+//教育博客
+function getBlog(datalist){
+	getStInfo(datalist,"jybklist");
+}
+//名师工作室
+function getStudio(lname,lurl,datalist){
+	$("#studio_more").attr("href",lurl);
+	var ncode=new Array();
+	for(var i=0;i<datalist.length;i++){
+		var temp=datalist[i];
+		ncode.push('<li title="'+temp.tagname+'" ><a href="'+temp.url+'"><img src="'+temp.pic+'" width="77" height="108" /></a><span><a href="'+temp.url+'">'+temp.tagname+'</a></span></li>');
+	}
+	$("#studiolist").html(ncode.join(""));
+}
+//索特信息显示处理
+function getStInfo(datalist,showid){
+	var ncode=new Array();
+	for(var i=0;(i<datalist.length && i<6);i++){
+		var temp=datalist[i];
+		ncode.push("<li><span class='fr'>"+temp.date+"</span><a target='_blank' title='"+temp.title+"' href='"+temp.url+"'>"+temp.title+"</a></li>");
+	}
+	$("#"+showid).html(ncode.join(""));
+}
+</script>
+</head>
+<body>
+<div class="tips" id="tips" >&nbsp;</div>
+<!-- 控件加载判断 -->
+<OBJECT ID="ocx" width="0" height="0" CLASSID="CLSID:B02201C9-1789-4FF0-B95F-C1A03D8B6B99">
+	<PARAM NAME="_Version" VALUE="65536">
+	<PARAM NAME="_ExtentX" VALUE="10583">
+	<PARAM NAME="_ExtentY" VALUE="10583">
+	<PARAM NAME="_StockProps" VALUE="0">
+</OBJECT>
+
+<div class="w980">
+  <div class="logo_login"> <span class="logo1"><img src="login/zz/images/login/logo.png" width="360" height="60"></span> <span class="city">郑州</span> <span class="swap_city"><a href="http://news.zzedu.net.cn/include/zhuanti/bbtsy/index.shtml" style="color:#999;">班班通客服</a></span> </div>
+  <div class="tel400">
+    <li class="mt10"><a href="http://n.eduyun.cn" target="_blank"><img src="login/zz/images/login/friend_adv.png"/></a></li>
+    <li><a href="http://vfszz.zzedu.net.cn/A01/lib/defaultstyle/2016yjt/11/newpk/login.html" target="_blank"><img src="login/zz/images/login/youke.png"></a></li>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<div id="flash">
+  <div class="w980">
+    <div class="posRe">
+      <div class="mask_login"></div>
+      <!--黑色遮罩-->
+      <div class="inputBox">
+        <form id="loginForm" name="loginForm" action="" method="post" target="">
+          <h2 class="tab gly"> <a class="sel" href="javascript:;" onclick="document.getElementById('zcButton').value='教师注册';" id="teacher">教师</a><a onclick="document.getElementById('zcButton').value='学生注册';" href="javascript:;"  id="student">学生</a><a href="javascript:;" id="parent">家长</a><a href="javascript:;" style="margin-right:0;" id="manager">管理员</a> </h2>
+          <input type="hidden" id="loginUsertype" name="loginUsertype"/>
+          <input type="hidden" id="gjpt" name="gjpt" />
+          <div class="loginBg">
+            <div class="posRe">
+              <!-- 多账号选择层 -->
+              <div id="roleDiv" phonenum="" class="ac_results" style="left:5px;top:40px;display:none;position:absolute" >
+                <ul id="roleList" style="overflow:hidden" >
+                </ul>
+              </div>
+              <p class="bor">
+                <label class="user"></label>
+                <input type="text"  id="inputname" name="inputname" class="textbox1" def="请输入账号/手机号" value="请输入账号/手机号" onFocus="focuss(this);clearusername();" onKeyUp="clearusername();" onChange="clearusername();" onBlur="blurr(this)"  />
+                <input type="hidden" name="username" id="username"/>
+                <input type="hidden" name="sfp" id="sfp" value="" />
+                <span class="name" style="background:none;background-color:none;display:none" id="changename"></span> <a title='手机号登陆用户，点击此处选择角色' onClick="getRoles(1)" class="arr_1" ></a> </p>
+            </div>
+            <p class="bor">
+              <label class="password"></label>
+              <input type="password" placeholder="请输入密码" id="inpwd" autocomplete="new-password" class="textbox1" onFocus="focuss(this);" onBlur="blurr(this)" />
+              <input type="hidden"  id="pwd" name="pwd" value="" />
+              <input id="isPortalisPortal" name="isPortal" type="hidden" value="1" />
+              <input id="data" name="data" type="hidden" value="" />
+            </p>
+            <p class="bor" style="width:120px;float:left;">
+              <label class="check_code"></label>
+              <input type="text" name="validateCode" id="validateCode"  class="textbox1" style="width:50px;" maxlength="4" def="验证码" value="验证码" onFocus="focuss(this);" onBlur="blurr(this);" />
+            </p>
+            <span class="yanz"> <img src="login/default/images/hide.gif" width="58" height="28" /> </span>
+            <div class="getKey m-f15">
+           <span class="fr" > <a id="visitor_login" href="#" class="btn_yellow youke" onclick="visitorLogin();return false;"><i class="fa fa-user-o" aria-hidden="true"></i> 游客登录</a></span>
+              <input type="checkbox"  value="1" id="savepass" />
+            &nbsp;记住密码  <a href="#" id="findpwd" class="blue f12" >找回密码</a>  <a href="#" id="helplink" target="_blank" class="blue f12" id="help" >帮助</a> </div>
+          <p class="mt20 qk2">
+            <input type="button" value="登&nbsp;录"  class="loginBtn"  id="loginbuttion" onClick="tologin();"/>
+            <input type="button" class="greenBtn" style="display:none" value="注&nbsp;册" id="zcButton" onClick="zcClick(null);"/>
+          </p>
+        </div>
+        </form>
+      </div>
+      <!--会员登录结束--> 
+      
+    </div>
+    <!--end posRe--> 
+  </div>
+  <!--end w980-->
+  
+  <ul id="tp">
+    <li id="flash1" style="display: block;"><a href="#"><span style="background:url(login/zz/img/login_img1.jpg) no-repeat center center;"></span></a></li>
+  </ul>
+  <div class="w980">
+    <div class="flash_bar" id="an">
+      <div class="dq" id="f1" onclick="changeflash(1)"></div>
+    </div>
+  </div>
+  <script>
+			var currentindex=1;
+			var numbers = 1;
+			function changeflash(i) {	
+			currentindex=i;
+			for (j=1;j<=numbers;j++){
+				if (j==i) 
+				{$("#flash"+j).fadeIn("normal");
+				$("#flash"+j).css("display","block");
+				$("#f"+j).removeClass();
+				$("#f"+j).addClass("dq");
+				}
+				else
+				{$("#flash"+j).css("display","none");
+				$("#f"+j).removeClass();
+				$("#f"+j).addClass("no");}
+			}}
+			function startAm(){
+			timerID = setInterval("timer_tick()",8000);
+			}
+			function stopAm(){
+			clearInterval(timerID);
+			}
+			function timer_tick() {
+				if(currentindex<=numbers){
+					changeflash(currentindex);
+					currentindex++;
+				}else{
+					currentindex = 1;
+					changeflash(currentindex);
+					currentindex++;
+				}
+			}
+			$(document).ready(function(){
+				$(".flash_bar div").mouseover(function(){stopAm();}).mouseout(function(){startAm();});
+				startAm();
+			});
+		</script> <!--Flash end--> 
+  
+</div>
+<div class="block1 tongji">
+  <div class="w980">
+    <div><span><i><img src="login/zz/images/login/tm_r1_c1.png" width="35" height="35" alt=""></i>上周资源更新：<em class="redFon" id="top_tj_res_week"></em>条</span><span><i><img src="login/zz/images/login/tm_r3_c1.png" width="35" height="35" alt=""></i>资源总数：<em class="redFon" id="top_tj_res_all"></em>条</span><span><i><img src="login/zz/images/login/tm_r5_c1.png" width="35" height="35" alt=""></i>上周试题更新：<em class="redFon" id="top_tj_tq_week"></em>条</span><span><i><img src="login/zz/images/login/tm_r7_c1.png" width="35" height="35" alt=""></i>试题总数：<em class="redFon" id="top_tj_tq_all"></em>条</span><span><i><img src="login/zz/images/login/tm_r9_c1.png" width="35" height="35" alt=""></i>总容量：<em class="redFon" id="top_tj_size"></em>T</span></div>
+  </div>
+</div>
+<script type="text/javascript">
+try{
+$.getScript(protocol+sysconfig.CMS+"/pic/jsondata/toptqres/top_tq_res.js",function(){
+	if(typeof(top_tq_res)!="undefined"){
+		$("#top_tj_tq_week").html(top_tq_res.tqnum2);
+		$("#top_tj_tq_all").html(top_tq_res.tqtotal2);
+		$("#top_tj_res_week").html(top_tq_res.resnum2);
+		$("#top_tj_res_all").html(top_tq_res.restotal2);
+		var allsize=top_tq_res.capacity2;
+		if(top_tq_res.capacity2 && top_tq_res.capacity2.indexOf(".")>0){
+			allsize=top_tq_res.capacity2.substring(0,top_tq_res.capacity2.indexOf("."));
+		}
+		$("#top_tj_size").html(allsize);
+	}	
+});
+}catch(e){}
+</script>
+<div class="block1">
+<input id="ksCode" type="hidden" />
+  <div class="w1200">
+    <div class="video">
+     	<div class="list_con " >
+        	<div class="classif">
+            	<div class="choose">
+                    <span class="choose-sp">您已选择：</span>
+                  
+					<a id="ksCodeLinkId" class="choose-a" style="display:none" href="javascript:void(0);" onclick="clearKs();"></a>
+                </div>
+                <div class="class_1" style="border-top:1px solid #efefef">
+                	<ul>
+                   		
+                    	<li style="height:auto;">
+                        	<label id="level2_label">年级：</label>
+                            <span id="level2_span">
+                            </span>
+                        </li>
+                        <li style="height:auto;"><label id="level3_label">学期：</label>
+                            <span id="level3_span"></span>
+                        </li>
+                        <li style="height:auto;"><label id="level4_label">学科：</label>
+                            <span id="level4_span"></span>
+                        </li>
+                        <li style="height:auto;"><label id="level5_label">版本：</label>
+                            <span id="level5_span"></span>
+                        </li>
+						
+                    </ul>
+                </div>
+            </div><!------搜索目录----->
+            
+            <div class="search_bor" style="margin: inherit; width: auto;"> 
+				<input id="rsSearchKey" type="text" class="sou_2017" value="搜索您感兴趣的内容" onfocus="if (value =='搜索您感兴趣的内容'){value =''};" onblur="if (value ==''){value='搜索您感兴趣的内容'}" >
+				<input type="submit" class="souBtn" onclick="rsSearch()" value="搜索资源" style="padding: 0 15px; width: auto;">
+			</div>
+          	<div class="bk-more class_1">
+				<ul>
+					<li>
+						<span>
+							  <a href="javascript:void(0);" >人教版</a>
+							  <a href="javascript:void(0);" >北师大版</a>
+							  <a href="javascript:void(0);" >苏教版</a>
+							  <a href="javascript:void(0);" >翼教版</a>
+							  <a href="javascript:void(0);" >西南师大版</a>
+							  <a href="javascript:void(0);" >人教版</a>
+							  <a href="javascript:void(0);" >北师大版</a>
+							  <a href="javascript:void(0);" >苏教版</a>
+							  <a href="javascript:void(0);" >翼教版</a>
+							  <a href="javascript:void(0);" >西南师大版</a>
+							  <a href="javascript:void(0);" >人教版</a>
+							  <a href="javascript:void(0);" >北师大版</a>
+							  <a href="javascript:void(0);" >苏教版</a>
+							  <a href="javascript:void(0);" >翼教版</a>
+							  <a href="javascript:void(0);" >西南师大版</a>
+						</span>
+					</li>
+				</ul>
+			</div>	
+         </div>
+       <div class="clearfix"></div>
+    </div>
+    <div class="app_login" >
+      <div id="yjjz"></div>
+   </div>
+   <div class="clearfix"></div>
+  </div>
+</div>
+<!--end block1-->
+<div class="block1 hui-bg" style="padding: 0 0 30px 0;">
+	<div class="w980">
+		 <h2 class="lm_bt"> <span ><i class="fa fa-cubes" aria-hidden="true"></i> 精彩活动</span></h2>
+		
+		<div class="tulist2">
+        <ul id="jchdlist">
+          <li><a >数据加载中...</a><span>数据加载中...</span></li>
+        </ul>
+      </div>
+		
+		
+	</div>
+</div>
+<div class="clearfix"></div>
+<div class="block1" style="padding: 0 0 30px 0;">
+<div class="w980 ">
+ <div class="row">
+ 	<div class="zcol-6">
+		<h2 class="lm_bt"><em class="fr"><a href="#" id="ckjy_more" target="_blank">更多...</a></em> <span ><i class="fa fa-users" aria-hidden="true"></i>创客教育</span></h2>
+		 <div class="news_tj" >
+            <ul  style="width: 95%;" id="ckjylist">
+              <li><span class="fr"></span><a href="#">数据加载中。。。</a></li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+		
+		</div>
+		<div class="zcol-6">
+		<h2 class="lm_bt"><em class="fr"><a href="#" id="zhkt_more" target="_blank">更多...</a></em> <span ><i class="fa fa-graduation-cap" aria-hidden="true"></i>智慧课堂展示</span></h2>
+		 <div class="news_tj" >
+            <ul  style="width: 95%;" id="zhktlist">
+              <li><span class="fr"></span><a href="#">数据加载中。。。</a></li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+		
+		</div>
+ </div>
+	<div class="row">
+		<div class="zcol-6"><div  class="news_tj_wrap" >
+        <h1  class="hui_line"><em class="fr"><a id="jysx_more" href="#" target="_blank" >更多...</a><a id="xqdt_more" href="#" target="_blank" style="display:none">更多...</a></em><span class="tab_news " ><a href="javascript:void(0);" class="cur_2" id="13Tab_0" onclick="Show_Tab_List2(3,0,13);"><i class="fa fa-paper-plane" aria-hidden="true"></i>教育时讯</a> <a href="javascript:void(0);"  id="13Tab_1" onclick="Show_Tab_List2(3,1,13);"><i class="fa fa-newspaper-o" aria-hidden="true"></i>县区动态</a></span></h1>
+        <div class="clearfix"></div>
+        <div id="13s_0">
+          <div class="news_tj" >
+            <ul  style="width: 95%;" id="jysxlist" >
+              <li><span class="fr"></span><a >数据加载中。。。</a></li>
+              
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div id="13s_1" style="display: none" >
+          <div class="news_tj" >
+            <ul  style="width: 95%;" id="xqdtlist" >
+              <li><span class="fr"></span><a >数据加载中。。。</a></li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        
+      </div></div>
+		<div class="zcol-6">
+		<h2 class="lm_bt"><em class="fr"><a href="http://blog.zzedu.net.cn/" target="_blank">更多...</a></em> <span ><i class="fa fa-pencil" aria-hidden="true"></i>教育博客</span></h2>
+		 <div class="news_tj" >
+            <ul  style="width: 95%;" id="jybklist" >
+              <li><span class="fr"></span><a >数据加载中。。。</a></li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+		
+		</div>
+	</div>
+	
+ <div class="row">
+ 		<div class="zcol-6">
+		<h2 class="lm_bt"><em class="fr"><a href="#" id="sfx_more" target="_blank">更多...</a></em> <span ><i class="fa fa-university" aria-hidden="true"></i>示范校</span></h2>
+		
+	 <div class="zt_lie_sy">
+        <ul id="sfxlist">
+          <li><a >数据加载中...</a></li>
+		 </ul>
+			</div>
+		
+		</div>
+			<div class="zcol-6">
+		<h2 class="lm_bt"><em class="fr"><a href="#" id="studio_more" target="_blank">更多...</a></em> <span ><i class="fa fa-user-circle-o" aria-hidden="true"></i>名师工作室</span></h2>
+		
+    <div class="ms_lie_sy">
+        <ul id="studiolist">
+          <li>数据加载中。。。</li>
+		    </ul>
+			</div>
+		
+		</div>
+ 	
+ </div>
+	
+</div>
+	</div>
+<div class="clearfix"></div>
+<div class="block1 hui-bg" style="padding: 0px 0 30px 0; margin-top: -15px;">
+<div class="w980">
+<div class="link">
+ <h2 class="lm_bt" style="text-align: center;"> <span ><i class="fa fa-link" aria-hidden="true"></i>友情链接</span></h2>
+  
+	  <div class="tulink mt15">
+	  <a href="http://www.ncet.edu.cn/zhuzhan/index.html" target="_blank" ><img src="login/zz/images/friend1.jpg"alt="中央电教馆"/></a>
+	  <a href="http://www.haedu.gov.cn/" target="_blank" ><img src="login/zz/images/friend2.jpg" alt="河南教育厅"/></a>
+	  <a href="http://www.eduyun.cn/" target="_blank" ><img src="login/zz/images/friend3.jpg" alt="国家教育资源公共服务平台"/></a>
+	  <a href="http://www.zzjy.gov.cn/" target="_blank" ><img src="login/zz/images/friend4.jpg" alt="郑州市教育局"/></a>
+	  <a href="http://www.hner.cn/" target="_blank" ><img src="login/zz/images/friend5.jpg" alt="河南省基础教育资源公共服务平台"/></a>
+	  </div>
+      <div class="zilink mt15">
+		<a href="http://www.moe.edu.cn/" target="_blank" >中国教育部</a>
+<a href="http://www.hner.cn/" target="_blank" >河南教育资源网</a>
+<a href="http://www.zzedu.net.cn" target="_blank" >郑州教育信息网</a>
+<a href="http://blog.zzedu.net.cn/mainindex.html" target="_blank" >郑州教育博客</a>
+<a href="http://zwbl.zzedu.net.cn/" target="_blank" >郑州市中小学网上作文博览</a>
+<a href="http://cnki.zzedu.net.cn/" target="_blank" >郑州市教育数字图书馆</a>
+<a href="http://iclass.zzedu.net.cn/" target="_blank" >郑州市区域班班通录播课资源共建、共享平台</a>
+<a href="http://ms.zzedu.net.cn/" target="_blank" >郑州名师网络工作室</a>
+        <div class="clearfix"></div>
+      </div>
+	</div>
+	
+</div>
+</div>
+
+<!--页脚-->
+<div class="footer mt0">
+<iframe style="min-width: 1000px;" id="footiframe" name="footiframe" src="" width="100%" height="190" scrolling="no" frameborder="0"></iframe>
+</div>
+
+<!--end footer-->
+<!--客服电话-->
+<div class="kfQQ"> 
+  <h1><a href="javascript:void(0);" id="kf_btn" class="close_2"></a>
+    <div id="goTop"><a href="javascript:void(0);" onclick="goTop2();"></a></div>
+  </h1>
+  <div class="kf_Tel">
+    <ul>
+      <li>   <a title="点击这里给我发消息" href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzkzODE2MzM1Ml80NTg2MDdfNDAwNjM3MTMxOV8yXw" target="_blank"><img src="login/zz/images/qqtalk.png"></a></li>
+       <li>   <a title="点击这里给我发消息" href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzkzODE2MzM1Ml80NTg2MDdfNDAwNjM3MTMxOV8yXw" target="_blank"><img src="login/zz/images/qqtalk.png"></a></li>
+        <li>   <a title="点击这里给我发消息" href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzkzODE2MzM1Ml80NTg2MDdfNDAwNjM3MTMxOV8yXw" target="_blank"><img src="login/zz/images/qqtalk.png"></a></li>
+    </ul>
+    <h4></h4>
+  </div>
+</div>
+
+<!--页脚-->
+</body>
+</html>
+<script src="login/default/script/common.js"></script>
+<script src="login/default/script/login.js"></script>
+<script type="text/javascript">
+		var _type4OtherConfig="login";
+</script>
+<script type="text/javascript" src="common/otherConfig.jsp?day={DAYSTAMP}"></script>
+<script language="javascript">
+//展示登陆页焦点图
+getLoginfocusImg("CMS.JSON.A01047001");
+
+function zcClick(param){
+	if("undefined"==typeof(param) || param==null){
+		param=document.getElementById("loginUsertype").value;
+	}
+	if(param=='parent'){
+		param="student";
+	}
+	var loginUsertype="teacher";
+	if(param==null || param==""){
+		if($("#loginUsertype").val()==""){ //默认老师
+			loginUsertype = "teacher";
+		}else{
+			loginUsertype = $("#loginUsertype").val();
+		}
+	}else if(param=='student' || param =='teacher'){
+		loginUsertype=param;
+	}
+	//郑州教师注册定制
+	if("teacher"==loginUsertype){
+		window.open(protocol+sysconfig.TMS+"/tms/register/regTeacherAudit3P.do");
+	}else{
+		window.open(protocol+sysconfig.TMS+"/tms/register/register.do");
+	}
+}
+</script>
+<script language="javascript">
+//教育时讯
+$.getScript("http://news.zzedu.net.cn/include/block/bbt_jysx.shtml");
+//县区动态
+$.getScript("http://news.zzedu.net.cn/include/block/bbt_xqdt.shtml");
+//教育博客
+$.ajax({
+  url: "http://news.zzedu.net.cn/include/block/bbt_jybk.shtml",
+  dataType: "script",
+  scriptCharset:"utf-8"
+});
+//名师工作室
+$.ajax({
+  url: "http://ms.zzedu.net.cn//guest/studio.jsp",
+  dataType: "script"
+});
+</script>
+

@@ -1,0 +1,382 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="icon" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="bookmark"  href="{ICOIMG}" type="image/x-icon" />
+<title>龙江县教育信息化公共服务平台，{SEOKEY}</title>
+<link href="login/lj/style/common.css" rel="stylesheet" type="text/css" />
+<link href="login/lj/style/style.css" rel="stylesheet" type="text/css" />
+<link href="login/lj/style/login.css" rel="stylesheet" type="text/css" />
+<link href="login/lj/style/jquery.autocomplete.css" rel="stylesheet" type="text/css" />
+
+<script type='text/javascript' src="script/jquery.js"></script>
+<script type='text/javascript' src="script/jquery-migrate-ada.js"></script>
+<script type='text/javascript' src="script/jquery.cookie.js"></script>
+<script type='text/javascript' src="script/swfobject.js" ></script>
+<script type='text/javascript' src="space/script/artDialog.js?skin=default"></script>
+
+<script type='text/javascript' src="script/base64.js"></script>
+<script type='text/javascript' src="script/js_md5.js"></script>
+<script type='text/javascript' src="script/js_rsa.js"></script>
+<script type='text/javascript' src="script/util.js?day={DAYSTAMP}" ></script>
+<script type="text/javascript" src="common/config.jsp?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="script/loginobj.js?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="script/loginpage.js?day={DAYSTAMP}"></script>
+
+<script type='text/javascript' src="login/lj/script/ljlogin.js"></script>
+
+</head>
+<script type="text/javascript">
+$(".textbox1").live("keyup",function(eve){ //账号信息输入框绑定回车事件
+	if(eve.which==13){  
+		tologin();
+	}         
+});
+function hidTips() {//隐藏温馨提示
+    $('#tips').slideUp(600);
+}
+var otherConfig = decodeURIComponent(decodeURIComponent(portal_config.otherConfig));
+//默认Logo
+var defaultlogo="ljlogo.png";
+//优教家族代码中使用
+var cmsPath =protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/";
+
+</script>
+<body>
+	<div class="dtips" id="tips" >&nbsp;</div>
+	<!-- 控件加载判断 -->
+	<OBJECT ID="ocx" width="0" height="0" CLASSID="CLSID:B02201C9-1789-4FF0-B95F-C1A03D8B6B99">
+		<PARAM NAME="_Version" VALUE="65536">
+		<PARAM NAME="_ExtentX" VALUE="10583">
+		<PARAM NAME="_ExtentY" VALUE="10583">
+		<PARAM NAME="_StockProps" VALUE="0">
+	</OBJECT>
+	<div class="w980">
+		<div class="logo_login">
+    	<span class="logo1"><img src="" width="360" height="60"></span> <span class="city"></span> <span class="swap_city"><a href="city.html" style="color:#999;">[切换城市]</a></span> </div>
+    </div>
+    
+    <div class="tel400">
+    	<li class="mt10"><img src="login/lj/images/login/tel.png"></li>
+        <li><a href="http://n.eduyun.cn" target="_blank"><img src="login/lj/images/login/friend_adv.png"></a></li>
+    </div>
+    <div class="clearfix"></div>
+	</div><!--end container-->
+    <div id="flash">
+			<div class="w980">
+    		<div class="posRe">
+				<div class="mask_login"></div><!--黑色遮罩-->
+        <div class="inputBox">
+        <form id="loginForm" name="loginForm" action="" method="post" target="">
+      		<h2 class="tab gly">
+      		<a class="sel" href="javascript:;" id="teacher">教师</a><a href="javascript:;" id="student">学生</a><a href="javascript:;" id="parent">家长</a><a href="javascript:;" style="margin-right:0;" id="manager">管理员</a></h2>
+          <input type="hidden" id="loginUsertype" name="loginUsertype"/>
+          <input type="hidden" id="gjpt" name="gjpt" />
+          <div class="loginBg">
+          <div class="posRe">
+          	<!-- 多账号选择层 -->
+              <div id="roleDiv" phonenum="" class="ac_results" style="left:5px;top:40px;display:none;position:absolute" >
+                <ul id="roleList" style="overflow:hidden" >
+                </ul>
+              </div>
+            <p class="bor">
+            <label class="user"></label>
+            <input type="text" id="inputname" name="inputname" class="textbox1" def="用户名" value="用户名" onFocus="focuss(this);clearusername();" onKeyUp="clearusername();" onChange="clearusername();" onBlur="blurr(this)" />
+            <input type="hidden" name="username" id="username"/>
+            <input type="hidden" name="sfp" id="sfp" value="" />
+            <span class="name" style="background:none;background-color:none;display:none" id="changename"></span> <a title='手机号登陆用户，点击此处选择角色' onClick="getRoles(1)" class="arr_1" ></a>
+            </p>
+            </div>
+            <p class="bor">
+            <label class="password"></label>
+            <input type="password"  placeholder="密码" id="inpwd" class="textbox1" onFocus="focuss(this);" onBlur="blurr(this)" />
+            <input type="hidden" id="pwd" name="pwd" value="" />
+            <input id="isPortalisPortal" name="isPortal" type="hidden" value="1" />
+            <input id="data" name="data" type="hidden" value="" />
+            </p>
+						<p class="bor" style="width:120px;float:left;">
+						<label class="check_code"></label>
+						<input type="text" name="validateCode" id="validateCode"  class="textbox1" style="width:60px;" maxlength="4" value="验证码" def="验证码" onFocus="focuss(this);" onBlur="blurr(this);" /></p>
+            <span class="yanz"><img src="login/default/images/hide.gif" width="58" height="28" /></span>
+            <div class="getKey">
+            <input type="checkbox"  value="1" id="savepass"/>&nbsp;记住密码　　<a href="#" class="blue">找回密码</a>   <a class="blue" href="#" target="_blank" >帮助</a></div>
+    				<p class="mt20 qk2">
+		            <input type="button" value="登&nbsp;录"  class="loginBtn" id="loginbuttion" onClick="tologin();" />
+					<input type="button" value="优教卡注册"  class="loginBtn" id="zcbutton" onClick="zcClick();" />
+    				</p>
+   <!-- 
+-->
+           </div>
+           </form>
+          </div><!--会员登录结束-->
+    		</div><!--end posRe-->
+    	</div><!--end w980-->
+    
+    	<ul id="tp">
+        </ul>
+        <div class="w980">
+        <div class="flash_bar" id="an">
+      	</div>
+        </div>
+        <script>
+			var currentindex=1;
+			var numbers = 1;
+			function changeflash(i) {	
+			currentindex=i;
+			for (j=1;j<=numbers;j++){
+				if (j==i) 
+				{$("#flash"+j).fadeIn("normal");
+				$("#flash"+j).css("display","block");
+				$("#f"+j).removeClass();
+				$("#f"+j).addClass("dq");
+				}
+				else
+				{$("#flash"+j).css("display","none");
+				$("#f"+j).removeClass();
+				$("#f"+j).addClass("no");}
+			}}
+			function startAm(){
+			timerID = setInterval("timer_tick()",8000);
+			}
+			function stopAm(){
+			clearInterval(timerID);
+			}
+			function timer_tick() {
+				if(currentindex<=numbers){
+					changeflash(currentindex);
+					currentindex++;
+				}else{
+					currentindex = 1;
+					changeflash(currentindex);
+					currentindex++;
+				}
+			}
+			$(document).ready(function(){
+				$(".flash_bar div").mouseover(function(){stopAm();}).mouseout(function(){startAm();});
+				startAm();
+			});
+		</script>
+        
+		</div>
+    <!--end #flash-->
+    
+
+<div class="w980">
+<div class="container m20">
+	<div class="lef">
+		<!--十佳学校展示-->
+      <div class="mingshi2 w679 fl">
+        <h1 class="dbt line_o"><!--<span class="more"><a href="#">更多</a></span>--><font>2015年度信息技术应用十佳学校</font></h1>
+        <ul class="ms_list2" id="msList1">
+        </ul>
+      </div>
+      
+      <!--十佳教师展示-->
+      <div class="mingshi2 w679 fl">
+        <h1 class="dbt line_o"><!--<span class="more"><a href="#">更多</a></span>--><font>2015年度信息技术应用十佳教师</font></h1>
+        <ul class="ms_list2" id="msList2">
+        </ul>
+      </div>
+   	<!--banner-->
+ 		<div class="banner" id="banner1" style="padding-top:20px;"></div>	
+    <div class="banner" id="banner2" style="padding-top:10px;"></div>	
+  </div><!--左边结束-->
+    
+  	<!--右边开始-->
+    <div class="right_n">
+    	<!--教育资讯-->
+  		<div class="newsList">
+        	<h1 class="dbt2_lj">通知公告</h1>
+            <ul id="jyzxList1">
+      			</ul>
+        </div>
+        
+        <!--教师最热资源-->
+    	<div class="newsList">
+        	<h1 class="dbt2_lj">信息化动态</h1>
+            <ul id="jyzxList2">
+      			</ul>
+        </div>
+        
+        <!--学生最热资源-->
+  <div class="newsList">
+        	<h1 class="dbt2_lj">学校活跃度</h1>
+      		      <ul id="jyzxList3">
+      				</ul>
+        </div>
+        
+  <p>
+    <!--平台最热资源-->
+<div class="banner" ><a href="#"><img src="login/lj/img/06.jpg" width="300" height="190" /></a></div>	
+  </div><!--end rig-->
+  
+  
+     <!--广告-->
+    <div class="banner" id="banner3"></div>
+    <div class="banner" id="banner4"></div>
+    
+     <!--下面-->
+  <div class="app">
+   	<h1 class="dbt3">典型应用</h1>
+   	  <ul>
+       	  <dl>
+           	  <dt><img src="login/lj/images/ico/ico01.png" width="48" height="48" /></dt>
+              <dd class="title">轻松备课</dd>
+              <dd class="intro">丰富的教学资源，辅助备授课的智能平台</dd>          
+          </dl>
+          <dl>
+           	  <dt><img src="login/lj/images/ico/ico02.png" width="48" height="48" /></dt>
+              <dd class="title">高效数学</dd>
+              <dd class="intro">学同步课程，练在线测评，考试升学样样行</dd>            
+          </dl>
+          <dl>
+           	  <dt><img src="login/lj/images/ico/ico03.png" width="48" height="48" /></dt>
+              <dd class="title">家校互动</dd>
+              <dd class="intro">名师手拉手，同步专项、升学备考</dd>            
+          </dl>
+      </ul>
+      
+      <ul>
+       	  <dl>
+           	  <dt><img src="login/lj/images/ico/ico04.png" width="48" height="48" /></dt>
+              <dd class="title">同步预习</dd>
+              <dd class="intro">班级文化、资源、信息、活动的共享空间</dd>            
+          </dl>
+          <dl>
+           	  <dt><img src="login/lj/images/ico/ico05.png" width="48" height="48" /></dt>
+              <dd class="title">我要提问</dd>
+              <dd class="intro">丰富的教学资源，辅助备授课的智能平台</dd>            
+          </dl>
+          <dl>
+           	  <dt><img src="login/lj/images/ico/ico06.png" width="48" height="48" /></dt>
+              <dd class="title">专项培优</dd>
+              <dd class="intro">记录成长点滴，关爱成长过程</dd>            
+          </dl>
+      </ul>
+      
+      <ul style="margin-right:0;">
+       	  <dl>
+           	  <dt><img src="login/lj/images/ico/ico07.png" width="48" height="48" /></dt>
+              <dd class="title">课前辅学</dd>
+              <dd class="intro">班级文化、资源、信息、活动的共享空间</dd>            
+          </dl>
+          <dl>
+           	  <dt><img src="login/lj/images/ico/ico08.png" width="48" height="48" /></dt>
+              <dd class="title">测评反馈</dd>
+              <dd class="intro">亲子交流、互动、沟通的信息与资源平台</dd>            
+          </dl>
+          <dl>
+           	  <dt><img src="login/lj/images/ico/ico09.png" width="48" height="48" /></dt>
+              <dd class="title">家长学堂</dd>
+              <dd class="intro">丰富的教学资源，辅助备授课的智能平台</dd>            
+          </dl>
+      </ul>
+      <div class="clearfix"></div>
+    </div><!--end app-->
+</div><!--end container-->
+</div>
+
+             <!-- liucheng-->
+            <div class="liucheng">
+            	<div class="w980">
+            		<h1><font>使用流程</font></h1>
+                    <dl>
+                    	<dt><a class="ico1_lc"></a></dt>
+                        <dd class="bt3">注册/登录</dd>
+                        <dd class="intro">教师用户请与学校管理员联系，获得账号；学生用户使用家长手机号注册，自动生成学生和家长账号；登录时请填写手机号、密码及验证码，即可成为优教用户，期待你的加入。</dd>
+                    </dl>
+                    
+                    <dl>
+                    	<dt><a class="ico2_lc"></a></dt>
+                        <dd class="bt3">安装优教助手/信使</dd>
+                        <dd class="intro">在"优教家族"选择优教助手，下载并安装至个人电脑后，可直接通过助手登录优教。选择"优教信使"，安装在个人手机设备上，可随时使用优教互动服务及资源服务。</dd>
+                    </dl>
+                    
+                    <dl>
+                    	<dt><a class="ico3_lc"></a></dt>
+                        <dd class="bt3">完善个人信息</dd>
+                        <dd class="intro">登录后，在首页或个人中心完善个人学段、年级、班级、姓名等信息，建立个人网络学习空间，开始快速成长提升之旅。</dd>
+                    </dl>
+                    
+                    <dl style="margin-right:0;">
+                    	<dt><a class="ico4_lc"></a></dt>
+                        <dd class="bt3">应用提升</dd>
+                        <dd class="intro">根据个人学习需求，学习同步课程、做作业、与同伴互动、做训练、找名师听课程等，总有适合教师的教法，适合学生的学法。在优教，遇见更好的自己。</dd>
+                    </dl>
+                    <div class="clearfix"></div>
+            	</div><!--end w980-->            
+            </div><!--end liucheng-->
+
+
+<!--友情-->
+    <div class="links">
+    <div class="container">
+        <h1>友情链接</h1>
+        <ul>
+            <li>
+                <label>政务</label>
+                <span class="links_con">
+                    <a href="http://www.moe.edu.cn/" target="_blank">教育部</a>
+                    <a href="http://www.hlje.net/" target="_blank">黑龙江省教育厅</a>
+                    <a href="http://www.ljxrmzfw.gov.cn/" target="_blank">龙江县市政府网</a>
+                    <a href="http://www.ljxjyxx.gov.cn/" target="_blank">龙江县教育网</a>
+                </span>
+            </li>
+            <li style="margin-right:0;">
+                <label>资源</label>
+                <span class="links_con">
+                    <a href="http://www.zxxk.com/" target="_blank">学科网</a>
+                    <a href="http://www.cnki.net/" target="_blank">中国知网</a>
+                    <a href="http://www.pep.com.cn/" target="_blank">人民教育出版社</a>
+                    <a href="http://www.classroomvideo.cn" target="_blank">知识视界</a>
+                    <a href="http://qhtf.xjcxedu.com/ttmed/" target="_blank">清华同方</a>
+                </span>
+            </li>
+            <div class="clearfix"></div>    
+        </ul>
+    </div>
+</div><!--end links-->
+<iframe style="min-width: 1000px;" id="footiframe" name="footiframe" src="" width="100%" height="190" scrolling="no" frameborder="0"></iframe>
+</body>
+</html>
+<script src="login/default/script/common.js"></script>
+<script src="login/default/script/login.js"></script>
+<!-- 
+<script src="login/lj/script/login.js"></script>
+ -->
+<script type="text/javascript">
+		var _type4OtherConfig="login";
+</script>
+<script type="text/javascript" src="common/otherConfig.jsp?day={DAYSTAMP}"></script>
+<script language="javascript">
+
+     //展示登陆页焦点图
+     getLoginfocusImg("CMS.JSON.A01074015001");
+     showMsOrMxz("msList1","CMS.JSON.A01038001");
+     showMsOrMxz("msList2","CMS.JSON.A01038002");
+     showZy("jyzxList1","CMS.JSON.A01038005");
+     showZy("jyzxList2","CMS.JSON.A01038006");
+     showZy("jyzxList3","CMS.JSON.A01038008");
+     showBannerImg("banner1","CMS.JSON.A01038011",1,"<a href=\"~url~\" target=\"~target~\"><img src=\"~src~\" width=\"680\" height=\"162\" /></a>");
+     showBannerImg("banner2","CMS.JSON.A01038012",1,"<a href=\"~url~\" target=\"~target~\"><img src=\"~src~\" width=\"680\" height=\"162\" /></a>");
+     showBannerImg("banner3","CMS.JSON.A01038013",1,"<a href=\"~url~\" target=\"~target~\"><img src=\"~src~\" width=\"1000\" height=\"100\" /></a>");
+     showBannerImg("banner4","CMS.JSON.A01038014",1,"<a href=\"~url~\" target=\"~target~\"><img src=\"~src~\" width=\"1000\" height=\"100\" /></a>");
+    
+
+//名师特效
+function msmxz_ys(){
+	$(".ms_list2 > li > a").hover(function(){
+			$(this).next(".tips2").fadeIn(400);
+			$(this).parent().css('z-index','100');
+			$(this).parent().siblings().css('opacity','.5');
+		},function(){
+			$(this).next(".tips2").fadeOut(50);
+			$(this).parent().css('z-index','3');
+			$(this).parent().siblings().css('opacity','1');
+		}
+	)
+}
+</script>

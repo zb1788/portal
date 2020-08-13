@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>小学生引导</title>
+<link href="../css/w1200/S-index-yindao.css" rel="stylesheet" type="text/css">
+<script src="../jquery/jquery.js"></script>
+<script type="text/javascript">
+	function getRequest() { 
+		var url = location.search; 
+		var theRequest = new Object(); 
+		if (url.indexOf("?") != -1) { 
+			var str = url.substr(1); 
+			strs = str.split("&"); 
+			for(var i = 0; i < strs.length; i ++) { 
+				theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]); 
+			} 
+		} 
+		return theRequest; 
+	} 
+	var param = new Object(); 
+	param = getRequest();
+	var path = param["path"];
+	$(document).ready(function(){
+		$("#yindao_s").attr("href",path+"/webindex.action");
+		$("#yindao_x").attr("href",path+"/webindex.action");
+	});
+</script>
+</head>
+
+<body>
+<div class="bjbox">
+   <div class="turn-off"><a href="#" id="yindao_s"></a></div>
+   <div class="ydbox">
+      <a class="btn" href="#" id="yindao_x"></a>
+   </div>
+</div>
+</body>
+</html>

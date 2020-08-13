@@ -1,0 +1,62 @@
+#tagsList {background:  url(../images/tupu.gif) no-repeat center;}
+#div1 {position:relative; width:450px; height:450px; margin: 20px auto 0; }
+
+#tagsList .blue {color:blue;}
+#tagsList .red {color:red;}
+#tagsList .yellow {color:yellow;}
+#tagsList .green {color:green;}
+
+#tagsList .pink{color:#ff99ee;}
+#tagsList .grass{color:#ABCDEF;}
+#tagsList .opaque{color:#766fa8;}
+#tagsList .orange{color:rgb(255,141,0);}
+
+#tagsList .bigblue {color:blue;border: 1px solid #0000ff; border-radius: 2px;font-family:Microsoft YaHei;font-weight: bold;}
+#tagsList .bigred {color:red;border-color: red;border-width:1px;border-style:solid;font-family:Microsoft YaHei;font-weight: bold;}
+#tagsList .bigyellow {color:yellow;border-color: yellow;border-width:1px;border-style:solid;font-family:Microsoft YaHei;font-weight: bold;}
+#tagsList .biggreen {color:green;border-color: green;border-width:1px;border-style:solid;font-family:Microsoft YaHei;font-weight: bold;}
+#tagsList .bigpink{color:#ff99ee;border-color: #ff99ee;border-width:1px;border-style:solid;font-family:Microsoft YaHei;font-weight: bold;}
+#tagsList .biggrass{color:#ABCDEF;border-color: #ABCDEF;border-width:1px;border-style:solid;font-family:Microsoft YaHei;font-weight: bold;}
+#tagsList .bigopaque{color:#766fa8;border-color: #766fa8;border-width:1px;border-style:solid;font-family:Microsoft YaHei;font-weight: bold;}
+#tagsList .bigorange{color:rgb(255,141,0);border-color: rgb(255,141,0);border-width:1px;border-style:solid;font-family:Microsoft YaHei;font-weight: bold;}
+#tagsList .bigfont{border-color: #989898;border-width:1px;border-style:solid;font-family:Microsoft YaHei;font-weight: bold;}
+
+#tagsList {
+
+	position: relative;
+
+	width: 950px;
+
+	height: 850px;
+
+	margin: 20px auto 0;
+
+}
+
+#tagsList a {
+
+	position: absolute;
+
+	top: 0px;
+
+	left: 0px;
+
+    font-family: '宋体';
+
+	color: #333;
+
+
+
+	text-decoration: none;
+
+	padding: 3px 6px;
+
+}
+
+#tagsList a:hover {
+
+	color: #FF0000;
+
+	letter-spacing: 2px;
+
+}

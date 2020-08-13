@@ -1,0 +1,122 @@
+.extraread-main {
+    margin-top: 38px;
+    margin-bottom: 50px;
+}
+
+.extraread-main .toggle-tag {
+    margin-bottom: 23px;
+}
+
+.extraread-main .toggle-tag li {
+    float: left;
+    margin-right: 20px;
+    color: #666;
+    font-size: 16px;
+    padding: 5px 17px;
+    border-bottom: 1px solid #fff;
+    cursor: pointer;
+}
+
+.extraread-main .toggle-tag li.on,
+.extraread-main .toggle-tag li:hover {
+    color: #fe8f01;
+    border-bottom: 1px solid #fe8f01;
+}
+
+.extraread-main .toggle-tag .view-all {
+    float: right;
+    font-size: 16px;
+    color: #999;
+}
+
+.extraread-main .rec-title {
+    padding: 19px 0px;
+}
+
+.extraread-main .rec-title h3 {
+    font-size: 20px;
+    padding-left: 15px;
+    border-left: 6px solid #00bd52;
+    color: #000;
+}
+
+
+/* 每日推荐 start */
+
+.extraread-main .daily-rec {
+    float: left;
+    width: 300px;
+    margin-top: 14px;
+}
+
+.extraread-main .daily-rec-body {
+    height: 280px;
+    width: 100%;
+    background: red;
+    margin-bottom: 26px;
+}
+
+.extraread-main .daily-rec-body img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.extraread-main .daily-rec-info h4 {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 7px;
+}
+
+.extraread-main .daily-rec-info p {
+    font-size: 12px;
+    color: #666;
+}
+
+
+/* 每日推荐 end */
+
+
+/* 每周推荐 start*/
+
+.extraread-main .weekly-rec {
+    width: 654px;
+    float: left;
+    margin-top: 14px;
+    margin-left: 20px;
+}
+
+.extraread-main .weekly-rec ul li {
+    float: left;
+    width: 202px;
+    margin-right: 14px;
+    margin-bottom: 27px;
+}
+
+.extraread-main .weekly-rec ul li img {
+    display: block;
+    width: 100%;
+    height: 120px;
+}
+
+.extraread-main .weekly-rec ul li h4 {
+    font-size: 14px;
+    color: #333;
+    margin-top: 9px;
+    margin-bottom: 11px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.extraread-main .weekly-rec ul li p {
+    font-size: 12px;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* 每周推荐 end */

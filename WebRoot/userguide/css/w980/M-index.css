@@ -1,0 +1,67 @@
+@charset "utf-8";
+/* CSS Document */
+*{ margin:0; padding:0;}
+li{list-style-type:none;}
+a{ text-decoration:none; }
+img{ border:0 none; display:block;}
+input{ border:0 none;}
+
+body{ background-image:url(../../images/w980/bj.png);}
+.bigbox{margin:0 auto; width:980px;}
+.bj-img{ background-image:url(../../images/w980/P-index-bj.png); width:980px; height:1839px; position: relative;}
+.bj2-img{ background-image:url(../../images/w980/T-tbfx-bj.png);width:980px; height:1500px; position: relative;}
+.bj3-img{ background-image:url(../../images/w980/P-jxhd-.png);width:980px; height:765px; position: relative;}
+.bj4-img{ background-image:url(../../images/w980/P-jzxt-bj.png);width:980px; height:1619px; position: relative;}
+.turn-off img{ width:80px; height:81px; float:right; display:block;}
+
+.index{
+	width: 693px;
+	height: 436px;
+	background-image: url(../../images/w980/P-index.png);
+	position: absolute;
+	left: 0px;
+	top: 116px;
+	
+	}
+.btn1{ display:block; width:30px; height:30px; margin-left:646px; margin-top:387px;}
+.tbxx{
+	width: 738px;
+	height: 436px;
+	position: absolute;
+	background-image: url(../../images/w980/P-tbfx.png);
+	left: 66px;
+	top: 115px;
+	display:none;
+}
+.btn2{ display:block; width:30px; height:30px; margin-top:387px; margin-left:681px;}
+.hdxx{
+	width: 523px;
+	height: 426px;
+	position: absolute;
+	background-image: url(../../images/w980/P-jxhd.png);
+	left: 443px;
+	top: 115px;
+	display:none;
+}
+.btn3{ display:block; width:30px; height:30px; margin-top:378px; margin-left:465px;}
+.mzyl{
+	width: 424px;
+	height: 447px;
+	position: absolute;
+	background-image: url(../../images/w980/P-jzxt.png);
+	left: 544px;
+	top: 115px;
+	display:none;
+}
+.btn4{ display:block; width:30px; height:30px; margin-top:396px; margin-left:366px;}
+.msty{
+	width: 486px;
+	height: 242px;
+	background-image: url(../../images/w980/T-jsy.png);
+	position: absolute;
+	left: 254px;
+	top: 379px;
+	display:none;
+}
+.btn7{ display:block; width:126px; height:36px; margin-top:165px; margin-left:128px; float:left;}
+.btn8{ display:block; width:126px; height:36px; margin-top:165px; margin-left:15px; float:left;}

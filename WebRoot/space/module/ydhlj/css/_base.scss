@@ -1,0 +1,106 @@
+/*技巧总结
+备忘
+@for $i from 1 through 4
+            th:nth-child($i)
+
+*/
+/*
+给前几个元素写样式
+调用方式：
+@include eq(".licong",5){
+  display: none;
+}
+*/
+@mixin eq($selector,$eq) {
+  #{$selector}:nth-child(-n+#{$eq}) {
+    @content
+  }
+}
+
+/*当 <a> 元素没有文本值，但 href 属性有链接的时候显示链接：
+a[href^="http"]:empty::before {
+            content: attr(href);
+        }
+*/
+/*强制不换行*/
+%nowrap {
+  white-space: nowrap;
+}
+
+/*强制换行*/
+%break-word {
+  word-wrap: break-word;
+}
+/*多行文本溢出隐藏*/
+@mixin MultiRowOverflowEllipsis($col:2) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: $col;
+  -webkit-box-orient: vertical;
+}
+/*单行文本溢出隐藏*/
+@mixin OneRowOverflowEllipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/*设置单一边框，排除最后一个元素*/
+@mixin notLastBorder($selector,$border-style,$direction) {
+  #{$selector}:not(:last-child) {
+    @if ($direction=="align") {
+      border-right: $border-style;
+    } @else {
+      border-bottom: $border-style;
+    }
+  }
+}
+
+/*前后追加内容,如果需要排除最后一个，需要使用:not伪类*/
+@mixin after-before-push($selector,$before:"",$after:"") {
+  @if ($after!="") {
+    #{$selector}::after {
+      content: $after;
+    }
+  } @else if ($before!="") {
+    #{$selector}::before {
+      content: $before;
+    }
+  }
+}
+
+/*子元素水平、垂直居中*/
+@mixin flexCenter($direction:"all") {
+  @if ($direction=="justify") {
+    justify-content: center;
+    display: -webkit-flex;
+    display: flex;
+  } @else if ($direction=="align") {
+    align-items: center;
+    display: -webkit-flex;
+    display: flex;
+  } @else {
+    justify-content: center;
+    align-items: center;
+    display: -webkit-flex;
+    display: flex;
+  }
+}
+
+/*设置placeholder颜色默认值*/
+@mixin placeholder($color:#fff) {
+  &::-webkit-input-placeholder {
+    color: #ccff00;
+  }
+  &:-ms-input-placeholder {
+    color: #ccff00;
+  }
+  &:-moz-placeholder {
+    color: #ccff00;
+  }
+  &::placeholder {
+    color: #ccff00;
+  }
+}
+%content{width: 1200px;
+  margin: 0 auto;}

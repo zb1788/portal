@@ -1,0 +1,81 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{ margin:0; padding:0;}
+li{list-style-type:none;}
+a{ text-decoration:none; }
+img{ border:0 none; display:block;}
+input{ border:0 none;}
+
+body{ background-image:url(../images/bj.png);}
+.bigbox{margin:0 auto; width:995px;}
+
+.yindaobox{ position:relative;}
+.bj-img{ background-image:url(../images/background-images.png); width:995px; height:2300px;}
+.bj2-img{ background-image:url(../images/tbxx-k.png); width:995px; height:1700px;}
+.bj3-img{ background-image:url(../images/hdxx-k.png); width:995px; height:1700px;}
+.bj4-img{ background-image:url(../images/zlzzj-k.png); width:995px; height:1400px;}
+.bj5-img{ background-image:url(../images/C-zwzd-bj.png); width:995px; height:1455px;}
+.turn-off img{ width:80px; height:81px; float:right; display:block;}
+
+.index{
+	width: 646px;
+	height: 349px;
+	background-image: url(../images/index-img.png);
+	position: absolute;
+	left: -71px;
+	top: 106px;
+}
+.jsjx{ margin-top:260px; margin-left:400px;}
+.tbxx{
+	width: 601px;
+	height: 343px;
+	position: absolute;
+	background-image: url(../images/tbxx-img.png);
+	left: 89px;
+	top: 106px;
+	display:none;
+}
+.jsjx2{ margin-top:260px; margin-left:360px;}
+.hdxx{
+	width: 600px;
+	height: 343px;
+	position: absolute;
+	background-image: url(../images/hd-img.png);
+	left: 253px;
+	top: 106px;
+	display:none;
+}
+.jsjx3{ margin-top:260px; margin-left:360px;}
+.zlzzj{
+	width: 564px;
+	height: 343px;
+	position: absolute;
+	background-image: url(../images/zlzzj-img.png);
+	left: 453px;
+	top: 107px;
+	display:none;
+}
+.jsjx4{ margin-top:250px; margin-left:340px;}
+.zwzd{
+	width: 556px;
+	height: 346px;
+	background-image: url(../images/zwzd-img.png);
+	position: absolute;
+	left: 622px;
+	top: 135px;
+	display:none;
+}
+.jsjx5{ margin-top:250px; margin-left:340px;}
+.masty{
+	width: 592px;
+	height: 275px;
+	background-image: url(../images/ty-imgpng.png);
+	position: absolute;
+	left: 196px;
+	top: 292px;
+	display:none;
+}
+.jsjx6,.jsjx7{ float:left; margin-top:180px;}
+.jsjx6{ margin-left:240px;}
+.jsjx7{ margin-left:20px;}

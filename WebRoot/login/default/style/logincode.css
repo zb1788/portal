@@ -1,0 +1,27 @@
+@charset "gb2312";
+/*¶þÎ¬ÂëµÇÂ¼*/
+.scan{
+position: absolute; right: -15px; top: -15px;
+}
+.scan .scan-ts{
+display: inline-block; background: #fff; width: 100px; padding: 0 10px; text-align: center; border-radius: 25px;height: 18px; color: deepskyblue; position: absolute; right: 50px; top: 3px; z-index: 99999;
+}
+.scan span a.qrcode_target{
+  width: 45px;
+    height: 45px;
+    background: url(../images/lg_ma.png) no-repeat;
+  display: block;
+}
+.scan span a.qrcode_target.pt{
+    background: url(../images/lg_pt.png) no-repeat;
+}
+
+.loginBg.pt { border-top:none; height: 285px; padding: 18px; margin-top: 5px; text-align: center;}
+.loginBg.pt h2{
+font-size: 16px; color:#2182cd; line-height: 20px; 
+}
+.loginBg.pt p.ma img{ margin:10px auto; width: 70%; height: auto;}
+.w980 .loginBg.pt p.ma img{ margin:20px auto; width: 75%; height: auto;}
+
+.loginBg.pt p.link{ line-height: 30px; }
+.loginBg.pt p.link a{ margin: 0 30px; font-size: 14px;}

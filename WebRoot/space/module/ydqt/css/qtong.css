@@ -1,0 +1,362 @@
+.clBox {
+  margin-top: 30px;
+}
+/*焦点图{*/
+.focus.qtong {
+  position: relative;
+  width: 1200px;
+  height: 330px;
+  margin-top: 30px;
+}
+.focus.qtong img {
+  width: 1200px;
+  height: 330px;
+}
+.focus.qtong .shadow .title {
+  width: 260px;
+  height: 65px;
+  padding-left: 30px;
+  padding-top: 20px;
+}
+.focus.qtong .shadow .title a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bolder;
+  overflow: hidden;
+}
+.focus.qtong .btn {
+  position: absolute;
+  bottom: 34px;
+  left: 510px;
+  overflow: hidden;
+  zoom: 1;
+}
+.focus.qtong .btn a {
+  position: relative;
+  display: inline;
+  width: 13px;
+  height: 13px;
+  border-radius: 7px;
+  margin: 0 5px;
+  color: #B0B0B0;
+  font: 12px/15px "\5B8B\4F53";
+  text-decoration: none;
+  text-align: center;
+  outline: 0;
+  float: left;
+  background: #D9D9D9;
+}
+.focus.qtong .btn a:hover,
+.focus.qtong .btn a.current {
+  cursor: pointer;
+  background: #F7B940;
+}
+.focus.qtong .fPic {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.focus.qtong .D1fBt {
+  overflow: hidden;
+  zoom: 1;
+  height: 16px;
+  z-index: 10;
+}
+.focus.qtong .shadow {
+  position: absolute;
+  width: 995px;
+  margin-left: -497.5px;
+  left: 50%;
+  bottom: 0;
+  font-size: 16px;
+  height: 40px;
+  line-height: 40px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  text-indent: 10px;
+}
+.focus.qtong .shadow a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+  overflow: hidden;
+  margin-left: 10px;
+}
+.focus.qtong .fcon {
+  position: relative;
+  width: 100%;
+  float: left;
+  display: none;
+  background: #000;
+}
+.focus.qtong .fcon img {
+  display: block;
+}
+.focus.qtong .fbg {
+  position: absolute;
+  left: 0;
+  bottom: 5px;
+  margin-left: 500px;
+  z-index: 200;
+}
+.focus.qtong .fbg div {
+  margin: 4px auto 0;
+  overflow: hidden;
+  zoom: 1;
+  height: 14px;
+}
+.focus.qtong .D1fBt a {
+  position: relative;
+  display: inline;
+  width: 30px;
+  height: 3px;
+  background: #ccc;
+  margin: 0 5px;
+  color: #B0B0B0;
+  font: 12px/15px "\5B8B\4F53";
+  text-decoration: none;
+  text-align: center;
+  outline: 0;
+  float: left;
+}
+.focus.qtong .D1fBt .current,
+.focus.qtong .D1fBt a:hover {
+  background: #3B95F5;
+}
+.focus.qtong .D1fBt img {
+  display: none;
+}
+.focus.qtong .D1fBt i {
+  display: none;
+  font-style: normal;
+}
+.focus.qtong .prev,
+.focus.qtong .next {
+  position: absolute;
+  width: 80px;
+  height: 40px;
+  background: url(../images/qtong/h-focus_btn.png) no-repeat;
+}
+.focus.qtong .prev {
+  top: 50%;
+  margin-top: -20px;
+  left: -40px;
+  background-position: 0 0;
+  cursor: pointer;
+}
+.focus.qtong .next {
+  top: 50%;
+  margin-top: -20px;
+  right: -40px;
+  background-position: 0 -40px;
+  cursor: pointer;
+}
+.focus.qtong .prev:hover {
+  background-position: 0 -80px;
+}
+.focus.qtong .next:hover {
+  background-position: 0 -120px;
+}
+.H-sy.focus.qtong {
+  height: 350px;
+}
+.H-sy.focus.qtong .fbg .D1fBt a {
+  margin-top: 10px;
+}
+/*}end 焦点图*/
+/*我的应用{*/
+.clFunBox {
+  border-top: 1px solid #fff;
+}
+.clFunBox h3,
+.clBox_con h3 {
+  position: relative;
+  height: 70px;
+  line-height: 70px;
+  text-indent: 70px;
+  text-align: center;
+  color: #333;
+  font-size: 26px;
+}
+.clFunBox h3 span,
+.clBox_con h3 span {
+  position: absolute;
+  left: 50%;
+  margin-top: -10px;
+  margin-left: 20px;
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #adadad;
+}
+.clFunBox .clFunList {
+  overflow: hidden;
+  width: 995px;
+  margin: 0 auto;
+  padding-top: 30px;
+}
+.clFunBox .clFunList a {
+  display: block;
+  float: left;
+  margin: 0 21px;
+}
+.clFunBox .clFunList a figure img {
+  display: block;
+  width: 123px;
+  height: 123px;
+}
+.clFunBox .clFunList a figure figcaption {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 18px;
+  color: #646464;
+}
+.clFunBox .clFunList a:hover figcaption {
+  color: #3B95F5;
+}
+/*}我的应用*/
+/*班级空间与家校互动{*/
+.clBox_con {
+  width: 50%;
+}
+.clBox_con .clbox_con_school {
+  width: 352px;
+  height: 240px;
+  margin-left: 125px;
+  margin-top: 30px;
+  position: relative;
+}
+.clBox_con .clbox_con_school .kuang {
+  position: absolute;
+  right: 0;
+  top: 35px;
+  z-index: 1000;
+  width: 170px;
+  height: 170px;
+  background: #3B95F5;
+  text-align: right;
+}
+.clBox_con .clbox_con_school .kuang a {
+  display: block;
+  width: 137px;
+  height: 170px;
+  padding-right: 33px;
+  margin: 45px 0;
+}
+.clBox_con .clbox_con_school .kuang a p {
+  line-height: 36px;
+  font-size: 18px;
+  color: #fff;
+}
+.clBox_con .clbox_con_school .kuang a:hover {
+  text-decoration: none;
+}
+.clBox_con .clbox_con_school .kuang:hover {
+  background: #0c7bf1;
+}
+.clBox_con .clbox_con_school img {
+  z-index: 2;
+}
+/*家校互动{*/
+.cl_ico_wrap {
+  min-height: 280px;
+  margin-left: 170px;
+}
+.cl_ico_wrap ul {
+  margin: 10px 20px;
+  max-width: 290px;
+}
+.cl_ico_wrap ul li {
+  position: relative;
+  width: 33.333333%;
+  float: left;
+  text-align: center;
+  margin-top: 35px;
+}
+.cl_ico_wrap ul li a p {
+  font-size: 14px;
+  line-height: 40px;
+  color: #333;
+  text-align: center;
+}
+.cl_ico_wrap ul li a:hover p {
+  color: #3B95F5;
+}
+.cl_ico_wrap.stu ul li {
+  margin-top: 15px;
+}
+/*}end 班级空间与家校互动*/
+/*选项卡列表，开始{*/
+#clRecommendList {
+  margin-top: 16px;
+}
+#clRecommendList .clTabTitleBox {
+  background: #fff;
+  width: 100%;
+  text-align: center;
+  height: 65px;
+}
+#clRecommendList .clTabTitleBox li {
+  display: inline-block;
+  height: 59px;
+  line-height: 53px;
+  width: 160px;
+  text-align: center;
+  color: #333;
+  font-size: 26px;
+  cursor: pointer;
+}
+#clRecommendList .clTabTitleBox li span {
+  display: block;
+  margin-left: 70px;
+  width: 20px;
+  height: 2px;
+  background: #adadad;
+}
+#clRecommendList .clTabTitleBox li.active {
+  background: #fff;
+  color: #3B95F5;
+}
+#clRecommendList .clTabTitleBox li.active span {
+  color: #3B95F5;
+}
+#clRecommendList .clTabContentBox {
+  padding: 30px 190px 30px 190px;
+  background: #f5f5f5;
+  height:250px;
+}
+#clRecommendList .clTabContentBox ul {
+  padding: 0 38px;
+}
+#clRecommendList .clTabContentBox ul li {
+  height: 39px;
+  line-height: 39px;
+  overflow: hidden;
+  background: url("../images/qtong/h-dot0.png") left center no-repeat;
+  padding-left: 20px;
+}
+#clRecommendList .clTabContentBox ul li:nth-child(1) {
+  background: url("../images/qtong/h-dot1.png") left center no-repeat;
+}
+#clRecommendList .clTabContentBox ul li:nth-child(2) {
+  background: url("../images/qtong/h-dot.png") left center no-repeat;
+}
+#clRecommendList .clTabContentBox ul li.mode-blue time {
+  color: #3B95F5;
+}
+#clRecommendList .clTabContentBox ul li.mode-blue a {
+  color: #3B95F5;
+}
+#clRecommendList .clTabContentBox ul li a {
+  float: left;
+  color: #333;
+  font-size: 14px;
+}
+#clRecommendList .clTabContentBox ul li time {
+  float: right;
+  color: #555555;
+  font-size: 14px;
+}
+/*}结束，选项卡列表*/
+/*备课页面开始*/

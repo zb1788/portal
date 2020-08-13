@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee   http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  
+     
+  	<filter>
+	    <filter-name>SsoSessionFailFilter</filter-name>
+	    <filter-class>vcom.sso.util.SsoSessionFailFilter</filter-class>
+	 </filter>
+	 <filter-mapping>
+	    <filter-name>SsoSessionFailFilter</filter-name>
+	    <url-pattern>*.action</url-pattern>
+	 </filter-mapping>
+	 <filter-mapping>
+	    <filter-name>SsoSessionFailFilter</filter-name>
+	    <url-pattern>*.jsp</url-pattern>
+	 </filter-mapping>
+	 
+  	<filter>
+	    <filter-name>PropertiesFilter</filter-name>
+	    <filter-class>zzvcom.util.filter.PropertiesFilter</filter-class>
+	 </filter>
+	 <filter-mapping>
+	    <filter-name>PropertiesFilter</filter-name>
+	    <url-pattern>*.action</url-pattern>
+	 </filter-mapping>
+	 <filter-mapping>
+	    <filter-name>PropertiesFilter</filter-name>
+	    <url-pattern>*.jsp</url-pattern>
+	 </filter-mapping>
+	 <servlet>
+	 <servlet-name>UIController</servlet-name>
+	 <servlet-class>zzvcom.web.servlet.UIController</servlet-class>
+	 </servlet>
+	 <servlet-mapping>
+	 <servlet-name>UIController</servlet-name>
+	 <url-pattern>*.action</url-pattern>
+	 </servlet-mapping>
+	 <listener>
+	    <listener-class>
+	        vcom.sso.SsoServiceCfgListener
+	    </listener-class>
+ 	</listener>
+  
+	<!-- 字符编码Filter -->
+	 <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>zzvcom.util.filter.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>*.action</url-pattern>
+    </filter-mapping>
+    
+    
+	<security-constraint>  
+	<web-resource-collection>
+		<web-resource-name>HttpSafe</web-resource-name>
+		<description>close unsave http1.1 method</description>
+		<url-pattern>/*</url-pattern>
+		<http-method>PUT</http-method>  
+		<http-method>DELETE</http-method>  
+		<http-method>HEAD</http-method>  
+		<http-method>OPTIONS</http-method>  
+		<http-method>TRACE</http-method>  
+	</web-resource-collection>
+	<auth-constraint> <role-name>JBossAdmin</role-name></auth-constraint>  
+	</security-constraint>  
+	
+    
+	<mime-mapping>
+        <extension>ico</extension> 
+        <mime-type>image/x-icon</mime-type> 
+    </mime-mapping>
+    
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <error-page>
+	<error-code>404</error-code>
+	<location>/common/error_404.jsp</location>
+  </error-page>
+
+  <error-page>
+	<error-code>500</error-code>
+	<location>/common/error_500.jsp</location>
+  </error-page>
+</web-app>
+

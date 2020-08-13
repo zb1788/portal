@@ -1,0 +1,21 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{ margin:0; padding:0;}
+li{list-style-type:none;}
+a{ text-decoration:none; }
+img{ border:0 none; display:block;}
+input{ border:0 none;}
+
+.turn-off{ float:right;}
+body{ background-image:url(../../images/w980/bj.png);}
+.bjbox{ background-image:url(../../images/w980/middle-index.png); margin:0 auto;width:980px; height:2000px; position:relative;}
+.ydbox{
+	background-image: url(../../images/w980/M-index-yindao.png);
+	width: 959px;
+	height: 729px;
+	position: absolute;
+	left: 12px;
+	top: 384px;
+}
+.btn{ width:190px; height:56px; display:block; margin-top:667px; margin-left:650px;}

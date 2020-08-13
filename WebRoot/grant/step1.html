@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>百度教育云授权-优教班班通</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<link href="public/style/common.css" rel="stylesheet" type="text/css" />
+<link href="public/style/register.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" media="all" href="public/script/calendar/calendar-system.css" title="calendar-blue" />
+<script src="public/script/jquery.min.js"></script>
+<script src="public/script/distpicker.js"></script>
+<script src="public/script/artDialog.js?skin=default"></script>
+<script type="text/javascript" src="public/script/calendar/calendar.js"></script>
+<script type="text/javascript" src="public/script/calendar/calendar-setup.js"></script>
+<script type="text/javascript">
+function nextPage(){
+	var grantPath="/grant/";
+	if(window.location.href.indexOf("?")>-1){
+		grantPath=grantPath+window.location.href.substring(window.location.href.indexOf("?"))
+	}
+	if("999999"==$('#province option:selected').attr("data-code")){
+		url="http://kw.czbanbantong.com"+grantPath;
+		window.location.href=url;
+		return;
+	}
+	var selval=$('#district option:selected').attr("data-code");
+	if(selval==null || ""==selval){
+		alert("请选择所在地区");
+		return;
+	}
+	var url=null;
+	if("411481"==selval){
+		//商丘-永城
+		url="http://yc.czbanbantong.com"+grantPath
+	}else if(selval.indexOf("4101")==0){
+		//郑州
+		url="http://zz.zzedu.net.cn"+grantPath
+	}else if(selval.indexOf("4110")==0){
+		//许昌
+		url="http://xc.czbanbantong.com"+grantPath
+	}else if(selval.indexOf("41")==0){
+		//河南
+		url="http://henan.czbanbantong.com"+grantPath
+	}
+	if(url!=null){
+		window.location.href=url;
+	}
+}
+</script>
+</head>
+
+<body>
+<div class="w1200">
+  <div class="logo_login"> <span class="logo1"><a href="login.html" title="返回首页"><img src="public/images/login/logo.png" width="360" height="60"></a></span> </div>
+  <div class="tel400 qk3">
+    <li ><img src="public/images/login/tel.png"></li>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<!--end block1-->
+
+<div class="w1200">
+  <div class="conCity_2">
+    <div class="re_nav">
+      <ul>
+        <!--<span><a href="#">返回首页</a></span>-->
+        <li class="sel"><a ><span>1</span>选择区域</a></li>
+        <li><a ><span>2</span>选择登录角色</a></li>
+        <li><a ><span>3</span>账号密码登录</a> </li>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+    <div class="reg_main" data-toggle="distpicker" data-autoselect="3" data-province="河南省">
+      <form id="confirmForm" method="post" onsubmit="return false" >
+        <table cellpadding="10" cellspacing="0" border="0"  width="80%" >
+          <tr>
+            <td width="40%" style="text-align:right"><label>选择所属省</label></td>
+            <td width="34%" align="left" style="text-align:left"><select id="province" class="txt_select" >
+              </select></td>
+            <td width="26%"><div  id="login_1" class="tips_off" style="width:180px;">请选择省份 </div></td>
+          </tr>
+          <tr>
+            <td width="40%" style="text-align:right"><label>选择所属市</label></td>
+            <td width="34%"><span style="text-align:left">
+             <select  id="city" class="txt_select"  ></select>
+              </span></td>
+            <td width="26%"><div  id="login_11" class="tips_off" style="width:180px;">选择市</div></td>
+          </tr>
+          <tr>
+            <td width="40%" style="text-align:right"><label><!--<font class="redxing">*</font>-->请选择所属县/区</label></td>
+            <td width="34%"><select id="district" class="txt_select"  ></select></td>
+            <td width="26%"><div  id="login_2" class="tips_off" style="width:210px;">选择县/区 </div></td>
+          </tr>
+          <tr style="display:none" >
+            <td width="40%" style="text-align:right; "><label>选择学校</label></td>
+            <td width="34%" style="position:relative;"><p>
+                <input name="user3" type="text" class="txt" id="school-name" placeholder="点击选择学校" title="请选择学校" onfocus="pop_open(1);" value=""   />
+              
+              <div class="school_pop" id="pop_1" style="display:none; top:50px;">
+                <div class="bor3">
+                  <h1><span><a href="javascript:void(0);" class="guan" title="关闭" onclick="pop_close(1);"></a></span>选择学校</h1>
+                  <h3><strong>学校所在地</strong>：
+                    <select style="width:80px;background:#fafafa;">
+                      <option value="">中原区</option>
+                      <option value="">二七区</option>
+                      <option value="">管城区</option>
+                      <option value="">金水区</option>
+                      <option value="">上街区</option>
+                      <option value="">郑东新区</option>
+                      <option value="">惠济区</option>
+                      <option value="">高新区</option>
+                      <option value="">中牟县</option>
+                      <option value="">巩义市</option>
+                      <option value="">荥阳市</option>
+                      <option value="">新密市</option>
+                      <option value="">新郑市</option>
+                      <option value="">登封市</option>
+                    </select>
+                    <strong>类别</strong>：
+                    <select style="width:55px;background:#fafafa;">
+                      <option value="">小学</option>
+                      <option value="">初中</option>
+                      <option value="">高中</option>
+                    </select>
+                    <strong>学校名称</strong>：
+                    <input type="text" class="textbox" onfocus="this.className='textbox2';"  onblur="this.className='textbox';" style=" width:120px;"/>
+                    <a href="javascript:void(0);" class="reg_sou">搜&nbsp;索</a> </h3>
+                  <ul class="school_list">
+                    <li><a href="#">河南省郑航附小</a></li>
+                    <li><a href="#">郑州市二七区京广路小学</a></li>
+                    <li><a href="#">郑州市二七区实验小学</a></li>
+                    <li><a href="#">二七区外国语小学</a></li>
+                    <li><a href="#">齐礼闫小学</a></li>
+                    <li><a href="#">二七区黄岗寺小学</a></li>
+                    <li><a href="#">铭功路小学</a></li>
+                    <li><a href="#">长江东路小学</a></li>
+                    <li><a href="#">郑州市二七区佛岗小学</a></li>
+                    <li><a href="#">王庄小学</a></li>
+                    <li><a href="#">郑州市二七区邱砦小学</a></li>
+                    <li><a href="#">二七区汝河路小学</a></li>
+                    <li><a href="#">李鹏总理郑州市二七区兴华中学郑州市二七区兴华中学郑州市二七区兴华中学郑州市二七区兴华中学郑州市二七区兴华中学</a></li>
+                    <li><a href="#">郑州市二七区侯砦小学</a></li>
+                    <li><a href="#">郑州市二七区棉纺路小学</a></li>
+                    <li><a href="#">郑州市二七区兴华小学</a></li>
+                    <li><a href="#">郑州市二七区政通路小学</a></li>
+                    <li><a href="#">郑州市二七区张砦小学</a></li>
+                    <li><a href="#">二七区汉川街小学</a></li>
+                    <li><a href="#">郑州市二七区刘胡垌小学</a></li>
+                    <li><a href="#">郑州市二七区王胡砦小学</a></li>
+                    <li><a href="#">交通路小学</a></li>
+                    <li><a href="#">轵城实验小学</a></li>
+                    <li><a href="#">36中</a></li>
+                    <li><a href="#">郑州大学第一附属小学</a></li>
+                    <li><a href="#">城西实验学校</a></li>
+                    <li><a href="#">王胡寨小学</a></li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <!--end bor3--> 
+              </div>
+              <!--弹出层结束-->
+              
+              </p></td>
+            <td width="26%" ></td>
+          </tr>
+          <tr>
+            <td width="40%" style="text-align:right"></td>
+            <td width="34%"><input type="button" class="sub" id="user" name="user"  value="下一步"  onmouseover="this.style.backgroundColor='#0091CE'"onmouseout="this.style.backgroundColor='#0096d6'" onclick="nextPage();" /></td>
+            <td width="26%"></td>
+          </tr>
+        </table>
+      </form>
+      <br />
+      <br />
+    </div>
+    <!--end citypop--> 
+  </div>
+</div>
+<!--end w1200--> 
+
+<!--页脚-->
+<div class="footer mt0" style="padding:0px;height:190px">
+  <div class="w1200">
+    <iframe style="min-width: 1000px;" id="footiframe" name="footiframe" src="http://cms.czbanbantong.com/A01/A01074/A01074017/A01074017001/list_1.html" width="100%" height="185" scrolling="no" frameborder="0"></iframe>
+  </div>
+  <!--end w980--> 
+</div>
+<!--end footer-->
+
+</body>
+</html>
+<script src="public/script/common.js"></script>
+<script language="javascript">
+function pop_close(num){
+	switch (num) 
+	   { 
+	   case 1:
+	   $('#pop_1').hide();   
+	   break
+	   
+	   case 2:
+	   $('#pop_2').hide();   
+	   break
+	  }
+	}
+function pop_open(num){
+	switch (num) 
+	   { 
+	   case 1:
+	   $('#pop_2').hide();
+	   $('#pop_1').fadeIn(300);   
+	   break
+	   
+	   case 2:
+	   $('#pop_1').hide();
+	   $('#pop_2').fadeIn(300);   
+	   break
+	  }
+	}
+	
+$('.school_list > li > a').bind('click', function(){
+		var item=$(this);
+		//var school = item.attr('school-id');
+		//更新选择大学文本框中的值
+		$('#school-name').val(item.text());
+
+		//关闭弹窗
+		pop_close(1);
+	});
+
+
+$('.nianji > ul > li > a').bind('click', function(){
+		var item1=$(this);
+		var cc=item1.text();
+		//var school = item.attr('school-id');
+		//更新选择大学文本框中的值
+		$('#banji-name').val(item1.text());
+
+		//关闭弹窗
+		//pop_close(2);
+	});
+	
+$('.banji > ul > li > a').bind('click', function(){
+		var item2=$(this);
+		//var school = item.attr('school-id');
+		//更新选择大学文本框中的值
+		$('#banji-name').val(item2.text());
+
+		//关闭弹窗
+		pop_close(2);
+	});
+
+function cloPop() {
+	    $('#pop').fadeOut(100);	
+		$('#mask').hide();
+		}
+function openPop() {
+	    $('#pop').fadeIn(300);	
+		$("#mask").show();
+		}
+function show_phone(){
+	$(".phone").slideDown("400");
+	}
+function hide_phone(){
+	$(".phone").slideUp("400");
+	}
+</script>

@@ -1,0 +1,1163 @@
+@charset "UTF-8";
+/*样式重置，开始{*/
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, figure, p, blockquote, th, td {
+  margin: 0;
+  padding: 0; }
+
+a {
+  text-decoration: none;
+  color: #5a5a5a;
+  cursor: pointer;
+  outline: none; }
+
+a:hover {
+  text-decoration: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+fieldset, img {
+  border: 0; }
+
+address, caption, cite, code, dfn, em, strong, th, var {
+  font-style: normal;
+  font-weight: normal; }
+
+ol, ul {
+  list-style: none; }
+
+caption, th {
+  text-align: left; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal; }
+
+q:before, q:after {
+  content: ''; }
+
+abbr, acronym {
+  border: 0;
+  font-variant: normal; }
+
+sup {
+  vertical-align: text-top; }
+
+sub {
+  vertical-align: text-bottom; }
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  *font-size: 100%;
+  outline: none; }
+
+legend {
+  color: #000; }
+
+i {
+  font-style: normal; }
+
+html, body {
+  height: 100%;
+  font-size: 16px;
+  font-family: "NotoSnsHans DemLight", "Microsoft YaHei", "微软雅黑", "AppleGothic"; }
+
+/*}结束，样式重置*/
+/*技巧总结
+备忘
+@for $i from 1 through 4
+            th:nth-child($i)
+
+*/
+/*
+给前几个元素写样式
+调用方式：
+@include eq(".licong",5){
+  display: none;
+}
+*/
+/*当 <a> 元素没有文本值，但 href 属性有链接的时候显示链接：
+a[href^="http"]:empty::before {
+            content: attr(href);
+        }
+*/
+/*强制不换行*/
+/*强制换行*/
+/*多行文本溢出隐藏*/
+/*单行文本溢出隐藏*/
+/*设置单一边框，排除最后一个元素*/
+/*前后追加内容,如果需要排除最后一个，需要使用:not伪类*/
+/*子元素水平、垂直居中*/
+/*设置placeholder颜色默认值*/
+.clHeader .clHeaderIn, .clHeader .clNav ul, .clHeader .clSubNav ul, .clFooter .clFooterIn, #clContentBox, .login header, .login .loginBox .loginBoxIn, .login footer .footerIn, .clWrapper {
+  width: 1200px;
+  margin: 0 auto; }
+
+/*公共头部*/
+.clHeader .clHeaderIn {
+  position: relative;
+  height: 118px; }
+.clHeader .clLogo {
+  background: url("../images/logo.png") no-repeat;
+  width: 386px;
+  height: 72px;
+  text-indent: -9999px;
+  position: absolute;
+  left: 0;
+  top: 25px; }
+.clHeader .clNav {
+  background: #0d94ea; }
+  .clHeader .clNav ul {
+    overflow: hidden; }
+    .clHeader .clNav ul li {
+      height: 70px;
+      float: left; }
+      .clHeader .clNav ul li a {
+        position: relative;
+        margin: 0 3px;
+        margin-top: 13px;
+        display: block;
+        color: #ffffff;
+        font-size: 20px;
+        padding: 0 25px;
+        border-radius: 20px;
+        behavior: url(css/PIE.htc);
+        height: 44px;
+        line-height: 44px; }
+        .clHeader .clNav ul li a:hover {
+          color: #0d94ea;
+          background: #ffffff; }
+          .clHeader .clNav ul li a:hover .clHeaderNavActiveIco {
+            display: block; }
+      .clHeader .clNav ul li.active a {
+        color: #0d94ea;
+        background: #ffffff; }
+        .clHeader .clNav ul li.active a .clHeaderNavActiveIco {
+          display: block; }
+      .clHeader .clNav ul li .clHeaderNavActiveIco {
+        display: none;
+        position: absolute;
+        left: 50%;
+        bottom: -8px;
+        margin-left: -8px;
+        width: 17px;
+        height: 8px;
+        background: url("../images/clHeaderNavActiveIco.png"); }
+.clHeader .clHeaderUserBox {
+  background: #efefef;
+  height: 58px;
+  line-height: 58px;
+  color: #555555;
+  font-size: 18px;
+  border-radius: 25px;
+  behavior: url(css/PIE.htc);
+  position: absolute;
+  right: 0;
+  top: 38px; }
+  .clHeader .clHeaderUserBox a {
+    color: #555555; }
+  .clHeader .clHeaderUserBox .clHeaderUserPhoto {
+    border: 8px solid #fff;
+    border-radius: 50%;
+    behavior: url(css/PIE.htc);
+    width: 58px;
+    height: 58px;
+    display: block;
+    position: absolute;
+    top: -8px;
+    left: -35px;
+    outline: none; }
+  .clHeader .clHeaderUserBox .clHeaderLogOut {
+    color: #8fc31f;
+    display: inline-block;
+    border-radius: 20px;
+    behavior: url(css/PIE.htc);
+    margin-right: 8px;
+    margin-left: 16px;
+    text-align: center;
+    width: 89px;
+    height: 44px;
+    line-height: 44px;
+    background: #fff;
+    border: 1px solid #eeeeee;
+    position: relative; }
+  .clHeader .clHeaderUserBox .clHeaderDownloadLink {
+    margin-left: 35px; }
+  .clHeader .clHeaderUserBox .clHeaderUserName {
+    margin-right: 7px;
+    margin-left: 67px; }
+.clHeader .clSubNav {
+  height: 56px;
+  line-height: 56px;
+  background: #d9edfd; }
+  .clHeader .clSubNav ul {
+    overflow: hidden;
+    height: 20px;
+    line-height: 20px;
+    padding-top: 18px; }
+    .clHeader .clSubNav ul li {
+      float: left;
+      border-left: 1px solid #1291eb;
+      margin-left: -1px; }
+      .clHeader .clSubNav ul li a {
+        margin: 0 23px;
+        color: #1291eb; }
+        .clHeader .clSubNav ul li a:hover {
+          color: #282828; }
+      .clHeader .clSubNav ul li.active a {
+        color: #282828; }
+
+.clFooter {
+  background: #f4f4f4;
+  border-top: 4px solid #dfdfdf;
+  margin-top: 30px; }
+  .clFooter .clFooterIn {
+    position: relative;
+    height: 192px; }
+    .clFooter .clFooterIn .clQRcode {
+      position: absolute;
+      top: 30px;
+      left: 70px; }
+      .clFooter .clFooterIn .clQRcode img {
+        width: 100px;
+        height: 100px;
+        display: block;
+        margin: 0 auto; }
+      .clFooter .clFooterIn .clQRcode figcaption {
+        font-size: 16px;
+        color: #555555;
+        margin-top: 10px;
+        text-align: center; }
+    .clFooter .clFooterIn .copyBox {
+      position: absolute;
+      left: 363px;
+      top: 50px; }
+      .clFooter .clFooterIn .copyBox p {
+        font-size: 16px;
+        color: #555555;
+        line-height: 30px; }
+
+.clSelectVersionBox {
+  margin-left: 8px;
+  width: 275px;
+  height: 170px;
+  position: relative;
+  background: #f4f4f4; }
+  .clSelectVersionBox header {
+    background: url("../images/clSelectVersionHBg.png") no-repeat;
+    width: 291px;
+    height: 59px;
+    position: absolute;
+    left: -8px;
+    top: 0; }
+    .clSelectVersionBox header h3 {
+      height: 50px;
+      line-height: 50px;
+      text-indent: 30px;
+      color: #ffffff;
+      font-size: 22px; }
+    .clSelectVersionBox header .clAddSelectVersionIco {
+      background: url("../images/clAddSelectVersionIco.png") no-repeat;
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      right: 22px;
+      top: 10px;
+      cursor: pointer; }
+  .clSelectVersionBox .clSelectVersionList {
+    padding-top: 50px; }
+    .clSelectVersionBox .clSelectVersionList .clSelectVersionListIn {
+      position: relative;
+      z-index: 2;
+      background: #f4f4f4;
+      padding-top: 18px;
+      height: 100px;
+      overflow: hidden; }
+      .clSelectVersionBox .clSelectVersionList .clSelectVersionListIn li {
+        margin-bottom: 15px; }
+        .clSelectVersionBox .clSelectVersionList .clSelectVersionListIn li a {
+          display: block;
+          width: 244px;
+          height: 34px;
+          line-height: 34px;
+          border-radius: 14px;
+          behavior: url(css/PIE.htc);
+          border: 1px solid #dcdcdc;
+          background: #ffffff;
+          text-align: center;
+          margin: 0 auto; }
+          .clSelectVersionBox .clSelectVersionList .clSelectVersionListIn li a:hover {
+            background: #dcdcdc; }
+        .clSelectVersionBox .clSelectVersionList .clSelectVersionListIn li.active a {
+          background: #dcdcdc; }
+
+.clDefaultBtn {
+  height: 28px;
+  line-height: 28px;
+  color: #5eb0f2;
+  padding: 0 15px;
+  border: 1px solid #d9edfd;
+  margin-left: 10px;
+  display: inline-block;
+  background: #f3faff; }
+
+.clGreenBtn {
+  height: 28px;
+  line-height: 28px;
+  color: #8fc31f;
+  padding: 0 15px;
+  border: 1px solid #8fc31f;
+  margin-left: 10px;
+  display: inline-block;
+  background: #f3fddd; }
+
+.clTabTitle1 {
+  background: #f6f6f6;
+  border-bottom: 1px solid #e8e8e8;
+  height: 65px; }
+  .clTabTitle1 li {
+    float: left;
+    height: 66px;
+    line-height: 53px;
+    width: 160px;
+    text-align: center; }
+    .clTabTitle1 li a {
+      height: 60px;
+      display: block;
+      color: #9b9b9b;
+      font-size: 20px;
+      background: url("../images/clTabSplitBg.png") right center no-repeat;
+      border-left: 1px solid #f6f6f6;
+      border-right: 1px solid #f6f6f6;
+      border-top: 6px solid #f6f6f6; }
+      .clTabTitle1 li a:hover {
+        background: #fff;
+        border-right: 1px solid #e8e8e8;
+        color: #98c73b;
+        border-top: 6px solid #98c73b; }
+    .clTabTitle1 li.active a {
+      background: #fff;
+      border-left: 1px solid #f6f6f6;
+      border-right: 1px solid #e8e8e8;
+      color: #98c73b;
+      border-top: 6px solid #98c73b; }
+
+.clTabTitle2 {
+  background: #e2f2ff;
+  margin-bottom: 14px;
+  height: 42px; }
+  .clTabTitle2 li {
+    height: 42px;
+    line-height: 42px;
+    float: left;
+    position: relative; }
+    .clTabTitle2 li .badge {
+      height: 18px;
+      line-height: 18px;
+      color: #ffffff;
+      background: #ed5900;
+      padding: 0 6px;
+      font-size: 12px;
+      border-radius: 9px;
+      behavior: url(css/PIE.htc);
+      position: absolute;
+      top: 3px;
+      right: 7px; }
+    .clTabTitle2 li a {
+      display: block;
+      padding: 0 25px;
+      font-size: 16px;
+      color: #0d94ea; }
+      .clTabTitle2 li a .clTabTitle2ActiveIco {
+        display: block;
+        background: url("../images/clTabTitle2ActiveIco.png") no-repeat;
+        width: 14px;
+        height: 7px;
+        position: absolute;
+        bottom: -7px;
+        left: 50%;
+        margin-left: -7px;
+        display: none; }
+      .clTabTitle2 li a:hover {
+        background: #5eb0f2;
+        color: #ffffff; }
+        .clTabTitle2 li a:hover .clTabTitle2ActiveIco {
+          display: block; }
+    .clTabTitle2 li.active a {
+      background: #5eb0f2;
+      color: #ffffff; }
+      .clTabTitle2 li.active a .clTabTitle2ActiveIco {
+        display: block; }
+
+.yellowTabTitle {
+  background: #fff7e5; }
+  .yellowTabTitle li a {
+    color: #f79700; }
+    .yellowTabTitle li a .clTabTitle2ActiveIco {
+      background: url("../images/clTabTitle2YellowActiveIco.png") no-repeat; }
+    .yellowTabTitle li a:hover {
+      background: #ffae00;
+      color: #ffffff; }
+      .yellowTabTitle li a:hover .clTabTitle2ActiveIco {
+        display: block; }
+  .yellowTabTitle li.active a {
+    background: #ffae00;
+    color: #ffffff; }
+    .yellowTabTitle li.active a .clTabTitle2ActiveIco {
+      display: block; }
+
+.greenTabTitle {
+  background: #ebf9cc; }
+  .greenTabTitle li a {
+    color: #8fc31f; }
+    .greenTabTitle li a .clTabTitle2ActiveIco {
+      background: url("../images/clTabTitle2GreenActiveIco.png") no-repeat; }
+    .greenTabTitle li a:hover {
+      background: #8fc31f;
+      color: #ffffff; }
+      .greenTabTitle li a:hover .clTabTitle2ActiveIco {
+        display: block; }
+  .greenTabTitle li.active a {
+    background: #8fc31f;
+    color: #ffffff; }
+    .greenTabTitle li.active a .clTabTitle2ActiveIco {
+      display: block; }
+
+.clTabTitle3 {
+  background: #f4f4f4;
+  height: 40px; }
+  .clTabTitle3 li {
+    height: 40px;
+    line-height: 40px;
+    float: left; }
+    .clTabTitle3 li a {
+      color: #888888;
+      padding: 0 30px;
+      border-bottom: 2px solid #f4f4f4;
+      display: block;
+      line-height: 38px; }
+      .clTabTitle3 li a:hover {
+        color: #0d94ea;
+        border-bottom: 2px solid #5eb0f2; }
+    .clTabTitle3 li.active a {
+      color: #0d94ea;
+      border-bottom: 2px solid #5eb0f2; }
+
+.clTabTitle4 {
+  background: #fff7e5;
+  border-bottom: 1px solid #e8e8e8;
+  height: 64px;
+  border: 1px solid #fee2a4; }
+  .clTabTitle4 li {
+    float: left;
+    height: 44px;
+    line-height: 44px;
+    margin-top: 9px; }
+    .clTabTitle4 li a {
+      display: block;
+      color: #f79700;
+      font-size: 20px;
+      border: 1px solid #ffae00;
+      padding-left: 58px;
+      padding-right: 22px;
+      border-radius: 20px;
+      behavior: url(css/PIE.htc);
+      position: relative;
+      margin-left: 10px;
+      /*  新增，开始{*/
+      /*  }结束，新增*/ }
+      .clTabTitle4 li a:hover {
+        /*  新增，开始{*/
+        /*  }结束，新增*/
+        color: #fff; }
+        .clTabTitle4 li a:hover.clYWIco {
+          background: url("../images/clYWActiveIco.png") 20px center no-repeat #ffae00; }
+        .clTabTitle4 li a:hover.clSXIco {
+          background: url("../images/clSXActiveIco.png") 20px center no-repeat #ffae00; }
+        .clTabTitle4 li a:hover.clENIco {
+          background: url("../images/clENActiveIco.png") 20px center no-repeat #ffae00; }
+        .clTabTitle4 li a:hover.clKXIco {
+          background: url("../images/clKXActiveIco.png") 20px center no-repeat #ffae00; }
+        .clTabTitle4 li a:hover.clPDIco {
+          background: url("../images/clPDActiveIco.png") 20px center no-repeat #ffae00; }
+        .clTabTitle4 li a:hover.clYYIco {
+          background: url("../images/clYYActiveIco.png") 20px center no-repeat #ffae00; }
+        .clTabTitle4 li a:hover.clMSIco {
+          background: url("../images/clMSActiveIco.png") 20px center no-repeat #ffae00; }
+        .clTabTitle4 li a:hover.clWLIco {
+          background: url("../images/clWLActiveIco.png") 20px center no-repeat #ffae00; }
+        .clTabTitle4 li a:hover.clHXIco {
+          background: url("../images/clHXActiveIco.png") 20px center no-repeat #ffae00; }
+        .clTabTitle4 li a:hover.clSWIco {
+          background: url("../images/clSWActiveIco.png") 20px center no-repeat #ffae00; }
+        .clTabTitle4 li a:hover.clDLIco {
+          background: url("../images/clDLActiveIco.png") 20px center no-repeat #ffae00; }
+        .clTabTitle4 li a:hover.clZZIco {
+          background: url("../images/clZZActiveIco.png") 20px center no-repeat #ffae00; }
+        .clTabTitle4 li a:hover.clLSIco {
+          background: url("../images/clLSActiveIco.png") 20px center no-repeat #ffae00; }
+        .clTabTitle4 li a:hover.clXXJSIco {
+          background: url("../images/clXXJSActiveIco.png") 20px center no-repeat #ffae00; }
+        .clTabTitle4 li a:hover.clTYJSIco {
+          background: url("../images/clTYJSActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li a.clYWIco {
+        background: url("../images/clYWIco.png") 20px center no-repeat #ffffff; }
+      .clTabTitle4 li a.clSXIco {
+        background: url("../images/clSXIco.png") 20px center no-repeat #ffffff; }
+      .clTabTitle4 li a.clENIco {
+        background: url("../images/clENIco.png") 20px center no-repeat #ffffff; }
+      .clTabTitle4 li a.clKXIco {
+        background: url("../images/clKXIco.png") 20px center no-repeat #ffffff; }
+      .clTabTitle4 li a.clPDIco {
+        background: url("../images/clPDIco.png") 20px center no-repeat #ffffff; }
+      .clTabTitle4 li a.clYYIco {
+        background: url("../images/clYYIco.png") 20px center no-repeat #ffffff; }
+      .clTabTitle4 li a.clMSIco {
+        background: url("../images/clMSIco.png") 20px center no-repeat #ffffff; }
+      .clTabTitle4 li a.clWLIco {
+        background: url("../images/clWLIco.png") 20px center no-repeat #ffffff; }
+      .clTabTitle4 li a.clHXIco {
+        background: url("../images/clHXIco.png") 20px center no-repeat #ffffff; }
+      .clTabTitle4 li a.clSWIco {
+        background: url("../images/clSWIco.png") 20px center no-repeat #ffffff; }
+      .clTabTitle4 li a.clDLIco {
+        background: url("../images/clDLIco.png") 20px center no-repeat #ffffff; }
+      .clTabTitle4 li a.clZZIco {
+        background: url("../images/clZZIco.png") 20px center no-repeat #ffffff; }
+      .clTabTitle4 li a.clLSIco {
+        background: url("../images/clLSIco.png") 20px center no-repeat #ffffff; }
+      .clTabTitle4 li a.clXXJSIco {
+        background: url("../images/clXXJSIco.png") 20px center no-repeat #ffffff; }
+      .clTabTitle4 li a.clTYJSIco {
+        background: url("../images/clTYJSIco.png") 20px center no-repeat #ffffff; }
+    .clTabTitle4 li.active a {
+      color: #fff;
+      /*  新增，开始{*/
+      /*  }结束，新增*/ }
+      .clTabTitle4 li.active a.clYWIco {
+        background: url("../images/clYWActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li.active a.clSXIco {
+        background: url("../images/clSXActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li.active a.clENIco {
+        background: url("../images/clENActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li.active a.clKXIco {
+        background: url("../images/clKXActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li.active a.clPDIco {
+        background: url("../images/clPDActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li.active a.clYYIco {
+        background: url("../images/clYYActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li.active a.clMSIco {
+        background: url("../images/clMSActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li.active a.clWLIco {
+        background: url("../images/clWLActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li.active a.clHXIco {
+        background: url("../images/clHXActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li.active a.clSWIco {
+        background: url("../images/clSWActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li.active a.clDLIco {
+        background: url("../images/clDLActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li.active a.clZZIco {
+        background: url("../images/clZZActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li.active a.clLSIco {
+        background: url("../images/clLSActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li.active a.clXXJSIco {
+        background: url("../images/clXXJSActiveIco.png") 20px center no-repeat #ffae00; }
+      .clTabTitle4 li.active a.clTYJSIco {
+        background: url("../images/clTYJSActiveIco.png") 20px center no-repeat #ffae00; }
+
+/*搜索1，开始{*/
+.clSearchBox {
+  margin-bottom: 16px;
+  background: #dfdfdf;
+  height: 70px; }
+  .clSearchBox .clSearchTxt {
+    font-size: 14px;
+    border: none;
+    width: 390px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 15px;
+    margin: 15px 0 0 13px;
+    vertical-align: middle;
+    float: left; }
+  .clSearchBox .clSearchBtn {
+    background: url("../images/clSearchBtn.png") no-repeat;
+    width: 40px;
+    height: 40px;
+    border: none;
+    margin-top: 15px;
+    vertical-align: middle;
+    cursor: pointer; }
+
+/*}结束，搜索1*/
+/*搜索2，开始{*/
+.clSearchBox2 {
+  background: #5eb0f2;
+  height: 64px;
+  position: relative; }
+  .clSearchBox2 h6 {
+    line-height: 64px;
+    color: #ffffff;
+    font-size: 20px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-indent: 24px; }
+  .clSearchBox2 .searchFormBox {
+    float: right;
+    margin-top: 12px;
+    margin-right: 13px; }
+    .clSearchBox2 .searchFormBox .clSearchTxt {
+      width: 385px;
+      height: 40px;
+      line-height: 40px;
+      background: #ffffff;
+      border: none;
+      color: #898989;
+      font-size: 14px;
+      padding: 0 15px;
+      float: left;
+      vertical-align: middle; }
+    .clSearchBox2 .searchFormBox .clSearchBtn {
+      background: url("../images/clSearchBtn2.png") no-repeat;
+      width: 40px;
+      height: 40px;
+      vertical-align: middle;
+      border: none; }
+  .clSearchBox2 .searchOtherBtn {
+    margin-right: 13px;
+    float: right;
+    height: 40px;
+    line-height: 40px;
+    background: #ffffff;
+    padding: 0 10px 0 10px;
+    font-size: 16px;
+    color: #5eb0f2;
+    margin-top: 12px; }
+    .clSearchBox2 .searchOtherBtn .clHelpIco {
+      background: url("../images/clHelpIco.png") no-repeat;
+      width: 20px;
+      height: 24px;
+      margin-right: 7px;
+      vertical-align: text-bottom;
+      display: inline-block; }
+
+/*}结束，搜索2*/
+/*右侧按钮，开始{*/
+.clBtns {
+  position: absolute;
+  right: 0;
+  top: 0; }
+  .clBtns a {
+    margin-left: 6px;
+    height: 40px;
+    line-height: 40px;
+    display: block;
+    float: right;
+    padding: 0 14px;
+    font-size: 16px;
+    color: #ffffff; }
+  .clBtns .clGreenBtn {
+    background: #8fc31f; }
+  .clBtns .clYellowBtn {
+    background: #ffa62a; }
+
+/*}结束，右侧按钮*/
+/*功能区域，开始{*/
+.clListFunBox {
+  padding-left: 25px;
+  position: relative;
+  height: 40px;
+  line-height: 40px;
+  background: #e2f2ff; }
+  .clListFunBox .clCheckBox {
+    background: #ffffff;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #e5e5e5;
+    vertical-align: middle; }
+  .clListFunBox label {
+    vertical-align: middle;
+    color: #5eb0f2;
+    font-size: 16px; }
+
+/*功能区域，开始{*/
+.clLaudIco {
+  background: url("../images/clLaudIco.png") no-repeat;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: text-bottom;
+  margin-right: 5px; }
+
+/*公共头部*/
+.clArrowHeader {
+  height: 40px;
+  line-height: 40px; }
+  .clArrowHeader h3 {
+    color: #ffffff;
+    font-size: 18px;
+    text-indent: 43px; }
+    .clArrowHeader h3.clHeaderIco1 {
+      background: url("../images/clLaudIco.png") 15px center no-repeat; }
+    .clArrowHeader h3.clHeaderIco2 {
+      background: url("../images/clCalendarIco.png") 15px center no-repeat; }
+    .clArrowHeader h3.clHeaderIco3 {
+      background: url("../images/clAuestIco.png") 15px center no-repeat; }
+    .clArrowHeader h3.clHeaderIco4 {
+      background: url("../images/clHotIco.png") 15px center no-repeat; }
+  .clArrowHeader.clArrowHeaderGreenBg {
+    background: url("../images/clArrowHeaderGreenBg.png") no-repeat #d0e999; }
+  .clArrowHeader.clArrowHeaderOrangeBg {
+    background: url("../images/clArrowHeaderOrangeBg.png") no-repeat #fee4af; }
+  .clArrowHeader.clArrowHeaderBlueBg {
+    background: url("../images/clArrowHeaderBlueBg.png") no-repeat #aed7f9; }
+  .clArrowHeader.clArrowHeaderVioletBg {
+    background: url("../images/clArrowHeaderVioletBg.png") no-repeat #d8d5ff; }
+
+.clNoArrowHeader {
+  height: 40px;
+  line-height: 40px; }
+  .clNoArrowHeader h3 {
+    color: #ffffff;
+    font-size: 18px;
+    text-indent: 43px; }
+    .clNoArrowHeader h3.clHeaderIco1 {
+      background: url("../images/clLaudIco.png") 15px center no-repeat; }
+    .clNoArrowHeader h3.clHeaderIco2 {
+      background: url("../images/clCalendarIco.png") 15px center no-repeat; }
+    .clNoArrowHeader h3.clHeaderIco3 {
+      background: url("../images/clAuestIco.png") 15px center no-repeat; }
+    .clNoArrowHeader h3.clHeaderIco4 {
+      background: url("../images/clHotIco.png") 15px center no-repeat; }
+  .clNoArrowHeader.clNoArrowHeaderGreenBg {
+    background: #64c995; }
+  .clNoArrowHeader.clNoArrowHeaderOrangeBg {
+    background: #ff9f00; }
+  .clNoArrowHeader.clNoArrowHeaderBlueBg {
+    background: #5eb0f2; }
+  .clNoArrowHeader.clNoArrowHeaderVioletBg {
+    background: #a29bf9; }
+
+/*列*/
+.clBoxCol2 {
+  width: 300px;
+  float: left;
+  margin-left: 18px; }
+
+.clBoxCol8 {
+  width: 880px;
+  float: left;
+  margin-left: 18px; }
+
+#clContentBox {
+  margin-top: 30px;
+  margin-bottom: 30px; }
+
+.clBoxColWra {
+  overflow: hidden;
+  margin-left: -18px; }
+
+/**/
+/*登陆页，开始{*/
+.login {
+  /*幻灯片*/ }
+  .login header {
+    height: 221px;
+    position: relative; }
+    .login header h1 {
+      background: url("../images/logo.png") no-repeat;
+      width: 386px;
+      height: 72px;
+      position: absolute;
+      left: 0;
+      top: 111px; }
+      .login header h1 a {
+        display: block;
+        text-indent: -9999px; }
+  .login #slider {
+    position: relative;
+    height: 360px; }
+    .login #slider ul li {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%; }
+      .login #slider ul li a {
+        display: block;
+        width: 100%;
+        height: 100%; }
+    .login #slider ol {
+      position: absolute;
+      bottom: 20px;
+      z-index: 1000;
+      left: 0;
+      right: 0;
+      text-align: center;
+      margin-left: -400px; }
+      .login #slider ol li {
+        cursor: pointer;
+        margin: 0 5px;
+        width: 13px;
+        height: 13px;
+        display: inline-block;
+        background: url("../images/sliderNumIco.png") -13px top no-repeat; }
+        .login #slider ol li.active {
+          background-position: 0 0; }
+  .login .loginBox {
+    height: 370px; }
+    .login .loginBox .loginBoxIn {
+      z-index: 1000;
+      position: relative; }
+    .login .loginBox .loginForm {
+      padding: 0 23px;
+      width: 339px;
+      height: 463px;
+      border: 10px solid #fff;
+      background: #e6e6e6;
+      position: absolute;
+      right: 0px;
+      top: -113px; }
+      .login .loginBox .loginForm .tabTitle {
+        margin-top: 44px;
+        margin-bottom: 36px;
+        background: #555555;
+        border-radius: 25px;
+        behavior: url(css/PIE.htc);
+        position: relative;
+        height: 54px; }
+        .login .loginBox .loginForm .tabTitle a {
+          float: left;
+          display: block;
+          height: 54px;
+          line-height: 54px;
+          padding: 0 18px;
+          font-size: 21px;
+          color: #ffffff;
+          position: relative;
+          z-index: 1000; }
+        .login .loginBox .loginForm .tabTitle .active {
+          display: block;
+          background: #8fc31f;
+          color: #ffffff;
+          border-radius: 25px;
+          behavior: url(css/PIE.htc);
+          position: absolute;
+          padding: 0;
+          width: 78px;
+          height: 54px;
+          left: -1px;
+          top: 0; }
+      .login .loginBox .loginForm .tabContent i {
+        width: 40px;
+        height: 40px;
+        border: 1px solid #e8e8e8;
+        border-radius: 50%;
+        behavior: url(css/PIE.htc);
+        display: inline-block;
+        position: absolute;
+        right: 6px;
+        top: 6px; }
+      .login .loginBox .loginForm .tabContent .userIco {
+        background: url("../images/userIco.png") center no-repeat; }
+      .login .loginBox .loginForm .tabContent .passwordIco {
+        background: url("../images/unlockIco.png") center no-repeat; }
+      .login .loginBox .loginForm .tabContent .validateIco {
+        background: url("../images/validateIco.png") center no-repeat; }
+      .login .loginBox .loginForm .tabContent p {
+        position: relative;
+        margin-bottom: 15px;
+        background: #fff;
+        border-radius: 25px;
+        behavior: url(css/PIE.htc);
+        height: 53px; }
+        .login .loginBox .loginForm .tabContent p input {
+          width: 312px;
+          border: none;
+          background: none;
+          padding-left: 22px;
+          height: 53px;
+          line-height: 53px; }
+        .login .loginBox .loginForm .tabContent p.code {
+          width: 184px; }
+          .login .loginBox .loginForm .tabContent p.code input {
+            width: 162px; }
+          .login .loginBox .loginForm .tabContent p.code img {
+            position: absolute;
+            width: 140px;
+            right: -153px;
+            height: 53px; }
+      .login .loginBox .loginForm .tabContent .loginBtn {
+        display: block;
+        height: 53px;
+        line-height: 53px;
+        color: #ffffff;
+        font-size: 24px;
+        width: 100%;
+        border: none;
+        background: #0d94ea;
+        border-radius: 25px;
+        behavior: url(css/PIE.htc);
+        position: relative;
+        margin-top: 15px; }
+      .login .loginBox .loginForm .tabContent #savepass {
+        vertical-align: middle;
+        margin-left: 10px; }
+      .login .loginBox .loginForm .tabContent label {
+        font-size: 20px;
+        color: #0d94ea;
+        vertical-align: middle; }
+  .login footer {
+    height: 200px;
+    background: #e6e6e6; }
+    .login footer .footerIn {
+      position: relative; }
+      .login footer .footerIn .copyBox {
+        padding-top: 64px; }
+      .login footer .footerIn .QRCodeBox {
+        position: absolute;
+        right: 66px;
+        top: 40px; }
+        .login footer .footerIn .QRCodeBox figure {
+          float: right;
+          margin-left: 70px; }
+          .login footer .footerIn .QRCodeBox figure img {
+            display: block; }
+          .login footer .footerIn .QRCodeBox figure figcaption {
+            display: block;
+            margin-top: 10px;
+            font-size: 16px;
+            color: #555555; }
+      .login footer .footerIn p {
+        color: #555555;
+        font-size: 16px;
+        line-height: 30px; }
+
+/*}结束，登陆页*/
+/*我的应用，开始{*/
+.clMyApplying {
+  float: left;
+  width: 298px;
+  border: 1px solid #e8e8e8; }
+  .clMyApplying h3 {
+    height: 70px;
+    line-height: 70px;
+    background: #8fc31f;
+    color: #ffffff;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 28px; }
+  .clMyApplying .clApplyingLinks {
+    overflow: hidden; }
+    .clMyApplying .clApplyingLinks .clAppLying {
+      float: left;
+      display: block;
+      margin-left: 28px;
+      margin-bottom: 27px; }
+      .clMyApplying .clApplyingLinks .clAppLying figure img {
+        width: 108px;
+        height: 108px;
+        display: block; }
+      .clMyApplying .clApplyingLinks .clAppLying figure figcaption {
+        margin-top: 10px;
+        text-align: center;
+        color: #9b9b9b;
+        font-size: 18px; }
+
+/*}结束，我的应用*/
+.clContent {
+  float: right;
+  width: 880px; }
+
+/*选项卡列表，开始{*/
+#clRecommendList {
+  border: 1px solid #e8e8e8;
+  margin-top: 16px; }
+  #clRecommendList .clTabTitleBox {
+    background: #f6f6f6;
+    border-bottom: 1px solid #e8e8e8;
+    height: 65px; }
+    #clRecommendList .clTabTitleBox li {
+      float: left;
+      height: 59px;
+      line-height: 53px;
+      width: 160px;
+      text-align: center;
+      color: #9b9b9b;
+      font-size: 20px;
+      background: url("../images/clTabSplitBg.png") right center no-repeat;
+      border-right: 1px solid #f6f6f6;
+      border-top: 6px solid #f6f6f6;
+      cursor: pointer; }
+      #clRecommendList .clTabTitleBox li.active {
+        background: #fff;
+        border-right: 1px solid #e8e8e8;
+        color: #98c73b;
+        border-top: 6px solid #98c73b; }
+  #clRecommendList .clTabContentBox {
+    padding-top: 30px;
+    padding-bottom: 34px; }
+    #clRecommendList .clTabContentBox ul {
+      padding: 0 38px; }
+      #clRecommendList .clTabContentBox ul li {
+        height: 39px;
+        line-height: 39px;
+        overflow: hidden; }
+        #clRecommendList .clTabContentBox ul li a {
+          float: left;
+          color: #555555;
+          font-size: 16px; }
+        #clRecommendList .clTabContentBox ul li time {
+          float: right;
+          color: #555555;
+          font-size: 16px; }
+
+/*}结束，选项卡列表*/
+#clSlider {
+  position: relative;
+  width: 1200px;
+  height: 330px;
+  overflow: hidden; }
+  #clSlider ul li {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0; }
+    #clSlider ul li a img {
+      display: block;
+      width: 100%; }
+    #clSlider ul li a p {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      height: 40px;
+      line-height: 40px;
+      background: rgba(0, 0, 0, 0.5);
+      filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0, startColorstr = '#80000000', endColorstr = '#80000000') \9 ;
+      color: #ffffff;
+      text-indent: 10px; }
+  #clSlider ol {
+    position: absolute;
+    right: 35px;
+    bottom: 15px;
+    z-index: 200; }
+    #clSlider ol li {
+      width: 12px;
+      height: 12px;
+      background: #d9d9d9;
+      margin-right: 10px;
+      cursor: pointer;
+      border-radius: 6px;
+      behavior: url(css/PIE.htc);
+      float: left; }
+      #clSlider ol li.active {
+        background: #f7b940; }
+
+.clSearchBox .clSearchBtn {
+  float: right;
+  margin-right: 15px; }
+.clSearchBox .clSearchTxt {
+  float: right; }
+
+.clIcoList {
+  border: 1px solid #e8e8e8;
+  height: 620px;
+  background: #f6f6f6; }
+  .clIcoList h3 {
+    height: 70px;
+    line-height: 70px;
+    background: url("../images/clWoldIco.png") 26px center no-repeat #8fc31f;
+    text-indent: 68px;
+    color: #ffffff;
+    font-size: 28px; }
+  .clIcoList ul {
+    margin-top: 15px; }
+    .clIcoList ul li {
+      height: 58px;
+      line-height: 58px; }
+      .clIcoList ul li a {
+        font-size: 20px;
+        color: #9fa0a0;
+        text-indent: 68px;
+        display: block; }
+        .clIcoList ul li a.clStudentMenuIco1 {
+          background: url("../images/clListIco1.png") 26px center no-repeat; }
+        .clIcoList ul li a.clStudentMenuIco2 {
+          background: url("../images/clListIco2.png") 26px center no-repeat; }
+        .clIcoList ul li a.clStudentMenuIco3 {
+          background: url("../images/clListIco3.png") 26px center no-repeat; }
+        .clIcoList ul li a.clStudentMenuIco4 {
+          background: url("../images/clListIco4.png") 26px center no-repeat; }
+        .clIcoList ul li a.clStudentMenuIco5 {
+          background: url("../images/clListIco5.png") 26px center no-repeat; }
+        .clIcoList ul li a.clStudentMenuIco6 {
+          background: url("../images/clListIco6.png") 26px center no-repeat; }
+        .clIcoList ul li a.clStudentMenuIco7 {
+          background: url("../images/clListIco7.png") 26px center no-repeat; }
+
+.clFunBox {
+  border-top: 1px solid #fff; }
+  .clFunBox h3 {
+    height: 70px;
+    line-height: 70px;
+    background: url("../images/clgiftIco.png") 30px center no-repeat #ffae00;
+    text-indent: 70px;
+    color: #ffffff;
+    font-size: 28px; }
+  .clFunBox .clFunList {
+    overflow: hidden;
+    margin-left: -47px;
+    margin-bottom: 30px; }
+    .clFunBox .clFunList a {
+      margin-top: 24px;
+      display: block;
+      float: left;
+      margin-left: 47px; }
+      .clFunBox .clFunList a figure img {
+        display: block; }
+      .clFunBox .clFunList a figure figcaption {
+        margin-top: 15px;
+        text-align: center;
+        font-size: 18px;
+        color: #646464; }
+
+.clListBox {
+  border: 1px solid #e8e8e8; }
+  .clListBox header {
+    height: 65px;
+    line-height: 65px;
+    background: #f6f6f6;
+    border-bottom: 1px solid #e8e8e8; }
+    .clListBox header h3 {
+      background: #fff;
+      border-left: 1px solid #f6f6f6;
+      border-right: 1px solid #e8e8e8;
+      color: #98c73b;
+      border-top: 6px solid #98c73b;
+      height: 60px;
+      font-size: 20px;
+      line-height: 53px;
+      float: left;
+      padding: 0 40px; }
+  .clListBox ul {
+    height: 254px;
+    padding-top: 30px; }
+    .clListBox ul li {
+      height: 38px;
+      line-height: 38px;
+      padding: 0 38px; }
+      .clListBox ul li a {
+        font-size: 16px;
+        color: #555555;
+        float: left; }
+      .clListBox ul li time {
+        float: right; }
+
+/*# sourceMappingURL=style.css.map */

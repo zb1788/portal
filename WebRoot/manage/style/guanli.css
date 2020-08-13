@@ -1,0 +1,197 @@
+@charset "utf-8";
+a { text-decoration:none;}
+/* CSS Document */
+.school_mc img{ margin:10px; width:190px;}
+.school_mc ul { margin-bottom:15px;}
+.school_mc ul li{ font:normal 12px/25px Microsoft YaHei;
+				  padding-left:10px;}
+.money{   font: bold 18px/24px Microsoft YaHei;
+  		  color: #fff;
+		  padding: 15px 5px 15px 15px;
+		  background:#269bd7;}
+.money span{ float:right;
+			 font: normal 16px/30px Microsoft YaHei;
+			  margin-right:5px;
+			  cursor:pointer;
+			  text-decoration:none;}
+a.cur_3{ text-decoration:none;
+		 color:#fff;}
+		
+.table_3{
+	      clear: both;
+		  text-align: center;
+		  border-collapse: collapse;
+		  border-spacing: 0;  }
+		
+.table_3 td{   line-height: 26px;
+			   height: 40px;
+			   font-size: 13px;
+			   margin-left:15px;}
+.table_3 .red{ background:url(../images/manage/square.png) no-repeat center center;
+			   color:#fff; }	
+.table_3 span,.sh_tx span{ color:#e13335;}
+.table_3 .grey{ background:url(../images/manage/grey.png)  no-repeat center center;
+			   color:#fff; }
+a.bj_tj{ background:#0096d6;
+		 line-height:30px; height:30px; padding:0 15px; 
+		 display:inline-block; margin-left:5px; 
+		 border-radius:3px; font-weight:normal; color:#fff; text-decoration:none; vertical-align:middle;}
+/*-------------审核提醒------------------*/
+.sh_tx { width:25%; float:left;}
+.sh_tx h1 , .yh_gl h1, .yh_tj h1{ color:#555;font:normal 16px/40px Microsoft YaHei; 
+					  text-indent:1px;
+					  border-bottom:1px solid #efefef; margin-top:2px;   }
+.sh_tx ul { border-bottom:1px solid #efefef; } 
+.sh_tx ul li a {
+			font:normal 16px/40px Microsoft YaHei;
+			padding-left:45px;
+			text-decoration:none; 
+			}	
+li.student{ background:url(../images/manage/students.png) no-repeat left center;
+			margin-left:30px;}
+li.school{ background:url(../images/manage/school.png) no-repeat left center;
+			margin-left:30px;}
+li.books { background:url(../images/manage/books.png) no-repeat left center;
+			margin-left:30px;}
+li.video { background:url(../images/manage/video.png) no-repeat left center;
+			margin-left:30px;}				
+.yh_gl{ width:70%; float:right;}
+.yh_tj {width:30%; float:left;  }
+.hy_yh {width:45%;float:right;}
+/*-----------二级导航-----------*/
+.nav_con li{ width:90px; }
+.nav.guanli ul li a,.nav.guanli ul li a:visited{ padding:0px;}
+.w1200 .nav.guanli ul.nav_con li a,.w1200 .nav.guanli ul.nav_con li a:visited { padding:0px;}
+.nav_con li .subnav {
+		 background:#0096d6; border:1px solid  #0096d6; border-top:none;
+		 top: 137px; width:90px; height:auto;
+		 font-size: 16px; display: none;
+		 position: absolute; z-index: 1000;text-align:center;padding:0px;}
+.nav_con li .subnav dl { float: left; display: block; }
+.nav_con li .subnav dl dt { width: 90px; overflow: hidden; float: left; line-height:40px;padding:0px; }
+.nav_con li .subnav dl dt a {  height: 40px; font-size: 16px; display: block; color:#fff; text-align:center;padding:0px;}
+.nav_con li .subnav dl dt a:hover { background: none;text-decoration:none; background:#0083ba;padding:0px;}
+
+/*------------学校机构-------------*/
+span.search_xx{ width:100%; 
+			    display:block;
+				margin:10px 0px 15px 0px;
+				padding-bottom:15px;
+				border-bottom:1px solid #efefef;
+				font:normal 14px Microsoft YaHei;
+				}
+span.search_yy{  
+			    display:block;
+				float:left;
+				font:normal 14px Microsoft YaHei; }
+				
+span.search_yy textarea{
+					padding:5px;
+					text-align:10em;
+					overflow:auto;
+					font:normal 12px/30px Microsoft YaHei;
+					color:#666;}				
+span.search_xx select,span.search_yy select{ padding:5px 0px 5px 15px;
+						margin-top:-1px;
+						vertical-align:middle;
+						color: #818181; }
+span.search_xx label,span.search_yy label {
+					color: #818181;
+					vertical-align: middle;
+					font-size:14px;
+					}
+span.search_xx  i {
+				 font:normal 13px/35px Microsoft YaHei;
+				 height:40px;
+				vertical-align:middle;}
+input[type="text"] { color:#9a9a9a; padding-left:10px; vertical-align: middle; }
+input[type="checkbox"] { width:15px;
+						 vertical-align: middle;
+						 margin:0px 5px 0px 20px;
+						}
+input[type="button"] {
+					 padding:7px 30px;
+					 background:#0096d6;
+					 color:#fff;
+					 font:normal 16px  Microsoft YaHei;
+					 border-radius:5px;
+					 -webkit-box-shadow: none;
+					 -moz-box-shadow: none;
+					  box-shadow: none;
+					  text-shadow:none;
+					  border:none;
+					 display: inline-block;
+					 overflow: visible;
+					 cursor:pointer; 
+					}
+a.cancel{  padding:7px 30px;
+			background:#ececec;
+			 border-radius:5px;
+			 border: 1px solid #c6c6c6;
+			 display:inline-block; vertical-align: middle;
+			 margin-left:25px;
+			 text-decoration:none;}
+input[type="date"]{
+				padding:5px 16px;
+				}									
+.tijiao{  text-align:center;
+		  display:block; }
+span.btn_cy  a {  line-height: 30px;
+				height: 30px;
+				padding: 0 15px;
+				display: inline-block;
+				margin-left: 5px;
+				border-radius: 3px;
+				font-weight: normal;}
+				
+.photo_list { display:block;
+			  margin-left:85px;
+			  margin-top:20px;}
+.photo_list li {
+		float: left;
+		margin: 0 14px 14px 0;
+		position: relative;
+		z-index: 3;
+		}
+.photo_list li img {
+	width:80px;
+		padding:5px;
+		display: block;
+		text-align: center;
+		background-color: #fff;
+		border: 1px solid #efefef;}
+.photo_list span{ text-align:center;
+				  line-height:25px;
+				  display:block;
+				  width:90px;
+				  overflow:hidden;
+				  white-space:nowrap;
+				  text-overflow:ellipsis;
+				  }
+.tj_cy{
+		 paddig:20px 15px;
+		 display:block;}
+.grayFon span{ height:26px; 
+				line-height:26px; 
+				text-align:center; 
+				font-size:14px; 
+				display:inline-block; 
+				padding:0 10px; }
+
+.edition{ margin-left:80px;
+		 margin-top:20px;
+		 display:block;}
+h2.pai{ text-align:center;
+		font:normal 23px/35px  Microsoft YaHei;
+		margin-top:25px;
+		background:#e0f1fd;
+		padding:5px;}
+tr.hebing{ background:#e0f1fd;
+			text-align:left;}
+td.ranking{ padding-left:30px;
+			font:normal 16px  Microsoft YaHei;}			
+.qk3 td {
+		white-space: normal;
+		word-break: break-all;
+		border-bottom: 1px solid #f6f6f6;}
+.yj_rangking { background:#fff; padding:0px 10px;}

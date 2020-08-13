@@ -1,0 +1,59 @@
+<project name="CMS_V5.x" default="all" basedir=".">
+    <property name="base.dir" value="."/>
+    <property name="webapp.path" value="./WebRoot"/>
+    <property name="weblib" value="./AntBuildLib"/>
+    <property name="project.name" value="portal"/>
+    <property name="generate.war" value="./portal.war"/>
+
+    <!--  编译到cms.war/WEB-INF/classes  -->
+    <target name="compile">
+        <delete dir="${webapp.path}/WEB-INF/classes"/>
+        <echo message="编译源文件..."/>
+        <mkdir dir="${webapp.path}/WEB-INF/classes"/>
+        <mkdir dir="${webapp.path}/WEB-INF/lib"/>
+        <javac fork="true" destdir="${webapp.path}/WEB-INF/classes"
+               optimize="of"
+               debug="on" failonerror="false"
+               srcdir="${base.dir}/src"
+               encoding="UTF-8"
+               memoryinitialsize="256m"
+               memorymaximumsize="512m">
+            <classpath>
+                <pathelement location="${webapp.path}/WEB-INF/classes"/>
+                <fileset dir="${webapp.path}/WEB-INF/lib">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${weblib}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+            <include name="**"/>
+            <exclude name="tags/**"/>
+        </javac>
+    </target>
+
+    <target name="copy" depends="compile">
+        <echo message="复制源文件以外的资源文件..."/>
+        <copy toDir="${webapp.path}/WEB-INF/classes" failonerror="false">
+            <fileset dir="${base.dir}/src">
+                <include name="**"/>
+                <exclude name="**/*.svn"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="generateWar" depends="copy">
+        <echo message="生成war目录文件.."/>
+        <copy toDir="${generate.war}/">
+            <fileset dir="${base.dir}/WebRoot/">
+                <include name="**"/>
+            </fileset>
+        </copy>
+    </target>
+
+
+    <target name="all" depends="copy,compile,generateWar">
+        <echo message="结束!"/>
+    </target>
+</project>

@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>应用定制</title>
+<link href="style/common_new.css" rel="stylesheet" type="text/css" />
+<link href="style/parents.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery_mix.js"></script>
+<script type="text/javascript" src="../script/partcustom.js"></script>
+<script type="text/javascript" src="../script/jquery.event.drag.min.js"></script>
+<style type="text/css">
+.drag {
+	border: 1px solid #89B;
+	background: #BCE;
+	height: 58px;
+	width: 58px;
+	cursor: move;
+	top: 120px;
+	}
+#container {
+	height: 299px;
+	border: 1px dashed #888;
+	}
+</style>
+<script type="text/javascript">
+jQuery(function($){
+	var $div = $('.h595');
+	var clonenode=null;
+	$('dl')
+		.drag("start",function( ev, dd ){
+			dd.limit = $div.offset();
+			dd.limit.bottom = dd.limit.top + $div.outerHeight() - $( this ).outerHeight();
+			dd.limit.right = dd.limit.left + $div.outerWidth()-20 - $( this ).outerWidth();
+			clonenode=$( this ).clone();
+			clonenode.insertBefore($( this ));
+			$( this ).css({position: 'absolute',zIndex:10000}); 
+			$( this ).fadeTo(10,0.4);
+		})
+		.drag("dragend",function( ev, dd ){
+			var lsize=$("#dingzhi dl").size();
+			var h=130+(lsize/7)*90;
+			
+			if(parseInt($(this).css("top"))<h){
+				$( this ).css({position: ''});
+				$( this ).fadeTo(1000,1);
+				clonenode.remove();
+			    $(this).find("img").attr("src","images/del.jpg");
+				$(this).find(".add").unbind();
+				$(this).find(".add").click(function(){_customUtil.del(this);		 });
+				$("#dingzhi").append($(this));
+			}else{
+				$( this ).animate({
+					top: clonenode.offset().top,
+					left: clonenode.offset().left
+				}, 420,null,function(){
+							$( this ).css({position: ''});
+							$( this ).fadeTo(1000,1);
+							clonenode.remove();
+						});
+			}
+			//$( this ).css({position: ''});
+		})
+		.drag(function( ev, dd ){
+			$( this ).css({
+				top: Math.min( dd.limit.bottom, Math.max( dd.limit.top, dd.offsetY ) ),
+				left: Math.min( dd.limit.right, Math.max( dd.limit.left, dd.offsetX ) )
+			});   
+		});
+});
+</script>
+</head>
+
+<body>
+<div id="testdrag"></div>
+<div class="pop qk1" id="pop2">
+    <h2><span><a href="#" onclick="document.getElementById('pop2').style.display='none';document.getElementById('mask').style.display='none';" title="关闭"><img src="images/closeBtn.gif" width="18" height="18" /></a></span>应用定制</h2>
+    <div class="h595">
+        <div class="children1">
+            <h3>已经定制的应用</h3>
+             <ul class="myApp" id="dingzhi">         
+             </ul>
+        </div>
+        <!--end children-->
+        <div class="children1">
+            <h3>尚未定制的应用</h3>
+            <ul class="myApp" id="ztjy">
+                    
+                        <dl>
+                            <dt> <div class="add" type="ztjy" index="1"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon01" title="课程表"></a></dt>
+                            <dd>课程表</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add" type="ztjy" index="2"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon02" title="在线课堂"></a></dt>
+                            <dd>在线课堂</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add" type="ztjy" index="3"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon03" title="家校互动"></a></dt>
+                            <dd>家校互动</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add" type="ztjy" index="4"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon04" title="收藏"></a></dt>
+                            <dd>收藏</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add" type="ztjy" index="5"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon05" title="名师课堂"></a></dt>
+                            <dd>名师课堂</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add" type="ztjy" index="6"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon06" title="家长学堂"></a></dt>
+                            <dd>家长学堂</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add" type="ztjy" index="7"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon07" title="教学教研 "></a></dt>
+                            <dd>教学教研 </dd>
+                        </dl>
+                        
+                        
+                        </ul>
+            <h4>我的班级</h4>
+             <ul class="myApp">
+                    
+                     <dl>
+                            <dt> <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon01" title="课程表"></a></dt>
+                            <dd>课程表</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon02" title="在线课堂"></a></dt>
+                            <dd>在线课堂</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon03" title="家校互动"></a></dt>
+                            <dd>家校互动</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon04" title="收藏"></a></dt>
+                            <dd>收藏</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon05" title="名师课堂"></a></dt>
+                            <dd>名师课堂</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon06" title="家长学堂"></a></dt>
+                            <dd>家长学堂</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon07" title="教学教研 "></a></dt>
+                            <dd>教学教研 </dd>
+                        </dl>
+                        
+                        
+                        </ul>
+            <h4>在线课堂</h4>
+             <ul class="myApp">
+                    
+                     <dl>
+                            <dt> <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon01" title="课程表"></a></dt>
+                            <dd>课程表</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon02" title="在线课堂"></a></dt>
+                            <dd>在线课堂</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon03" title="家校互动"></a></dt>
+                            <dd>家校互动</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon04" title="收藏"></a></dt>
+                            <dd>收藏</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon05" title="名师课堂"></a></dt>
+                            <dd>名师课堂</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon06" title="家长学堂"></a></dt>
+                            <dd>家长学堂</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon07" title="教学教研 "></a></dt>
+                            <dd>教学教研 </dd>
+                        </dl>
+                        
+                        
+                        </ul>
+            <h4>名师课堂</h4>
+          <ul class="myApp">
+                    
+                     <dl>
+                            <dt> <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon01" title="课程表"></a></dt>
+                            <dd>课程表</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon02" title="在线课堂"></a></dt>
+                            <dd>在线课堂</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon03" title="家校互动"></a></dt>
+                            <dd>家校互动</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon04" title="收藏"></a></dt>
+                            <dd>收藏</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon05" title="名师课堂"></a></dt>
+                            <dd>名师课堂</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon06" title="家长学堂"></a></dt>
+                            <dd>家长学堂</dd>
+                        </dl>
+                        
+                        <dl>
+                            <dt>
+                                <div class="add"><a href="#"><img src="images/add.jpg" width="15" height="15" /></a></div><a href="#" class="icon07" title="教学教研 "></a></dt>
+                            <dd>教学教研 </dd>
+                        </dl>
+                        
+                        
+                        </ul>
+            <div class="clearfix"></div>
+        </div>
+        <!--end children--> 
+        
+    </div>
+    <p class="tijiao">
+        <input type="submit" class="loginBtn" value="确定" />
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="submit" class="loginBtn" value="关闭" />
+    </p>
+</div>
+</body>
+</html>

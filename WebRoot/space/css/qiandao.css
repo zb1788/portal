@@ -1,0 +1,4 @@
+.you_ts dl dt{ width:200px; float:left;}
+.you_ts dl dt img{ width:100%; height:auto;}
+.you_ts dl dd{ width:320px; float:right; line-height:25px; padding-right:15px; }
+.you_ts dl dd.tit{ margin:20px 0; font-size:16px; font-weight:bold;}

@@ -1,0 +1,14 @@
+$("head").append("<link href=\"space/module/xm/css/room_xm.css\" rel=\"stylesheet\" type=\"text/css\" />");
+$(".bj_bg").css("height","80px");
+$(".qd_wrap").hide();
+$(".yjxs_wrap").hide();
+$(".jx_ico_wrap").parent(".row").prepend("<h1 class=\"hl_bt\">应用推荐</h1><div class=\"times wl xmyy_wrap\"><ul id=\"yyll\" style=\"height:380px\"></ul></div>");
+$("#yyll").append("<li><p><a target=\"_blank\" href=\"http://xm.jichu.chaoxing.com/api/front/yjtRedirectLogin\"><img src=\"space/module/xm/images/xm/mke.png\" width=\"40\" height=\"40\" alt=\"\"/>厦门慕课教与学服务平台</a></p></li>");
+$("#yyll").append("<li><p><a target=\"_blank\" href=\"http://www.eduyun.cn/\"><img src=\"space/module/xm/images/xm/gz.png\" width=\"40\" height=\"40\" alt=\"\"/>国家教育资源公共服务平台</a></p></li>");
+$("#yyll").append("<li><p><a target=\"_blank\" href=\"http://ssoxm.xmedu.cn/xmSSO/libApi\"><img src=\"space/module/xm/images/xm/tsg.png\" width=\"40\" height=\"40\" alt=\"\"/>厦门图书馆</a></p></li>");
+$("#yyll").append("<li><p><a target=\"_blank\" href=\"http://www.fjedu.cn/\"><img src=\"space/module/xm/images/xm/fjzy.png\" width=\"40\" height=\"40\" alt=\"\"/>福建省教育资源公共服务平台</a></p></li>");
+$("#yyll").append("<li><p><a target=\"_blank\" href=\"http://ggfw.tajy.gov.cn\"><img src=\"space/module/xm/images/xm/ta.png\" width=\"40\" height=\"40\" alt=\"\"/>同安教育公共服务平台</a></p></li>");
+$("#yyll").append("<li><p><a target=\"_blank\" href=\"http://www.yjt361.com/\"><img src=\"space/module/xm/images/xm/yj.png\" width=\"40\" height=\"40\" alt=\"\"/>翔安区教育资源公共服务平台</a></p></li>");
+$("#yyll").append("<li><p><a target=\"_blank\" href=\"http://r.cnki.net/KNS/brief/result.aspx?dbprefix=CFED/\"><img src=\"space/module/xm/images/xm/cnki2.png\" width=\"40\" height=\"40\" alt=\"\"/>厦门教育CNKI平台</a></p></li>");
+$("#yyll").append("<li><p><a target=\"_blank\" href=\"http://ebook.xmedu.cn/Usp\"><img src=\"space/module/xm/images/xm/apabi2.png\" width=\"40\" height=\"40\" alt=\"\"/>厦门教育Apabi电子书平台</a></p></li>");
+$("#yyll").append("<li><p><a target=\"_blank\" href=\"http://dssso.xmhcedu.cn/dsssoserver/login?service=http://dsrrt.xmhcedu.cn/dsideal_yy/html/ypt/index_hc.html?area_id=301053\"><img src=\"space/module/xm/images/xm/hc.png\" width=\"40\" height=\"40\" alt=\"\"/>海沧区教育公共服务平台</a></p></li>");

@@ -1,0 +1,44 @@
+.ac_results {
+    width:285px;background:#f8f8f8;border:1px solid #d0d0d0;filter:alpha(opacity=92); -moz-opacity:0.92; opacity: 0.92;overflow-y:auto;z-index:9999;
+}
+
+.ac_results ul {
+    list-style-position: outside;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ac_results li {
+	width:270px;height:30px;line-height:28px;padding-left:10px;cursor:pointer;
+	display:block;
+	font:normal 12px/22px SimSun;
+	padding:0 5px;
+    cursor: default;
+	color:#555;
+    /* 
+    if width will be 100% horizontal scrollbar will apear 
+    when scroll mode will be used
+    */
+    /*width: 100%;*/
+    /* 
+    it is very important, if line-height not setted or setted 
+    in relative units scroll will be broken in firefox
+    */
+    overflow: hidden;
+}
+
+.ac_loading {
+    background: white url('indicator.gif') right center no-repeat;
+}
+
+.ac_results .ac_odd {
+    background-color:#EFF6FE;
+}
+.ac_results .ac_even{background-color: #f8f8f8; }
+.ac_results .ac_over {
+	background:#d1e6f4;
+	/*background-color:#94C5FD;*/
+	color:#333;
+	text-decoration:none;
+}

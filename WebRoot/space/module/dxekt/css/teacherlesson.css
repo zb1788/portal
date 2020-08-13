@@ -1,0 +1,225 @@
+.banner {
+    margin-bottom: 42px;
+}
+
+.banner-nav .left-toggle {
+    position: absolute;
+    top: 65px;
+    left: 0px;
+    width: 211px;
+    height: 173px;
+    background: #fff;
+    padding-left: 58px;
+    padding-right: 17px;
+    background-color: #fff;
+    background-image: url('../img/ico_02.png');
+    background-repeat: no-repeat;
+    /* color: #fff; */
+}
+
+.banner-nav .grade-title {
+    padding: 15px 10px 14px 9px;
+    background: #00bd52;
+    color: #fff;
+    font-size: 16px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.banner-nav .grade-body {
+    width: 201px;
+    height: 117px;
+    padding: 3px 5px;
+    /* background: red; */
+    overflow: auto;
+}
+
+.banner-nav .grade-body li {
+    float: left;
+    color: #555;
+    margin-right: 15px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.banner-nav .grade-body li:nth-child(3n) {
+    margin-right: 0px;
+}
+
+.banner-nav .grade-body li a {
+    color: #555;
+    display: block;
+    width: 49px;
+    height: 22px;
+    overflow: hidden;
+    text-align: center;
+    line-height: 22px;
+    padding: 0px 3px;
+    border: 1px dashed #555;
+}
+
+.banner-nav .grade-body li:hover a,
+.banner-nav .grade-body li.on a {
+    border: 1px dashed #f8b502;
+    color: #f8b502;
+}
+
+
+/* main start */
+
+
+/* course start */
+
+.teacherlesson-main {
+    margin-bottom: 50px;
+}
+
+.teacherlesson-main-course .course-left {
+    width: 938px;
+    float: left;
+    margin-right: 20px;
+    overflow: hidden;
+}
+
+.main-title {
+    margin-bottom: 25px;
+}
+
+
+/* .main-list-body {} */
+
+.listBody>ul {
+    display: none;
+}
+
+.listBody>ul.on {
+    display: block;
+}
+
+.main-list-body li {
+    float: left;
+    height: 250px;
+    width: 219px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+}
+
+.main-list-body li:first-child,
+.main-list-body.four li:nth-child(5n),
+.main-list-body.fives li:nth-child(6n) {
+    margin-left: 0px;
+}
+
+.main-list-body li .img {
+    display: block;
+    width: 100%;
+    height: 150px;
+    margin-bottom: 9px;
+    overflow: hidden;
+}
+
+.main-list-body li .img img {
+    width: 100%;
+    height: 100%;
+}
+
+.main-list-body li .list-title,
+.main-list-body li .list-info,
+.main-list-body li .new-price {
+    padding: 0px 5px;
+}
+
+.main-list-body li .list-title,
+.main-list-body li .list-title a {
+    color: #354052;
+    font-size: 18px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 19px;
+}
+
+.main-list-body li .list-info {
+    line-height: 16px;
+    height: 16px;
+    color: #354052;
+    font-size: 16px;
+    margin-bottom: 13px;
+}
+
+.main-list-body li .list-info .info-left {
+    float: left
+}
+
+.main-list-body li .list-info .info-right {
+    float: right;
+}
+
+.main-list-body li .new-price {
+    color: red;
+    font-size: 16px;
+    margin-right: 12px;
+    padding-left: 5px;
+}
+
+.main-list-body li .old-price {
+    color: #999;
+    font-size: 14px;
+    padding-left: 5px;
+}
+
+.teacherlesson-main-course .course-right {
+    width: 240px;
+    float: left;
+    border: 1px solid #f1f5f9;
+}
+
+.teacherlesson-main-course .course-right .rigth-top {
+    /* line-height: 48px; */
+    padding: 10px 5px;
+    background: #f8f8f8;
+}
+
+.teacherlesson-main-course .course-right .rigth-top .main-title {
+    margin-bottom: 0px;
+    font-size: 18px;
+    color: #354052;
+}
+
+.teacherlesson-main-course .course-right .popular-body {
+    background: #fff;
+}
+
+.teacherlesson-main-course .course-right .popular-body li {
+    padding: 15px 10px;
+    border-top: 1px solid #f1f5f9;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.teacherlesson-main-course .course-right .popular-body li.popular a,
+.teacherlesson-main-course .course-right .popular-body li a:hover {
+    color: #00bd52;
+}
+
+.teacherlesson-main-course .course-right .popular-body li a {
+    color: #333333;
+    font-size: 16px;
+}
+
+.teacherlesson-main-yw {
+    margin-top: 35px;
+}
+
+.teacherlesson-main-yw .more-link {
+    margin-right: 30px;
+}
+
+
+/* main end */
+
+
+/* main end */

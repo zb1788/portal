@@ -1,0 +1,11 @@
+@charset "gb2312";
+
+.dtree-con{
+	background: #fff;
+}
+ul.dtree_con { clear:both;margin:10px 0 10px 10px;  line-height:30px; height:820px; overflow-y:auto;}
+ul.dtree_con li {margin-left:5px; height:30px; }
+ul.dtree_con li a {display:inline-block; padding:0 10px; height:26px; overflow:hidden; font-size:14px; }
+ul.dtree_con li a.cur_tree {border: 1px solid #3B95F5; width: 87%; border-radius:4px; color: #3b95f5; }
+ul.dtree_con h2 {font-size:14px; color:#888; height:30px; overflow:hidden; display:block; word-break:keep-all; white-space:nowrap; text-overflow:ellipsis; margin-top:5px; background: url(../images/qtong/blue-dot.png) 0 center no-repeat; padding-left: 14px;}
+ul.dtree_con h2 span{ }

@@ -1,0 +1,224 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{SEOKEY}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<link rel="shortcut" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="icon" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="bookmark"  href="{ICOIMG}" type="image/x-icon" />
+<meta name="keywords"	content="{SEOKEY}" />
+<link rel="stylesheet" type="text/css" href="login/default/style/jquery.autocomplete.css" />
+<link href="login/lnsy/public/style/common.css" rel="stylesheet" type="text/css" />
+<link id="xmcss" href="login/lnsy/css/xm_sy.css?v=18102" rel="stylesheet" type="text/css" />
+<script type='text/javascript' src="script/jquery_aa2d.js"></script>
+<script type='text/javascript' src="script/jquery-migrate-ada.js"></script>
+<script type="text/javascript" src="login/fjxm/js/jquery.SuperSlide.2.1.1.js"></script>
+<script type="text/javascript" src="login/fjxm/js/fullPage.min.js"></script>
+<script type='text/javascript' src="script/jquery.cookie.js"></script>
+<script type='text/javascript' src="script/jquery.qrcode.js"></script>
+<script type='text/javascript' src="login/fjxm/script/utfparse.js"></script>
+<script type='text/javascript' src="space/script/artDialog.js?skin=default"></script>
+<script type='text/javascript' src="script/base64.js"></script>
+<script type='text/javascript' src="script/js_md5.js"></script>
+<script type='text/javascript' src="script/js_rsa.js"></script>
+<script type='text/javascript' src="login/fjxm/script/util.js?day={DAYSTAMP}" ></script>
+<script type="text/javascript" src="common/config.jsp?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="login/fjxm/script/loginobj.js?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="login/lnsy/js/loginpage.js?day={DAYSTAMP}"></script>
+<script type='text/javascript' src="login/lnsy/js/respond.min.js"></script>
+<style type="text/css">
+.zcol-4 a{text-decoration:none}
+ @media (max-height: 800px) {
+  .bg1{
+   background-position:center 0;
+  }
+  }
+</style>
+<script type="text/javascript">
+$(".textbox1").live("keyup",function(eve){ //账号信息输入框绑定回车事件
+	if(eve.which==13){  
+		tologin();
+	}         
+});
+function hidTips() {//隐藏温馨提示
+    $('#tips').slideUp(600);
+}
+var otherConfig = decodeURIComponent(decodeURIComponent(portal_config.otherConfig));
+//默认Logo
+var defaultlogo="logo.png";
+//优教家族代码中使用
+var cmsPath =protocol+sysconfig.CMS+"/A01/lib/defaultstyle/portalWJ/";
+</script>
+</head>
+<script>
+
+function contentPosition(){
+	var con_height =$(window).height(); //获取页面可见高度
+	var con_height_half=(con_height-114-32-498)/2+114;
+	if (con_height <= 700){
+	   $('.content').css('top',con_height_half+'px').css('margin-top','0');		   
+	}else{		   
+	   $('.content').css('top','50%').css('margin-top','-300px');
+	}
+}
+$(window).resize(function() {
+	contentPosition();
+ })
+//游客登录
+function visitorLogin(){
+	window.location.href=protocol+sysconfig.SSO+"/sso/ssoAuth?loginUsertype=teacher&inputname=youke_teacher&username=youke_teacher&sfp=1&pwd=96e79218965eb72c92a549dd5a330112&isPortal=1&validateCode=1234&gjpt="+$("#gjpt").val()+"&data={setmain:\"PLS.NSEARCH\",icode:\"PLS.NSEARCH\"}";
+}
+//ie8低于1000高度，使用专用样式
+if(util.browser.msie && util.browser.version<9 && window.screen.height<900){
+	document.getElementById("xmcss").href="login/lnsy/css/xm_sy_ie8.css?v=18102";
+}
+</script>
+<body >
+<div class="tips" id="tips" >&nbsp;</div>
+<!-- 控件加载判断 -->
+<OBJECT ID="ocx" width="0" height="0" CLASSID="CLSID:B02201C9-1789-4FF0-B95F-C1A03D8B6B99">
+	<PARAM NAME="_Version" VALUE="65536">
+	<PARAM NAME="_ExtentX" VALUE="10583">
+	<PARAM NAME="_ExtentY" VALUE="10583">
+	<PARAM NAME="_StockProps" VALUE="0">
+</OBJECT>
+
+<div id="pageContain" >
+  <div class="page bg1 current" >
+    <div class="section section1">
+	<a style="position: absolute; width: 650px; height:600px; display:block;top:-10%;left:20%; margin-left:-300px;" target="_blank" href="https://vfsln.czbanbantong.com/A01/lib/defaultstyle/sykt/index.html">&nbsp;</a>
+      <div class="xm-left"></div>
+      <div class="xm-right" style="width:43%"> 
+       
+      </div>
+    </div>
+   
+  </div>
+  <div class="page page2 bg1" >
+    <div class="section section2">
+
+    </div>
+  </div>
+  <div class="page page3 bg1 " >
+    <div class="section section3">
+    </div>
+  </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+		var _type4OtherConfig="login";
+		eval(otherConfig);
+</script>
+<script type="text/javascript" src="common/otherConfig.jsp?day={DAYSTAMP}"></script>
+
+<script>
+    //登录区域，身份切换状态
+    $("#loginTab a").click(function(){
+    	loginutil.changeLoginRole($(this));
+        $(this).addClass("active").siblings().removeClass("active");
+    })
+    //年级切换状态
+    $("#classifyTab li").click(function(){
+        $(this).addClass("active").siblings().removeClass("active");
+        switch($(this).index()){
+            case 0: getgradelist(1); break;
+            case 1: getgradelist(2); break;
+            case 2: getgradelist(3); break;
+        }
+    })
+</script>
+<script>
+var indexUrl=window.location.href;
+
+var runPage;
+runPage = new FullPage({
+	id: 'pageContain',
+	slideTime: 800,
+	effect: {
+		transform: {
+			translate : 'Y',          // 'X'|'Y'|'XY'|'none'
+ 		    scale : [.1, 1],           // [scalefrom, scaleto]
+      		rotate : [0, 0]
+		},
+		opacity: [0, 1]
+	},
+	pageNow:itemIndex,
+	callback:function(index){
+		if(index >= 1){
+			$('#sy_pfcon').animate({bottom:'-114px'},1000);
+			$('#sy_pfcon').css('z-index','10');
+			$('.pf_con').show();
+		}else{
+			$('#sy_pfcon').animate({bottom:'32px'},1000);
+			$('.pf_con').hide();
+		}
+	},
+  	continuous:true,
+	mode: 'wheel, touch, nav:navBar',
+	easing: 'ease'
+});
+
+function Show_Tab_List2(num,active,where){
+	for(var i=0;i<num;i++){
+		if(i!=active){
+			document.getElementById(where+"s_"+i).style.display="none";
+			document.getElementById(where+"Tab_"+i).className="";
+			}else{
+			document.getElementById(where+"s_"+i).style.display="block";
+			document.getElementById(where+"Tab_"+i).className="cur_2";
+			}
+	}
+}
+
+//用户类型切换处理
+//登陆角色切换处理,thisobj为当前点击的角色div
+LoginObj.prototype.changeLoginRole=function(thisobj){
+	$(thisobj).siblings().removeClass();
+		//登录角色
+		$("#loginUsertype").attr("value",$(thisobj).attr("id"));
+		
+		$(thisobj).siblings().removeClass();
+		
+		if(util.isBlank(usertype)){//门户登陆页
+			 $(thisobj).addClass("sel");
+			 if(showRegedit == "0"){
+				$("#loginbuttion").css("width","310px");
+				$(".greenBtn").hide();
+			}else{
+				if($("#loginUsertype").val() == "student" || $("#loginUsertype").val() == "teacher"){
+					$("#loginbuttion").css("width","150px");
+					$(".greenBtn").fadeIn(300);
+				}else{
+					$("#loginbuttion").css("width","310px");
+					$(".greenBtn").hide();
+				}
+			}
+		 }else{//空间内登录
+			 $(thisobj).addClass("cur_5");
+		 }
+		//重置用户选择学生/家长
+		$("#username").attr("value","");
+		//调用选择账号接口
+		$("#roleDiv").attr("phonenum","");
+		//手机多账号选择
+		loginutil.getPhoneRoles();
+		//根据时间刷新验证码
+		//loginutil.refreshCodeImg();
+}
+
+util.getCommonCMS("jingCaiHuoDong","CMS.JSON.A01063001003",3,0,'<li><a target="~target~" href="~url~"><img src="~img~" width="320" height="131"  alt=""/><span class="tit">~text~</span></a><span>~desc~</span></li>',true);
+$('#loginForm').on("keyup",'input[type="text"]',function(eve){ //账号信息输入框绑定回车事件
+	if(eve.which==13){  
+		tologin();
+	}
+});
+$('#loginForm').on("keyup",'input[type="password"]',function(eve){ //账号信息输入框绑定回车事件
+	if(eve.which==13){  
+		tologin();
+	}         
+});
+
+</script>

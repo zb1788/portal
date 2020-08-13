@@ -1,0 +1,78 @@
+@charset "utf-8";
+/* CSS Document */
+*{ margin:0; padding:0;}
+li{list-style-type:none;}
+a{ text-decoration:none; }
+img{ border:0 none; display:block;}
+input{ border:0 none;}
+
+body{ background-image:url(../../images/w1200/bj.png);}
+.bigbox{margin:0 auto; width:1200px;}
+.bj-img{ background-image:url(../../images/w1200/middle-index.png); width:1200px; height:1993px; position: relative;}
+.bj2-img{ background-image:url(../../images/w1200/tbxx.png);width:1200px; height:1560px; position: relative;}
+.bj3-img{ background-image:url(../../images/w1200/hdxx.png);width:1200px; height:1897px; position: relative;}
+.bj4-img{ background-image:url(../../images/w1200/mzyl.png);width:1200px; height:1350px; position: relative;}
+.bj5-img{ background-image:url(../../images/w1200/zwzd.png);width:1200px; height:1700px; position: relative;}
+.turn-off img{ width:80px; height:81px; float:right; display:block;}
+
+.index{
+	width: 740px;
+	height: 447px;
+	background-image: url(../../images/w1200/M-index.png);
+	position: absolute;
+	left: 2px;
+	top: 117px;
+}
+.btn1{ display:block; width:30px; height:30px; margin-left:684px; margin-top:397px;}
+.tbxx{
+	width: 760px;
+	height: 447px;
+	position: absolute;
+	background-image: url(../../images/w1200/M-tbxx.png);
+	left: 84px;
+	top: 114px;
+	display:none;
+}
+.btn2{ display:block; width:30px; height:30px; margin-top:396px; margin-left:702px;}
+.hdxx{
+	width: 660px;
+	height: 445px;
+	position: absolute;
+	background-image: url(../../images/w1200/M-tbfd.png);
+	left: 204px;
+	top: 113px;
+	display:none;
+}
+.btn3{ display:block; width:30px; height:30px; margin-top:396px; margin-left:605px;}
+.mzyl{
+	width: 539px;
+	height: 492px;
+	position: absolute;
+	background-image: url(../../images/w1200/M-mzyl.png);
+	left: 371px;
+	top: 115px;
+	display:none;
+}
+.btn4{ display:block; width:30px; height:30px; margin-top:432px; margin-left:482px;}
+.zwzd{
+	width: 486px;
+	height: 473px;
+	position: absolute;
+	background-image: url(../../images/w1200/M-zwzd.png);
+	left: 362px;
+	top: 113px;
+	display:none;
+}
+.btn5{ display:block; width:30px; height:30px; margin-top:412px; margin-left:430px;}
+.msty{
+	width: 511px;
+	height: 251px;
+	background-image: url(../../images/w1200/over.png);
+	position: absolute;
+	left: 358px;
+	top: 388px;
+	display:none;
+}
+
+.btn6{ display:block; width:126px; height:36px; margin-top:167px; margin-left:144px; float:left;}
+.btn7{ display:block; width:126px; height:36px; margin-top:167px; margin-left:15px; float:left;}

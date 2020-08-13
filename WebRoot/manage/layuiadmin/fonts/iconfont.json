@@ -1,0 +1,191 @@
+{
+  "id": "1073300",
+  "name": "管理员空间",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "15368",
+      "name": "上三角形",
+      "font_class": "shangsanjiaoxing",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    },
+    {
+      "icon_id": "461043",
+      "name": "首页",
+      "font_class": "home",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "478791",
+      "name": "位置",
+      "font_class": "weizhi",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "649316",
+      "name": "加",
+      "font_class": "jia",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "1200058",
+      "name": "学校概况",
+      "font_class": "xuexiaogaikuang",
+      "unicode": "e6d2",
+      "unicode_decimal": 59090
+    },
+    {
+      "icon_id": "1250665",
+      "name": "圆",
+      "font_class": "yuan",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "1288709",
+      "name": "消息",
+      "font_class": "xiaoxihudong",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "1400865",
+      "name": "完成",
+      "font_class": "wancheng",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "2959012",
+      "name": "电子围栏",
+      "font_class": "dianziweilan",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "3119506",
+      "name": "问号",
+      "font_class": "wenhao",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "3868274",
+      "name": "配网引导",
+      "font_class": "jiaowuguanli",
+      "unicode": "eb65",
+      "unicode_decimal": 60261
+    },
+    {
+      "icon_id": "3868280",
+      "name": "提案审批",
+      "font_class": "tianshenpi",
+      "unicode": "eb67",
+      "unicode_decimal": 60263
+    },
+    {
+      "icon_id": "3868281",
+      "name": "数据看板",
+      "font_class": "tongjifenxi",
+      "unicode": "eb66",
+      "unicode_decimal": 60262
+    },
+    {
+      "icon_id": "4354252",
+      "name": "图表-柱状图",
+      "font_class": "tubiao-zhuzhuangtu",
+      "unicode": "eb96",
+      "unicode_decimal": 60310
+    },
+    {
+      "icon_id": "4553749",
+      "name": "位置",
+      "font_class": "weizhi1",
+      "unicode": "e7e0",
+      "unicode_decimal": 59360
+    },
+    {
+      "icon_id": "4828300",
+      "name": "教学",
+      "font_class": "jiaoxueguanli",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "5026282",
+      "name": "减",
+      "font_class": "jjian-",
+      "unicode": "e6a9",
+      "unicode_decimal": 59049
+    },
+    {
+      "icon_id": "5611495",
+      "name": "教学",
+      "font_class": "jiaoxue1",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "5767874",
+      "name": "任务进程",
+      "font_class": "jichuguanli",
+      "unicode": "ec35",
+      "unicode_decimal": 60469
+    },
+    {
+      "icon_id": "5882682",
+      "name": "消息",
+      "font_class": "xiaoxi",
+      "unicode": "ec3b",
+      "unicode_decimal": 60475
+    },
+    {
+      "icon_id": "5961300",
+      "name": "待办事项",
+      "font_class": "daibanshixiang",
+      "unicode": "ec4e",
+      "unicode_decimal": 60494
+    },
+    {
+      "icon_id": "6786463",
+      "name": "活动管理",
+      "font_class": "huodongguanli",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "7011422",
+      "name": "通知公告",
+      "font_class": "tongzhigonggao",
+      "unicode": "e6d1",
+      "unicode_decimal": 59089
+    },
+    {
+      "icon_id": "7765170",
+      "name": "学校_教师",
+      "font_class": "xuexiao_jiaoshi",
+      "unicode": "e65f",
+      "unicode_decimal": 58975
+    },
+    {
+      "icon_id": "7765185",
+      "name": "学校_班级",
+      "font_class": "xuexiao_banji",
+      "unicode": "e661",
+      "unicode_decimal": 58977
+    },
+    {
+      "icon_id": "7802247",
+      "name": "通知公告",
+      "font_class": "tongzhigonggao1",
+      "unicode": "e780",
+      "unicode_decimal": 59264
+    }
+  ]
+}

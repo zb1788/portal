@@ -1,0 +1,79 @@
+@charset "utf-8";
+/* CSS Document */
+*{ margin:0; padding:0;}
+li{list-style-type:none;}
+a{ text-decoration:none; }
+img{ border:0 none; display:block;}
+input{ border:0 none;}
+
+body{ background-image:url(../../images/w980/bj.png);}
+.bigbox{margin:0 auto; width:980px;}
+.bj-img{ background-image:url(../../images/w980/middle-index.png); width:980px; height:1987px; position: relative;}
+.bj2-img{ background-image:url(../../images/w980/tbxx.png);width:980px; height:1500px; position: relative;}
+.bj3-img{ background-image:url(../../images/w980/hdxx.png);width:980px; height:1739px; position: relative;}
+.bj4-img{ background-image:url(../../images/w980/mzyl.png);width:980px; height:1325px; position: relative;}
+.bj5-img{ background-image:url(../../images/w980/zwzd.png);width:980px; height:1600px; position: relative;}
+.turn-off img{ width:80px; height:81px; float:right; display:block;}
+
+.index{
+	width: 685px;
+	height: 442px;
+	background-image: url(../../images/w980/M-index.png);
+	position: absolute;
+	left: 0px;
+	top: 117px;
+	/*display:none;*/
+	}
+.btn1{ display:block; width:30px; height:30px; margin-left:628px; margin-top:390px;}
+.tbxx{
+	width: 731px;
+	height: 443px;
+	position: absolute;
+	background-image: url(../../images/w980/M-tbxx.png);
+	left: 64px;
+	top: 117px;
+	display:none;
+}
+.btn2{ display:block; width:30px; height:30px; margin-top:392px; margin-left:672px;}
+.hdxx{
+	width: 681px;
+	height: 464px;
+	position: absolute;
+	background-image: url(../../images/w980/M-tbfd.png);
+	left: 163px;
+	top: 116px;
+	display:none;
+}
+.btn3{ display:block; width:30px; height:30px; margin-top:414px; margin-left:625px;}
+.mzyl{
+	width: 572px;
+	height: 507px;
+	position: absolute;
+	background-image: url(../../images/w980/M-mzyl.png);
+	left: 268px;
+	top: 116px;
+	display:none;
+}
+.btn4{ display:block; width:30px; height:30px; margin-top:449px; margin-left:518px;}
+.zwzd{
+	width: 487px;
+	height: 477px;
+	position: absolute;
+	background-image: url(../../images/w980/M-zwzd.png);
+	left: 295px;
+	top: 117px;
+	display:none;
+}
+.btn5{ display:block; width:30px; height:30px; margin-top:416px; margin-left:432px;}
+.msty{
+	width: 494px;
+	height: 243px;
+	background-image: url(../../images/w980/over.png);
+	position: absolute;
+	left: 258px;
+	top: 348px;
+	display:none;
+}
+
+.btn6{ display:block; width:126px; height:36px; margin-top:165px; margin-left:134px; float:left;}
+.btn7{ display:block; width:126px; height:36px; margin-top:165px; margin-left:16px; float:left;}

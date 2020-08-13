@@ -1,0 +1,585 @@
+.banner {
+    margin-bottom: 0px;
+}
+
+.banner-nav .left-toggle {
+    position: absolute;
+    top: 65px;
+    left: 0px;
+    width: 211px;
+    height: 173px;
+    background: #fff;
+    padding-left: 58px;
+    padding-right: 17px;
+    background-color: #fff;
+    background-image: url('../img/ico_04.png');
+    background-repeat: no-repeat;
+    /* color: #fff; */
+}
+
+.banner-nav .left-toggle .ver-title {
+    padding: 15px 10px 14px 9px;
+    background: #00bd52;
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 22px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.banner-nav .left-toggle .ver-txt {
+    margin-bottom: 26px;
+}
+
+.banner-nav .left-toggle .ver-txt span {
+    font-size: 14x;
+    color: #666;
+}
+
+.banner-nav .left-toggle .ver-oper-adddel {
+    color: #fff;
+    float: left;
+    width: 165px;
+    background: #f8b502;
+    font-size: 14px;
+    text-align: center;
+    padding: 7px 0px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.banner-nav .left-toggle .ver-select {
+    color: #fff;
+    float: left;
+    width: 40px;
+    background: #00bd52;
+    font-size: 14px;
+    text-align: center;
+    padding: 7px 0px;
+    cursor: pointer;
+}
+
+
+/* sync-main start */
+
+.sync-main {
+    height: 879px;
+}
+
+.sync-main .sync-main-left {
+    float: left;
+    width: 239px;
+    height: 922px;
+    border: 1px solid #efefef;
+    border-right-width: 2px;
+}
+
+.sync-main .sync-main-left .menu {
+    height: 48px;
+}
+
+.sync-main .sync-main-left .menu li {
+    float: left;
+    border: 1px solid #e4e4e4;
+    width: 95px;
+    height: 38px;
+    margin-top: 4px;
+    margin-right: 2px;
+    line-height: 38px;
+    text-align: center;
+}
+
+.sync-main .sync-main-left .menu li span {
+    width: 66px;
+    overflow: hidden;
+    display: block;
+    float: left;
+    color: #555555;
+    height: 38px;
+}
+
+.sync-main .sync-main-left .menu>span {
+    line-height: 48px;
+    font-size: 19px;
+}
+
+.sync-main .sync-main-left .menu>.ico {
+    float: left;
+    height: 100%;
+    width: 40px;
+    text-align: center;
+    line-height: 48px;
+}
+
+.sync-main .sync-main-left .menu>.ico i {
+    font-size: 23px;
+}
+
+.sync-main .sync-main-left .menu ul {
+    float: left;
+}
+
+.sync-main .sync-main-left .menu .menu-select i {
+    float: left;
+    width: 29px;
+    display: block;
+    height: 38px;
+    color: #aaaaaa;
+    cursor: pointer;
+    /* background: red; */
+}
+
+.sync-main .class-list {
+    border-top: 1px solid #efefef;
+    background: #f9f9f9;
+    height: 829px;
+    padding: 22px 14px;
+    overflow: auto;
+}
+
+.sync-main .class-list a {
+    display: block;
+    color: #555;
+    font-size: 14px;
+    padding: 10px;
+    overflow: hidden;
+    margin-bottom: 2px;
+}
+
+.sync-main .class-list li.on a,
+.sync-main .class-list li:hover a {
+    background: #f8b502;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.sync-main .class-list-t {
+    border-top: 1px solid #efefef;
+    background: #f9f9f9;
+    height: 829px;
+    padding: 22px 14px;
+    overflow: auto;
+}
+
+.sync-main .class-list-t a {
+    display: block;
+    color: #555;
+    font-size: 14px;
+    padding: 10px;
+    overflow: hidden;
+    margin-bottom: 2px;
+}
+
+.sync-main .class-list-t li.one {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.sync-main .class-list-t li.two.on a,
+.sync-main .class-list-t li.two:hover a {
+    background: #f8b502;
+    color: #fff;
+    border-radius: 5px;
+}
+
+
+/* sync-main-right start */
+
+.sync-main-right {
+    margin-top: 35px;
+    padding-left: 40px;
+    width: 913px;
+    padding-right: 5px;
+    float: left;
+}
+
+.sync-main-right .sync-main-title {
+    padding: 26px 0px;
+    /* position: relative; */
+}
+
+.sync-main-right .sync-main-title h3 {
+    text-align: center;
+    color: #000;
+    font-size: 20px;
+}
+
+.sync-main-right .sync-main-title h3 span {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.sync-main-right .sync-main-title ul {
+    float: right;
+    margin-top: -30px;
+}
+
+.sync-main-right .sync-main-title ul li {
+    float: left;
+    margin-left: 5px;
+    line-height: 30px;
+}
+
+.sync-main-right .sync-main-title ul li a {
+    display: block;
+    border: 1px solid #a7a5a5;
+    border-radius: 3px;
+    text-align: center;
+    padding: 1px 5px;
+    cursor: pointer;
+    color: #a7a5a5;
+    /* text-decoration: underline; */
+}
+
+.sync-main-right .sync-main-title ul li.off a {
+    color: #d5d5d5;
+    border: 1px solid #d5d5d5;
+}
+
+.sync-main-select-class {
+    padding: 6px 2px 15px 2px;
+    border-bottom: 1px solid #ececec;
+    border-top: 1px solid #ececec;
+}
+
+
+/* .sync-main-select-class>ul>li {
+    margin-bottom: 10px;
+} */
+
+.sync-main-select-class>ul>li li {
+    float: left;
+    padding: 9px 9px;
+    cursor: pointer;
+    border: 1px solid #fff;
+    margin-top: 9px;
+    margin-right: 5px;
+}
+
+.sync-main-select-class>ul.not-t>li li {
+    padding: 9px 20px;
+}
+
+.sync-main-select-class>ul>li.one li.on,
+.sync-main-select-class>ul>li.one li:hover {
+    background: #f8b502;
+    color: #fff;
+    border-radius: 20px;
+}
+
+.sync-main-select-class>ul>li.two li.on,
+.sync-main-select-class>ul>li.two li:hover {
+    border: 1px solid #f8b502;
+    color: #f8b502;
+    border-radius: 20px;
+}
+
+.sync-conent-list .share-link {
+    float: right;
+    margin-right: 5px;
+    display: block;
+    color: #fff;
+    background: #f8b502;
+    padding: 9px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+.sync-conent-list>ul {
+    padding-top: 50px;
+}
+
+.sync-conent-list>ul .img {
+    float: left;
+    width: 198px;
+    height: 126px;
+    display: block;
+}
+
+.sync-conent-list>ul>li {
+    height: 126px;
+    padding: 3px;
+    margin-bottom: 14px;
+}
+
+.sync-conent-list>ul .list-info {
+    float: left;
+    width: 690px;
+    padding-left: 15px;
+}
+
+.sync-conent-list-t>ul .list-info {
+    /* width: 460px; */
+    width: 380px;
+}
+
+.sync-conent-list-t .list-fun {
+    float: left;
+    width: 299px;
+    /* background: red; */
+    /* height: 1px; */
+}
+
+.sync-conent-list-t .list-fun li {
+    float: right;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.sync-conent-list-t .list-fun {
+    padding-top: 38px;
+}
+
+.sync-conent-list-t .list-fun li.one {
+    width: 72px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    color: #666;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    font-size: 15px;
+    margin-top: 3px;
+}
+
+.sync-conent-list-t .list-fun li.one a {
+    color: #666;
+}
+
+.sync-conent-list-t .list-fun li.one i {
+    vertical-align: -3px;
+    font-size: 21px;
+}
+
+.sync-conent-list-t .list-fun li.one:hover {
+    background-color: #f5f5f5;
+    border-color: #c0c0c0;
+}
+
+.sync-conent-list-t .list-fun li.two {
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+
+.sync-conent-list-t .list-fun li.two .tooltip {
+    width: 100px;
+    position: absolute;
+    color: #FFF;
+    top: -41px;
+    left: 50%;
+    margin-left: -50px;
+    z-index: 2;
+    text-align: center;
+    /* transition: margin .5s ease-in-out;
+    -webkit-transition: margin .5s ease-in-out;
+    -moz-transition: margin .5s ease-in-out; */
+    display: none;
+}
+
+.sync-conent-list-t .list-fun li.two .tooltip span {
+    background: #b1b1b1;
+    border-radius: 3px;
+    /* display: block; */
+    font-size: 12px;
+    line-height: 26px;
+    height: 26px;
+    display: inline-block;
+    padding: 2px 10px 2px 10px;
+    white-space: nowrap;
+}
+
+.sync-conent-list-t .list-fun li.two .tooltip .arrow {
+    position: absolute;
+    left: 50%;
+    margin-left: -7px;
+    bottom: -7px;
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 7px solid #b1b1b1;
+}
+
+.sync-conent-list-t .list-fun li.two i {
+    font-size: 25px;
+    width: 40px;
+    height: 40px;
+    display: block;
+    text-align: center;
+    background: #ececec;
+    color: #9a9a9a;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+}
+
+.sync-conent-list-t .list-fun li.two:hover i {
+    color: #fff;
+    background: #00bd52;
+}
+
+.sync-conent-list-t .list-fun li.two:hover i.qing {
+    background: #00B2B2;
+}
+
+.sync-conent-list-t .list-fun li.two:hover i.blue {
+    background: #29ABE3;
+}
+
+.sync-conent-list-t .list-fun li.two:hover i.yellow {
+    background: #f8b502;
+}
+
+.sync-conent-list-t .list-fun li.two:hover .tooltip {
+    display: block;
+}
+
+.sync-conent-list>ul .list-info .info-title {
+    color: #000;
+    font-size: 20px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sync-conent-list>ul .list-info.two .info-title {
+    margin-top: 15px;
+    margin-bottom: 22px;
+}
+
+.sync-conent-list>ul .list-info .info-note {
+    max-height: 45px;
+    color: #666;
+    font-size: 18px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.sync-conent-list>ul .list-info .info-data {
+    color: #999;
+    font-size: 14px;
+}
+
+
+/* sync-main-right end */
+
+
+/* sync-main end */
+
+
+/* 同步备课 start */
+
+.banner-nav .left-toggle-t {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 250px;
+    /* height: 235px; */
+    background: #fff;
+}
+
+.banner-nav .left-toggle-t .ver-title {
+    padding: 7px;
+    height: 25px;
+    background: #00bd52;
+    color: #fff;
+    line-height: 25px;
+    font-size: 18px;
+}
+
+.banner-nav .left-toggle-t .ver-title span i {
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+.banner-nav .left-toggle-t .ver-title a {
+    color: #fff;
+    float: right;
+    margin-top: -1px;
+    margin-right: 5px;
+}
+
+.banner-nav .left-toggle-t .ver-title a i {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.banner-nav .left-toggle-t .ver-txt {
+    font-size: 18px;
+    line-height: 30px;
+    padding-left: 10px;
+    color: #333;
+}
+
+.banner-nav .left-toggle-t .ver-list {
+    height: 150px;
+    overflow: hidden;
+    padding: 0px 13px;
+    background: #fdfdfd;
+}
+
+.banner-nav .left-toggle-t .ver-list ul li {
+    font-size: 14px;
+    color: #666;
+    padding: 6px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 25px;
+    cursor: pointer;
+}
+
+.banner-nav .left-toggle-t .ver-list ul li>span {
+    border-radius: 50%;
+    background: #ccc;
+    padding: 5px;
+    color: #fff;
+    overflow: hidden;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    font-size: 15px;
+    text-align: center;
+    line-height: 15px;
+    vertical-align: -7px;
+    margin-right: 10px;
+}
+
+.banner-nav .left-toggle-t .ver-list ul li>span.bg1 {
+    background: #58a7e9;
+}
+
+.banner-nav .left-toggle-t .ver-list ul li>span.bg2 {
+    background: #ffa845;
+}
+
+.banner-nav .left-toggle-t .ver-list ul li>span.bg3 {
+    background: #afa9cb;
+}
+
+.banner-nav .left-toggle-t .ver-list ul li.on {
+    color: #00bd52;
+    font-weight: bold;
+}
+
+.banner-nav .left-toggle-t .ver-list .not {
+    font-size: 16px;
+    margin-top: 50px;
+    color: #666;
+}
+
+.banner-nav .left-toggle-t .ver-oper {
+    height: 40px;
+    background: #f8b502;
+    text-align: center;
+    color: #fff;
+    padding: 4px;
+    cursor: pointer;
+}
+
+
+/* 同步备课 end */

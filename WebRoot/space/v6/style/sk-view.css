@@ -1,0 +1,10 @@
+@charset "gb2312";
+/* CSS Document */
+/*html{background: #f7f7f7;}*/
+.sk-view-top{height: 50px; background: #eee;}
+.sk-view-top h1{font-size: 20px; line-height: 45px; font-weight: bold;}
+
+.sk-view-con{background: #f7f7f7;}
+.sk-view-con .w1200,.sk-view-con .w980{background: #fff; min-height: 900px; padding: 20px;}
+
+.sk-view-top .sk-tu img{ width: 40px; height: auto; margin-left: 10px;}

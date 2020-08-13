@@ -1,0 +1,43 @@
+.ac_results {
+    background:#f8f8f8;border:1px solid #d0d0d0;width:125px;filter:alpha(opacity=92); -moz-opacity:0.92; opacity: 0.92;overflow-y:auto;z-index:9999;
+}
+
+.ac_results ul {
+    list-style-position: outside;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ac_results li {
+	display:block;
+	height:22px;
+	font:normal 12px/22px SimSun;
+	padding:0 5px;
+    cursor: default;
+	color:#555;
+    /* 
+    if width will be 100% horizontal scrollbar will apear 
+    when scroll mode will be used
+    */
+    /*width: 100%;*/
+    /* 
+    it is very important, if line-height not setted or setted 
+    in relative units scroll will be broken in firefox
+    */
+    overflow: hidden;
+}
+
+.ac_loading {
+    background: white url('indicator.gif') right center no-repeat;
+}
+
+.ac_odd {
+    background-color: #f8f8f8;
+}
+
+.ac_over {
+	background:#d1e6f4;
+	color:#333;
+	text-decoration:none;
+}

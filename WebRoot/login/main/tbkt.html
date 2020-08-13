@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="ie-stand">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="shortcut" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="icon" href="{ICOIMG}" type="image/x-icon"/>
+<link rel="bookmark"  href="{ICOIMG}" type="image/x-icon" />
+<meta name="keywords"	content="{SEOKEY}" />
+<meta name="description" content="{SEOKEY}，全国首家在线同步教与学平台，专注为中小学教师、学生、家长、管理者提供高品质的同步教学、同步学习、互动沟通 、教学管理服务。" />
+<title>{SEOKEY}</title>
+<link rel="stylesheet" type="text/css" href="login/main/style/jquery.autocomplete.css" />
+<link href="login/main/style/common.css" rel="stylesheet" type="text/css" />
+<link href="login/main/style/login_new_one.css" rel="stylesheet" type="text/css" />
+<link href="login/main/style/font_quan.css" rel="stylesheet" type="text/css" />
+<link href="login/main/css/top_foot.css" rel="stylesheet" type="text/css" />
+
+<script type='text/javascript' src="script/jquery.js"></script>
+<script type='text/javascript' src="script/jquery-migrate-ada.js"></script>
+
+<script type='text/javascript' src="script/jquery.qrcode.js"></script>
+<script type='text/javascript' src="script/utfparse.js"></script>
+<script type="text/javascript" src="login/default/script/swfobject.js"></script>
+<script type='text/javascript' src="space/script/artDialog.js?skin=default"></script>
+<script type='text/javascript' src="script/util.js" ></script>
+<script type='text/javascript' src="script/base64.js"></script>
+<script type='text/javascript' src="script/js_md5.js"></script>
+<script type='text/javascript' src="script/js_rsa.js"></script>
+<script type="text/javascript" src="common/config.jsp"></script>
+<script type='text/javascript' src="login/main/script/loginobj.js"></script>
+<script type='text/javascript' src="login/main/script/logincode.js"></script>
+<script type='text/javascript' src="login/main/script/loginpage.js"></script>
+
+
+<!--
+<script type='text/javascript' src="script/loginpage.js"></script>
+<script type="text/javascript" src="login/default/script/logincode.js"></script>
+ -->
+</head>
+
+<body>
+<div class="tips" id="tips" >&nbsp;</div>
+<script type="text/javascript">
+codelogin.width=160;
+codelogin.height=160;
+var otherConfig = decodeURIComponent(decodeURIComponent(portal_config.otherConfig));
+//默认Logo
+var defaultlogo="yj_n.png";
+var flashChannelCode="CMS.JSON.A01063002";
+var pdata={
+"teacher":"{channel:\"22.01\"}",
+"student":"{channel:\"22.09\"}",
+"parent":"{channel:\"22.09\"}"
+}
+</script>
+
+<script type="text/javascript">
+
+//页面加载初始化
+$(function(){
+	//加载版本
+	$.ajax({url:protocol+sysconfig.PLS+"/preteach/search/script/searcherKs.js",dataType:"script",scriptCharset:"gbk",success:function(){
+		setPlsDomain(protocol+sysconfig.PLS);
+		loadKsItem("0001",1,"");//只是标记，不调用搜索函数
+	}});
+	$("[fbind]").hide();
+	//处理统计信息
+	util.getIcodeScript("VFS.PORTALSTAT");
+});
+		//游客登录
+		function visitorLogin(){
+			window.location.href=protocol+sysconfig.SSO+"/sso/ssoAuth?loginUsertype=teacher&inputname=youke_teacher&username=youke_teacher&sfp=1&pwd=96e79218965eb72c92a549dd5a330112&isPortal=1&validateCode=1234&gjpt="+$("#gjpt").val()+"&data={setmain:\"PLS.NSEARCH\",icode:\"PLS.NSEARCH\"}";
+		}
+		//游客检索
+		function visitorSearch(parm){
+			window.location.href=protocol+sysconfig.SSO+"/sso/ssoAuth?loginUsertype=teacher&inputname=youke_teacher&username=youke_teacher&sfp=1&pwd=96e79218965eb72c92a549dd5a330112&isPortal=1&validateCode=1234&gjpt="+$("#gjpt").val()+"&data={setmain:\"PLS.NSEARCH\",icode:\"PLS.NSEARCH\",p:\""+parm+"\",sencode:\"true\"}";
+		}
+		//搜索按钮
+		function rsSearch(){
+			var sparam="";
+			var menuCode=$("#ksCode").val();
+			if(menuCode && menuCode!=null && menuCode.length>0){
+				sparam="menuCode="+menuCode;
+			}
+			var skey=$("#rsSearchKey").val();
+			if(skey && skey!=null && skey.length>0 && "搜索您感兴趣的内容"!=skey){
+				if(sparam!=""){
+					sparam=sparam+"&title="+encodeURIComponent(encodeURIComponent(skey));
+				}else{
+					sparam="title="+encodeURIComponent(encodeURIComponent(skey));
+				}
+			}
+			if(sparam!=""){
+				sparam=new Base64().encode(sparam);
+			}
+			visitorSearch(sparam);
+		}
+</script>
+<OBJECT ID="ocx" style="display:none" width="0" height="0" codebase="http://plshenan.czbanbantong.com:80/office/officdown.cab#version=1,0,1,4"
+	CLASSID="CLSID:B02201C9-1789-4FF0-B95F-C1A03D8B6B99">
+	<PARAM NAME="_Version" VALUE="65536">
+	<PARAM NAME="_ExtentX" VALUE="10583">
+	<PARAM NAME="_ExtentY" VALUE="10583">
+	<PARAM NAME="_StockProps" VALUE="0">
+</OBJECT>
+<div class="tblock" icodeurl='true'>
+  <div class="w980">
+    <div class="logo_login"> <span class="logo1"><img id="logoimg" src="login/main/images/new_yh/tbkt.png"  ></span><span class="zibt">— 同步课堂</span><span id="areaname" class="city">河南</span> <span class="swap_city"><a href="city.html" style="color:#999;">[切换城市]</a></span> </div>
+
+    <div class="tel400"> <span class="fr"><img src="login/main/images/new_yh/tel.png" width="182" height="44" alt=""/></span> <a href="{{icode:CMS.SETUPFILE}}" class="khd_down">客户端下载 </a> </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+<div id="flash">
+  <div class="w980">
+    <div class="posRe" icodeurl='true'>
+      <div class="mask_login"></div>
+      <!--黑色遮罩-->
+      <div class="inputBox" id="codeLogin" style="display:none">
+      	<div class="scan"><span ><a class="qrcode_target" href="javascript:" >&nbsp;</a></span></div>
+     
+        <div class="loginBg pt">
+        <h2>打开优教信使或微信<br>扫一扫   快速登录</h2>
+        <p class="ma" id="qrcodeCanvas" style="width:160px;height:160px;margin-left:auto;margin-right:auto;margin-top:10px;margin-bottom:10px;padding:17px;background-color:#FFF"></p>
+         <p class="link"> <a target="_blank" href="{{icode:CMS.PAGE.USEGUIDE}}" >帮助</a></p>
+         	
+        </div>
+      </div>
+      
+      <div class="inputBox" id="pwdLogin">
+      	<div class="scan"><span class="scan-ts">扫码登录更安全</span><span ><a class="qrcode_target" href="javascript:" >&nbsp;</a></span></div>
+        <h2 class="tab gly"><a id="teacher" href="javascript:;">教师</a><a id="student" href="javascript:;">学生</a><a id="parent" href="javascript:;" >家长</a><a id="manager" href="javascript:;" style="margin-right:0;">管理员</a></h2>
+        <form id="loginForm" name="loginForm" action="" method="post" target="">
+        <div class="loginBg">
+			<input type="hidden" id="loginUsertype" name="loginUsertype"/>
+			<input type="hidden" id="gjpt" name="gjpt" />
+			<input type="hidden" name="username" id="username"/>
+			<input type="hidden" name="sfp" id="sfp" value="" />
+			<input type="hidden"  id="pwd" name="pwd" value="" />
+			<input id="isPortalisPortal" name="isPortal" type="hidden" value="1" />
+			<input id="data" name="data" type="hidden" value="" />
+			
+          <!-- 多账号选择层 -->
+          <div id="roleDiv" phonenum="" class="ac_results" style="left:17px;top:120px;width:;275px;display:none;position:absolute" >
+            <ul id="roleList" style="overflow:hidden" >
+            </ul>
+          </div>
+          <p class="bor">
+            <label class="user"></label>
+            <input type="text" id="inputname" name="inputname" class="textbox1" placeholder="用户名" />
+          </p>
+          <p class="bor">
+            <label class="password"></label>
+            <input type="password" id="inpwd" placeholder="密　码" class="textbox1" />
+          </p>
+          <p class="bor" style="width:120px;float:left;">
+            <label class="check_code"></label>
+            <input type="text" name="validateCode" id="validateCode" class="textbox1" style="width:60px;" maxlength="4" placeholder="验证码" />
+          </p>
+          <span class="yanz"><img id="validateImg" src="login/main/images/code.png" width="58" height="28" /></span>
+          <div class="getKey">
+            <input id="savepass" type="checkbox" />
+            &nbsp;记住密码　　<a href="{{icode:TMS.803}}" class="blue">找回密码</a> <a class="blue" target="_blank" href="{{icode:CMS.PAGE.USEGUIDE}}" target="_blank" >帮助</a>
+          </div>
+          <p class="mt20 qk2">
+            <input type="button" value="登&nbsp;录"  class="loginBtn"  id="loginbuttion" />
+            <input type="button" class="greenBtn" style="display:none" id="zcButton" value="注&nbsp;册" />
+          </p>
+        </div>
+      </form>
+      
+      </div>
+      <!--会员登录结束--> 
+      
+    </div>
+    <!--end posRe--> 
+  </div>
+  <!--end w980-->
+  
+  <ul id="flashul" >
+    <li id="flash1" style="display: block;"><a href="#"><span style="background:url(../img/login_img1.jpg) no-repeat center center;"></span></a></li>
+    <li id="flash2" style="display: none;"><a href="#"><span style="background:url(../img/login_img1.jpg) no-repeat center center;"></span></a></li>
+    <li id="flash3" style="display: none;"><a href="#"><span style="background:url(../img/login_img1.jpg) no-repeat center center;"></span></a></li>
+    <li id="flash4" style="display: none;"><a href="#"><span style="background:url(../img/login_img1.jpg) no-repeat center center;"></span></a></li>
+    <li id="flash5" style="display: none;"><a href="#"><span style="background:url(../img/login_img1.jpg) no-repeat center center;"></span></a></li>
+  </ul>
+  <div class="w980">
+    <div class="flash_bar">
+      <div class="dq" id="f1" onclick="changeflash(1)"></div>
+      <div class="no" id="f2" onclick="changeflash(2)"></div>
+      <div class="no" id="f3" onclick="changeflash(3)"></div>
+      <div class="no" id="f4" onclick="changeflash(4)"></div>
+      <div class="no" id="f5" onclick="changeflash(5)"></div>
+    </div>
+  </div>
+<!--Flash end--> 
+  
+</div>
+<div class="block1 "  style="padding: 0 0 30px 0;">
+<input id="ksCode" type="hidden" />
+<div class="w980  ">
+
+
+<!--
+        <div class="title">
+            <h1>4大平台应用</h1>
+            <h2>个性化定制&nbsp;精准提高&nbsp;靶向突破</h2>
+        </div>
+-->
+
+        <div class="oh">
+            <dl class="fl course-item" >
+                <dt>
+                    <i class="i-tbfd bg-lazy" ><img src="login/main/images/new_yh/quyu.png" width="210" height="210" alt=""/></i>
+                </dt>
+                <dd>
+                    <h3>区域管理者</h3>
+                                  
+                    <p>了解各学校教师备、授课进展,了解各学校学生自主学习应用情况,管理区域内教师备课成果,管理区域内资源版本,了解各学校学生作业布置及完成情况     </p>
+                   
+                </dd>
+            </dl>
+            <dl class="fl course-item" >
+                <dt>
+                    <i class="i-tbfd bg-lazy" ><img src="login/main/images/new_yh/xuexiao.png" width="210" height="210" alt=""/></i>
+                </dt>
+                <dd>
+                    <h3>学校管理者</h3>
+                    <p>了解学校教师备、授课进展,了解学校学生自主学习应用情况,管理学校教师备课成果,了解学生作业布置及完成情况
+</p>
+                  
+                </dd>
+            </dl>
+            <dl class="fl course-item">
+                <dt>
+                   <i class="i-tbfd bg-lazy" ><img src="login/main/images/new_yh/jiaoshi.png" width="210" height="210" alt=""/></i>
+                </dt>
+                <dd>
+                    <h3>教师</h3>
+                   
+                  
+                  <p>使用优质的资源进行在线备课,使用班班通进行课堂教学,进行互动训练，及时检测课堂学习效果,布置及批改作业
+</p>
+                  
+                </dd>
+            </dl>
+            <dl class="fl course-item" >
+                <dt>
+                     <i class="i-tbfd bg-lazy" ><img src="login/main/images/new_yh/jzx.png" width="210" height="210" alt=""/></i>
+                </dt>
+                <dd>
+                    <h3>学生和家长</h3>
+                   
+                    <p>与教师进行课堂互动，生成课堂报告,及时完成各类在线作业，获取作业评价,主动进行同步课堂的自主学习
+</p>
+                   
+                </dd>
+            </dl>
+        </div>
+
+  
+  
+  
+  
+  
+  <div class="clearfix"></div>
+</div>
+</div>
+
+
+<!--  block1 end-->
+<div class="block1 hui-bg" id="guest_search" style="padding: 0 0 30px 0;display:none">
+
+<div class="w980  ">
+<div class="tbkt_xz">
+<h2 class="lm_bt bdnone ">资源导航：<span class="search_bor tbkt">  <input id="rsSearchKey" type="text" class="sou_2017" value="搜索您感兴趣的内容" onfocus="if (value =='搜索您感兴趣的内容'){value =''};" onblur="if (value ==''){value='搜索您感兴趣的内容'}" >
+	<input type="submit" class="souBtn" onclick="rsSearch()" value="搜索资源"></span></h2>
+	<div class="clearfix"></div>
+	<h3>您已选择：</h3>
+	   <div class="class_1 mt10">    		
+    		
+        <ul class="adjustTwo">
+                	<li>
+            <label id="level2_label">年级:</label><span id="level2_span"></span>
+            <div class="clearfix"></div>
+          </li>
+          <li>
+            <label id="level3_label">学期:</label><span id="level3_span"></span>
+            <div class="clearfix"></div>
+          </li>
+          <li>
+			<label id="level4_label">学科：</label><span id="level4_span"></span>
+            <div class="clearfix"></div>
+          </li>
+          <li>
+			<label id="level5_label">版本：</label><span id="level5_span"></span>
+          </li>
+		</ul>
+      </div>
+      
+	
+	
+	</div>
+	</div>
+	</div>
+
+<div class="clearfix"></div>
+
+<div class="block1 "  style="padding: 0 0 30px 0; ">
+<!-- <h2 class="lm_bt tb  tac "> <span > 教师备、授课应用前十名学校</span></h2>-->
+    <div class="w980  ">
+        <div class="row">
+            <div class="zcol-8">
+                <h2 class="lm_bt tl"> <span >教师备、授课应用前十名学校</span></h2>
+                <div class="tb zh_im_con mt15" id="schoolRankBar" style="height: 580px">
+
+                </div>
+            </div>
+            <div class="zcol-4">
+                <h2 class="lm_bt tl"><span >用户登录次数</span></h2>
+                <div class="tb zh_im_con" id="loginRecordBar" style="height: 580px">
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+
+<div class="block1 zqing-bg"  style="padding: 0 0 30px 0; background-image:none;">
+ <h2 class="lm_bt tb hei tac mt0"> <span > 师生课堂互动情况</span></h2>
+<div class="w980  ">
+<div class="zh_im_con tubiao">
+      <div class="row  " >
+        <div class="zcol-6"> <span class="num" fbind="stat">{{fdata:HW_COUNT[0].HW_COUNT}}次</span> <span class="mc">作业应用次数</span> <span class="line tar">——</span> <span class="bg  fr">A</span> </div>
+        <div class="zcol-6"> <span class="bg green">B</span> <span class="num fr" fbind="stat">{{fdata:RES_COUNT[0].RES_COUNT}}次</span>   <span  class="mc fr">资源应用次数</span>  <span class="line fr">——</span></div>
+      </div>
+
+	</div>
+
+</div>
+</div>
+
+
+
+
+
+<!--页脚-->
+<iframe style="min-width: 1000px;" id="footiframe" name="footiframe" src="" width="100%" height="190" scrolling="no" frameborder="0"></iframe>
+<!--end footer--> 
+<!--客服电话
+<div class="kfQQ">
+  <h1><a href="javascript:void(0);" id="kf_btn" class="close_2"></a>
+    <div id="goTop"><a href="javascript:void(0);" onclick="goTop2();"></a></div>
+  </h1>
+  <div class="kf_Tel">
+    <ul>
+      <li> <a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&amp;uin=8983659&amp;site=www.cactussoft.cn&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=2:8983659:41"></a></li>
+      <li> <a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&amp;uin=8983659&amp;site=www.cactussoft.cn&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=2:8983659:41"></a></li>
+      <li> <a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&amp;uin=8983659&amp;site=www.cactussoft.cn&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=2:8983659:41"></a></li>
+    </ul>
+    <h4></h4>
+  </div>
+</div>
+-->
+<!--end-->
+
+</body>
+</html>
+<script src="login/main/script/echarts.common.min.js"></script>
+<script src="login/main/script/chartdata.js"></script>
+<script src="login/main/script/login.js"></script>
+<script src="login/main/script/common.js"></script>
+<SCRIPT src="login/main/script/kefu.js"></SCRIPT>
+<script type="text/javascript">
+		var _type4OtherConfig="tbktlogin";
+</script>
+<script type="text/javascript" src="common/otherConfig.jsp?day={DAYSTAMP}"></script>
